@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const smtpPool = require('nodemailer-smtp-pool');
 const keys = require('../service-key.json');
 
+const host = 'localhost:3000';
 const config = {
   service: 'Gmail',
   host: 'localhost',
@@ -64,7 +65,7 @@ exports.auth.send_verification = function(req, res) {
             });
           } else {
             const transporter = nodemailer.createTransport(smtpPool(config));
-            var accept_link = '/auth/accept_verification?verify_code=' + verify_code;
+            var accept_link = host + '/auth/accept_verification?verify_code=' + verify_code;
             var mail_options = {
               from: '"no-reply" <contact@kabang.com>',
               to: user_email,
@@ -120,7 +121,9 @@ exports.auth.accept_verification = function(req, res) {
         // db update fail
         res.render('404.html');
       } else {
-        res.redirect('/student_login');
+        req.session.user_id = user_id;
+        req.session.type = 'student';
+        res.redirect('/student');
       }
     })
   } else {

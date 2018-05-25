@@ -38,24 +38,37 @@ app.configure('development', function(){
 
 // check if this user is logged in
 // if feature needs login, use this before routes function
-function checker(req, res, next) {
-  var user_db = app.get('db').collection('Users');
-  user_db.findOne({
-    id: req.session.user_id,
-    type: req.session.user_type
-  }, function(find_err, find_res) {
-    if (find_err || !find_res) {
-      res.redirect('/student_login');
+function checker(type) {
+  return function(req, res, next) {
+    var user_db = app.get('db').collection('Users');
+    var user_id = req.session.user_id;
+    var user_type = req.session.user_type;
+    
+    if (user_id && user_type && (!type || user_type == type)) {
+      user_db.findOne({
+        id: user_id,
+        type: user_type
+      }, function(find_err, find_res) {
+        if (find_err || !find_res) {
+          res.redirect('/' + user_type + '_login');
+        } else {
+          if (find_res.type == 'student' && !find_res.is_verified) {
+            res.redirect('/need_verification');
+          } else {
+            next();
+          }
+        }
+      });
     } else {
-      next();
+      res.redirect('/' + (type || 'student') + '_login');
     }
-  })
+  }
 };
 
 app.get('/', routes.index);
 
 app.post('/auth/login', routes.auth.login);
-app.post('/auth/logout', checker, routes.auth.logout);
+app.post('/auth/logout', checker(), routes.auth.logout);
 app.post('/auth/signup', routes.auth.signup);
 app.post('/auth/send_verification', routes.auth.send_verification);
 app.get('/auth/accept_verification', routes.auth.accept_verification);
