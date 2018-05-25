@@ -36,7 +36,29 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+// check if this user is logged in
+// if feature needs login, use this before routes function
+function checker(req, res, next) {
+  var user_db = app.get('db').collection('Users');
+  user_db.findOne({
+    id: req.session.user_id,
+    type: req.session.user_type
+  }, function(find_err, find_res) {
+    if (find_err || !find_res) {
+      res.redirect('/student_login');
+    } else {
+      next();
+    }
+  })
+};
+
 app.get('/', routes.index);
+
+app.post('/auth/login', routes.auth.login);
+app.post('/auth/logout', checker, routes.auth.logout);
+app.post('/auth/signup', routes.auth.signup);
+app.post('/auth/send_verification', routes.auth.send_verification);
+app.get('/auth/accept_verification', routes.auth.accept_verification);
 
 function connectDB() {
   var dbUrl = 'mongodb://localhost:27017';
