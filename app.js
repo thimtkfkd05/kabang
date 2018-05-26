@@ -37,6 +37,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.get('/map', routes.map);
 
 function connectDB() {
   var dbUrl = 'mongodb://localhost:27017';
