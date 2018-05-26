@@ -66,6 +66,7 @@ function checker(type) {
 };
 
 app.get('/', routes.index);
+app.get('/map', routes.map);
 
 app.post('/auth/login', routes.auth.login);
 app.post('/auth/logout', checker(), routes.auth.logout);

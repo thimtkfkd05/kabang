@@ -33,6 +33,9 @@ exports.index = function(req, res){
   res.render('index.html');
 };
 
+exports.map = function(req, res){
+  res.render('map.html');
+};
 exports.auth = function(req, res) {
   res.json(null);
 };
