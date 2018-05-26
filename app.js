@@ -70,6 +70,7 @@ app.get('/roomlist', routes.roomlist);
 app.get('/loginpage', routes.loginpage);
 app.get('/registerRoomOwner', routes.registerRoomOwner);
 app.get('/registerStudent', routes.registerStudent);
+app.get('/map', routes.map);
 
 app.post('/auth/login', routes.auth.login);
 app.post('/auth/logout', checker(), routes.auth.logout);
