@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Room List</title>
+  <title>KABANG - Room List</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -13,40 +13,32 @@
  
 <div class="container">
   <h2>Room List</h2>
-  <div class="row">
-    <div class="col">
-      <a href="#" class="btn btn-block btn-outline-light text-dark" role="button">
-        <div class="card">
-          <div class="card-header">Location</div>
-          <div class="card-body">
-            <img class="card-img-top" src="img_avatar1.png" alt="Card image">
-          </div> 
-          <div class="card-footer">
-            <div class="row">
-                <div class="col" color="b">Price</div>
-                <div class="col">Type</div> 
-              </div>
+  <div class="row"></div>
+
+  <strong>
+      <div class="col">
+          <a href="#" class="btn btn-block btn-outline-light text-dark" role="button">
+            <div class="card">
+              <div class="card-header">Location</div>
+              <div class="card-body">
+                <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+              </div> 
+              <div class="card-footer">
+                <div class="row">
+                    <div class="col">Price</div>
+                    <div class="col">Type</div>
+                </div>
+            </div>
           </div>
-        </div>
-      </a>
-    </div>
-    <div class="col">
-      <a href="#" class="btn btn-block btn-outline-light text-dark" role="button">
-        <div class="card">
-          <div class="card-header">Location</div>
-          <div class="card-body">
-            <img class="card-img-top" src="img_avatar1.png" alt="Card image">
-          </div> 
-          <div class="card-footer">
-            <div class="row">
-                <div class="col">Price</div>
-                  <div class="col">Type</div>
-              </div>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
+        </a>
+      </div>
+  </strong>
+
+  <script>
+    $("div").append($("strong"));
+    $("div").append($("strong"));
+  </script>
+
 </div>
 
 </body>
