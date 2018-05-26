@@ -66,7 +66,10 @@ function checker(type) {
 };
 
 app.get('/', routes.index);
-app.get('/map', routes.map);
+app.get('/roomlist', routes.roomlist);
+app.get('/loginpage', routes.loginpage);
+app.get('/registerRoomOwner', routes.registerRoomOwner);
+app.get('/registerStudent', routes.registerStudent);
 
 app.post('/auth/login', routes.auth.login);
 app.post('/auth/logout', checker(), routes.auth.logout);
