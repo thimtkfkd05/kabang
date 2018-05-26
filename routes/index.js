@@ -33,12 +33,21 @@ exports.index = function(req, res){
   res.render('index.html');
 };
 
-exports.map = function(req, res){
-  res.render('map.html');
-};
-exports.auth = function(req, res) {
-  res.json(null);
-};
+exports.roomlist = function(req,res){
+  res.render('roomlist.html');
+}
+
+exports.loginpage = function(req,res){
+  res.render('loginpage.html');
+}
+
+exports.registerRoomOwner = function(req,res){
+  res.render('registerRoomOwner.html');
+}
+
+exports.registerStudent = function(req,res){
+  res.render('registerStudent.html');
+}
 
 exports.auth.send_verification = function(req, res) {
   var user_db = req.app.get('db').collection('Users');
