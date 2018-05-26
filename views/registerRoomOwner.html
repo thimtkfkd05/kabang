@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KABANG :: registerStudent</title>
+      <link rel = "stylesheet" href = "../public/css/userregisterpage.css">
+      <!------ Include the above in your HEAD tag ---------->
+      <script src =  "https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src = "../public/js/userregister.js"></script>
+      
+  </head>   
+
+  <body>
+        <div class = "roomowner-register">
+          <div class = "form">
+              <form class  = "register-form">
+                    <table>
+                        <tr><font  face = '궁서' color = 'yellow' size = '5' align = 'center'>RoomOwner Register<br></font></tr>
+                            <tr>
+                              <td><font color = 'white'>E-mail</font></td>
+                              <td><br><input type = "email" placeholder = "E-mail" name = "E-mail" id = "EM">
+                                <br>
+                                <font color = 'white' size = '1'>*E-mail address will be used as your ID</font>
+                            </td>
+                              
+                          </tr>
+                        <tr>
+                            <td><font color = 'white'>Password</font></td>
+                        <td><input type = "password" placeholder = "password" name = "password" id = "pw" onchange="isSame()"></td>
+                      </tr>
+                        <tr>
+                            <td><font color = 'white'>Passwordcheck</font></td>
+                        <td><input type = "password" placeholder = "password" name = "passwordcheck" id = "pwCheck" onchange="isSame()">
+                          <span id = "same"></span></td></td>
+                      </tr>
+                      <tr>
+                        <td><font color = 'white'>NickName</font></td>
+                        <td><input type = "text" placeholder = "NickName" name = "nickname" id = "NN"></td>
+                      </tr>
+                      <tr>
+                        <td><font color = 'white'>PhoneNum</font></td>
+                        <td><input type = "text" placeholder = "PhoneNum" name = "phoneNum" id = "PN"></td>
+                      </tr>
+                      </table>
+                      <br>
+                      <input type = "button"  value = "Create" onclick = "Rcheckempty()">
+                      <input type = "reset" onclick = "location.href='loginpage.html'" value="Cancel">
+                  <p class="message">Already Registered? <a href="loginpage.html">Log In</a> </p>
+              </form> 
+              
+            </div> 
+  
+        </div>
