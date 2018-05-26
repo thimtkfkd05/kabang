@@ -53,8 +53,23 @@
   </strong>
 
   <script>
-    for (var i = 0; i<4; i++){
-      $("div").append($("strong"));}
+    $("div").append($("strong"));
+    function appendClass(){
+      var c1 = "<div class=\"row\">";
+      var c2 = "<div class=\"col\">";
+      var a1 = "<a href=\"#\" class=\"btn btn-block btn-outline-light text-dark\" role=\"button\">";
+      var c3 = "<div class=\"card\">";
+      var c4 = "<div class=\"card-header\">Location</div>";
+      var c5 = "<div class=\"card-body\">";
+      var im = "<img class=\"card-img-top\" src=\"img_avatar1.png\" alt=\"Card image\">";
+      var ed = "</div>";
+      var c6 = "<div class=\"card-footer\">";
+      var c7 = "<div class=\"col\">Price</div>";
+      var c8 = "<div class=\"col\">Type</div>";
+      var ea = "</a>";
+      $("body").append(c1,c2,a1,c3,c4,c5,im,ed,c6,c1,c7,c8,ed,ed,ed,ed,ea,ed,c2,a1,c3,c4,c5,im,ed,c6,c1,c7,c8,ed,ed,ed,ed,ea,ed,ed);
+    }
+    appendClass()
   </script>
 
 </div>
