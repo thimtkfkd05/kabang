@@ -1,0 +1,53 @@
+body{
+    background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6));
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.student-register{
+    width: 400px;
+    padding: 10% 0 0;
+    margin: auto;
+}
+.roomowner-register{
+    width: 400px;
+    padding: 10% 0 0;
+    margin: auto;
+}
+
+.form{
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 40,195, 0.8);
+    max-width: 400px;
+    margin: 0 auto 100px;
+    padding: 10px;
+    text-align : left;
+}
+
+
+input[type= button], input[type = reset]{
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 49%;
+    border: 0;
+    padding: 7px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: poiner;
+}
+input[type= button], input[type = reset]:hover ,input[type= button],input[type = reset]:active{
+    background: #43A047;
+}
+.form .message{
+    margin: 15px 0 0;
+    color: aliceblue;
+    font-size: 12px
+}
+.form .message a{
+    color: #4CAF50;
+    text-decoration: none;
+}
