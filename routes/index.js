@@ -33,6 +33,10 @@ exports.index = function(req, res){
   res.render('index.html');
 };
 
+exports.auth = function(req, res) {
+  res.json(null);
+};
+
 exports.auth.send_verification = function(req, res) {
   var user_db = req.app.get('db').collection('Users');
   var user_id = req.body.user_id;
