@@ -33,11 +33,9 @@ exports.index = function(req, res){
   res.render('index.html');
 };
 
-<<<<<<< HEAD
 exports.map = function(req, res){
   res.render('map.html');
 };
-=======
 exports.auth.send_verification = function(req, res) {
   var user_db = req.app.get('db').collection('Users');
   var user_id = req.body.user_id;
@@ -211,4 +209,3 @@ exports.auth.logout = function(req, res) {
   
   res.redirect(redirect_url);
 };
->>>>>>> 998422bce3b7333453215dd48aa249762177d00e
