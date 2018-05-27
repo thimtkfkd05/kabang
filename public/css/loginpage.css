@@ -58,3 +58,9 @@ body{
     color: #4CAF50;
     text-decoration: none;
 }
+
+.alert {
+    margin-top: 12.5px;
+    font-size: 14px;
+    padding: 10px 15px;
+}

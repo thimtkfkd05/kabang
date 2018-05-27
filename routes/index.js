@@ -58,7 +58,7 @@ exports.auth = function(req, res) {
 };
 
 exports.auth.send_verification = function(req, res) {
-  var user_db = req.app.get('db').collection('Users');
+  var user_db = db.collection('Users');
   var user_id = req.body.user_id;
   var user_email = req.body.user_email;
 
@@ -127,7 +127,7 @@ exports.auth.send_verification = function(req, res) {
 };
 
 exports.auth.accept_verification = function(req, res) {
-  var user_db = req.app.get('db').collection('Users');
+  var user_db = db.collection('Users');
   var verify_code = req.query.verify_code;
   
   if (verify_code) {
@@ -157,7 +157,7 @@ exports.auth.accept_verification = function(req, res) {
 };
 
 exports.auth.signup = function(req, res) {
-  var user_db = req.app.get('db').collection('Users');
+  var user_db = db.collection('Users');
   var email = req.body.email;
   var password = req.body.password;
   var name = req.body.name;
@@ -194,43 +194,54 @@ exports.auth.signup = function(req, res) {
 };
 
 exports.auth.login = function(req, res) {
-  var user_db = req.app.get('db').collection('Users');
+  var user_db = db.collection('Users');
   var email = req.body.email;
   var password = req.body.password;
+  console.log('??', email, password);
 
   if (email && password) {
     var find_query = {
       email: email,
       password: new Buffer(password, 'base64').toString()
     };
-    if (type == 'student') {
-      find_query['is_verified'] = true;
-    }
+    console.log(find_query.password);
     user_db.findOne(find_query, {
       id: 1,
-      type: 1
+      type: 1,
+      is_verified: 1
     }, function(find_err, find_res) {
-      var redirect_url = '/';
       if (find_err || !find_res) {
-        redirect_url += 'login'
-        res.redirect(redirect_url);
+        res.json({
+          result: false,
+          err: find_err
+        });
       } else {
-        req.session.user_id = find_res.id;
-        req.session.user_type = find_res.type;
-        redirect_url += find_res.type;
-        res.redirect(redirect_url);
+        if (find_res.type == 'student' && find_res.is_verified == false) {
+          res.json({
+            result: false,
+            err: 'not_verified'
+          });
+        } else {
+          req.session.user_id = find_res.id;
+          req.session.user_type = find_res.type;
+          res.json({
+            result: true,
+            type: find_res.type
+          });
+        }
       }
     });
   } else {
-    var redirect_url = '/login';
-    res.redirect(redirect_url);
+    res.json({
+      result: false,
+      err: 'empty_input'
+    });
   }
 };
 
 exports.auth.logout = function(req, res) {
-  var redirect_url = '/login';
   delete req.session.user_id;
   delete req.session.user_type;
   
-  res.redirect(redirect_url);
+  res.json(true);
 };

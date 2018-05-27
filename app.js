@@ -12,6 +12,7 @@ var express = require('express')
 
 var app = express();
 var port = process.env.PORT || 3000;
+db = null;
 
 app.configure(function(){
   app.set('port', port);
@@ -81,10 +82,12 @@ function connectDB() {
   var dbUrl = 'mongodb://localhost:27017';
   var mongoClient = mongodb.MongoClient;
 
-  mongoClient.connect(dbUrl, function(err, db) {
+  mongoClient.connect(dbUrl, {
+    useNewUrlParser: true
+  }, function(err, mongoclient) {
     if (err) throw err;
     console.log('DB connection success!');
-    app.set('db', db);
+    db = mongoclient.db('kabang');
   });
 };
 
