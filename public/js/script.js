@@ -23,7 +23,7 @@ var roomcard = function(ref, loc, img, pri, typ) {
   ].join('');
 };
 
-var roomNo = 7
+var roomNo = 8
 
 for (var i = 0; i < roomNo/2 ; i++) {
   var html = '<div class="row">';
