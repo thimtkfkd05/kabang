@@ -1,46 +1,39 @@
 $(document).ready(function() {
   console.log("Hello World!");
-});
 
-<div class="div_class_wrapper"></div>
 
 var roomcard = function(loc, img, pri, typ) {
   return [
-    '<div class="row">',
-      '<div class="col">',
-        '<a href="#" class="btn btn-block btn-outline-light text-dark" role="button">',
-          '<div class="card">',
-            '<div class="card-header">',loc,'</div>',
-            '<div class="card-body">',
-              '<img class="card-img-top" src="',img,'" alt="Card image">',
-            '</div>',
-            '<div class="card-footer">',
-              '<div class="col">',pri,'</div>',
-              '<div class="col">',typ,'</div>',
+    '<div class="col-6">',
+      '<a href="#" class="btn btn-block btn-outline-light text-dark" role="button">',
+        '<div class="card">',
+          '<div class="card-header">',loc,'</div>',
+          '<div class="card-body">',
+            '<img class="card-img-top" src="',img,'" alt="Card image">',
+          '</div>',
+          '<div class="card-footer">',
+            '<div class="row">',
+              '<div class="col-6">',pri,'</div>',
+              '<div class="col-6">',typ,'</div>',
             '</div>',
           '</div>',
-        '</a>',
-      '</col>',
-      '<div class="col">',
-        '<a href="#" class="btn btn-block btn-outline-light text-dark" role="button">',
-          '<div class="card">',
-            '<div class="card-header">',loc,'</div>',
-            '<div class="card-body">',
-              '<img class="card-img-top" src="',img,'" alt="Card image">',
-            '</div>',
-            '<div class="card-footer">',
-              '<div class="col">',pri,'</div>',
-              '<div class="col">',typ,'</div>',
-            '</div>',
-          '</div>',
-        '</a>',
-      '</col>',
+        '</div>',
+      '</a>',
     '</div>'
   ].join('');
 };
 
-for (var i = 0; i < 4; i++) {
-  $('div.div_class_wrapper').append(roomcard('Location', "img.jpg" , 'Price', 'Type'));
+var roomNo = 13
+
+for (var i = 0; i < roomNo/2 ; i++) {
+  var html = '<div class="row">';
+  for (var j = 0; j < 2; j++){
+    html += roomcard('Location', 'img.jpg', 'Price', 'Type');
+    if(roomNo%2==1 && i > roomNo/2 -1){ break; }
+  }
+  html += '</div>';
+  $('div.row_adder').append(html);
 }
 
+});
 //<div class="div_class_wrapper"></div>
