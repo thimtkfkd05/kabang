@@ -45,7 +45,7 @@ function Rcheckempty(){
     exit; 
     }  
     alert("Register Success");
-    window.location.href="loginpage.html";
+    window.location.href="loginpage";
 
 }
 
@@ -78,5 +78,5 @@ function Scheckempty(){
         exit;
     }
     alert("Please verify Kaist mail in 1 days");
-    window.location.href="loginpage.html";
+    window.location.href="loginpage";
 }
