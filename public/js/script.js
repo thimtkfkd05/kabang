@@ -2,10 +2,10 @@ $(document).ready(function() {
   console.log("Hello World!");
 
 
-var roomcard = function(loc, img, pri, typ) {
+var roomcard = function(ref, loc, img, pri, typ) {
   return [
     '<div class="col-6">',
-      '<a href="#" class="btn btn-block btn-outline-light text-dark" role="button">',
+      '<a href="', ref, '" class="btn btn-block btn-outline-light text-dark" role="button">',
         '<div class="card">',
           '<div class="card-header">',loc,'</div>',
           '<div class="card-body">',
@@ -23,12 +23,12 @@ var roomcard = function(loc, img, pri, typ) {
   ].join('');
 };
 
-var roomNo = 13
+var roomNo = 7
 
 for (var i = 0; i < roomNo/2 ; i++) {
   var html = '<div class="row">';
   for (var j = 0; j < 2; j++){
-    html += roomcard('Location', 'img.jpg', 'Price', 'Type');
+    html += roomcard('#', 'Location', 'img.jpg', 'Price', 'Type');
     if(roomNo%2==1 && i > roomNo/2 -1){ break; }
   }
   html += '</div>';
