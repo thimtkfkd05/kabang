@@ -175,16 +175,21 @@ exports.auth.signup = function(req, res) {
     }
     user_db.save(user_obj, function(save_err, save_res) {
       if (save_err) {
-        res.render({
+        res.json({
           result: false,
           err: save_err
         });
       } else {
-        res.render({
+        res.json({
           result: true
         });
       }
     });
+  } else {
+    res.json({
+      result: false,
+      err: 'empty_input'
+    })
   }
 };
 
@@ -192,39 +197,38 @@ exports.auth.login = function(req, res) {
   var user_db = req.app.get('db').collection('Users');
   var email = req.body.email;
   var password = req.body.password;
-  var type = req.body.type;
 
-  if (email && password && type) {
+  if (email && password) {
     var find_query = {
       email: email,
-      password: new Buffer(password, 'base64').toString(),
-      type: type
+      password: new Buffer(password, 'base64').toString()
     };
     if (type == 'student') {
       find_query['is_verified'] = true;
     }
     user_db.findOne(find_query, {
-      id: 1
+      id: 1,
+      type: 1
     }, function(find_err, find_res) {
       var redirect_url = '/';
       if (find_err || !find_res) {
-        redirect_url += type + '_login'
+        redirect_url += 'login'
         res.redirect(redirect_url);
       } else {
         req.session.user_id = find_res.id;
-        req.session.user_type = type;
-        redirect_url += type;
+        req.session.user_type = find_res.type;
+        redirect_url += find_res.type;
         res.redirect(redirect_url);
       }
     });
   } else {
-    var redirect_url = '/' + (type || 'student') + '_login';
+    var redirect_url = '/login';
     res.redirect(redirect_url);
   }
 };
 
 exports.auth.logout = function(req, res) {
-  var redirect_url = '/' + req.session.user_type + '_login';
+  var redirect_url = '/login';
   delete req.session.user_id;
   delete req.session.user_type;
   

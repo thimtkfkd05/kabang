@@ -49,7 +49,7 @@ function checker(type) {
         type: user_type
       }, function(find_err, find_res) {
         if (find_err || !find_res) {
-          res.redirect('/' + user_type + '_login');
+          res.redirect('/login');
         } else {
           if (find_res.type == 'student' && !find_res.is_verified) {
             res.redirect('/need_verification');
@@ -59,14 +59,14 @@ function checker(type) {
         }
       });
     } else {
-      res.redirect('/' + (type || 'student') + '_login');
+      res.redirect('/login');
     }
   }
 };
 
 app.get('/', routes.index);
 app.get('/roomlist', routes.roomlist);
-app.get('/loginpage', routes.loginpage);
+app.get('/login', routes.loginpage);
 app.get('/registerRoomOwner', routes.registerRoomOwner);
 app.get('/registerStudent', routes.registerStudent);
 app.get('/map', routes.map);
