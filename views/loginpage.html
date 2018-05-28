@@ -2,31 +2,33 @@
 <html>
   <head>
     <title>KABANG :: login page</title>
-    <link rel='stylesheet' href='/module/css/jquery-ui.min.css' />
-    <link rel='stylesheet' href='/module/css/bootstrap.min.css' />
-    <link rel='stylesheet' href='/module/font-awesome-4.7.0/css/font-awesome.min.css' />
-    <link rel="stylesheet" href='/css/loginpage.css'>
+      <link rel = "stylesheet" href = '/css/loginpage.css'>
+      <link rel='stylesheet' href='/module/css/jquery-ui.min.css' />
+      <link rel='stylesheet' href='/module/css/bootstrap.min.css' />
+      <link rel='stylesheet' href='/module/font-awesome-4.7.0/css/font-awesome.min.css' />
+      <link rel='stylesheet' href='/css/style.css' />
   </head>   
   <body>
-    <div class = "login-page">
-      <div class = "form">
-        <form class  = "login-form">
-          <input id="email" type="email" placeholder="E-mail"/>
-          <input id="password" type="password" placeholder="password"/>
-        </form>
-        <button id="login" class="btn btn-success">log in</button>
-          <div class="alert alert-danger" style="display: none;">
-            Login Failed. Please check your Email and Password.
-          </div>
-          <p class= "message">Not registered?
-            <a href="/registerStudent">Student</a>
-            <a href="/registerRoomOwner">RoomOwner</a>
-          </p>
-      </div> 
-    </div>
-    <script src="/module/js/jquery-1.12.4.min.js"></script>
-    <script src="/module/js/jquery-ui.min.js"></script>
-    <script src="/module/js/bootstrap.min.js"></script>
-    <script src="/js/login.js"></script>
+      <script src="/module/js/jquery-1.12.4.min.js"></script>
+      <script src="/module/js/jquery-ui.min.js"></script>
+      <script src="/module/js/bootstrap.min.js"></script>
+      <script src="/js/script.js"></script>
+      <div class = 'login-page'>
+        <div class = 'form'>
+            <form class  = "login-form">
+                <div class="Email">
+                    <label for="InputEmail"><font color = 'white'>Email address</font></label>
+                    <input type="email" class="form-control" id="InputEmail1"  placeholder="Enter email">
+                </div>
+                <div class="Password">
+                    <label for="InputPassword"><font color = 'white'>Password</font></label>
+                    <input type="password" class="form-control" id="InputPassword1" placeholder="Password">
+                </div>
+                <button type="submit" class="button1">Log_In</button>
+                    <p class= "message"><br>Not registered? <a href="registerStudent">Student</a>
+                        <a href="registerRoomOwner">RoomOwner</a> </p>
+            </form>      
+          </div> 
+      </div>
   </body>
-</html>
+  </html>

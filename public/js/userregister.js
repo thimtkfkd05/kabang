@@ -21,28 +21,28 @@ function Rcheckempty(){
 
     if(em == ""){
         alert("Please input E-mail");
-        exit;
+        return;
     }else if(pw == ""){
         alert("Please input Password");
-        exit;
+        return;
     }else if(pwCK == ""){
         alert("Please input PasswordCheck");
-        exit;
+        return;
     }else if(NN == ""){
         alert("Please input nickname");
-        exit;
+        return;
     }else if(PN == ""){
         alert("Please input phone Number");
-        exit;
+        return;
     }
 
     if(pw != pwCK){
         alert("password and passwordCheck are not same");
-        exit;
+        return;
     }
     if(regex.test(em) === false) {  
     alert("Wrong E-mail format");
-    exit; 
+    return;
     }  
     alert("Register Success");
     window.location.href="loginpage";
@@ -58,24 +58,24 @@ function Scheckempty(){
 
     if(em == ""){
         alert("Please input E-mail");
-        exit;
+        return;
     }else if(pw == ""){
         alert("Please input Password");
-        exit;
+        return;
     }else if(pwCK == ""){
         alert("Please input PasswordCheck");
-        exit;
+        return;
     }else if(NN == ""){
         alert("Please input nickname");
-        exit;
+        return;
     }else if(PN == ""){
         alert("Please input phone Number");
-        exit;
+        return;
     }
     
     if(pw != pwCK){
         alert("password and passwordCheck are not same");
-        exit;
+        return;
     }
     alert("Please verify Kaist mail in 1 days");
     window.location.href="loginpage";
