@@ -43,9 +43,10 @@ function Rcheckempty(){
     if(regex.test(em) === false) {  
     alert("Wrong E-mail format");
     exit; 
-    }  
-    alert("Register Success");
-    window.location.href="loginpage";
+    } else {
+        alert("Register Success");
+        window.location.href="loginpage";
+    }
 
 }
 
