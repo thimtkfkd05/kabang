@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KABANG :: Room Register</title>
+    <link rel='stylesheet' href='/module/css/jquery-ui.min.css' />
+    <link rel='stylesheet' href='/module/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/module/font-awesome-4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/css/style.css' />
+    <style type = "text/css">
+      .img_wrap{
+        width: 300px;
+        margin-top: 50px;
+      }
+      .img_wrap img{
+        max-width: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="/module/js/jquery-1.12.4.min.js"></script>
+    <script src="/module/js/jquery-ui.min.js"></script>
+    <script src="/module/js/bootstrap.min.js"></script>
+    <script src="/js/script.js"></script>
+    <form>
+        <script>
+          var sel_files = [];
+
+          $(document).ready(funtion(){
+            $("#input_imgs").on("change",handleImgsFileSelelct);
+          });
+
+          function handleImgsFileSelelct(e) {
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+
+            filesArr.array.forEach(function(f){
+              if(!f.type.match("image.*")){
+                alret("only possible extension is img ");
+                return;
+              }
+
+              sel_files.push(f);
+
+              var reader = new FileReader();
+              reader.onload = function(e){
+                var img_html = "<img scr=\"" + e.target.result + "\" />";
+                $(".imgs_wrap").append(img_html);
+              }
+              reader.readAsDataURL(f);
+            });
+          }
+          </script>
+          <div>
+            <h2><b>다중이미지 미리 보기</b></h2>
+            <p class="title">다중이미지 업로드</p>
+            <input type = "file" id = "input_imgs" multiple />
+          </div>
+
+          <div>
+            <div class="imgs_wrap"></div>
+          </div>
+    </form>
+    </body>
+    </html>
+  
+
+
+
+  </body>
+</html>
