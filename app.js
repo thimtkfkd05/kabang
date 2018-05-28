@@ -71,6 +71,7 @@ app.get('/login', routes.loginpage);
 app.get('/registerRoomOwner', routes.registerRoomOwner);
 app.get('/registerStudent', routes.registerStudent);
 app.get('/map', routes.map);
+app.get('/roomlist', routes.getroom);
 
 app.post('/auth/login', routes.auth.login);
 app.post('/auth/logout', checker(), routes.auth.logout);
@@ -98,6 +99,7 @@ http.createServer(app).listen(app.get('port'), function(){
 
 
 // DB use example
+// var db = app.get('db'); // if db use in app.js, this line doesn't need
 // var user_db = db.collection('Users');
 // user_db.find({
 //   id: 'user_id_ex',

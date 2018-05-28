@@ -245,3 +245,17 @@ exports.auth.logout = function(req, res) {
   
   res.json(true);
 };
+
+exports.getroom = function(req, res){
+  var room_db = db.collection('Rooms');
+  // res.json(room_db.find());
+  room_db.find({}).toArray(function(find_err, find_res) {
+    if (find_err) {
+      res.json(null);
+    } else {
+      res.json({
+        result: find_res
+      });
+    }
+  });
+};
