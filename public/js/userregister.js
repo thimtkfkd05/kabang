@@ -42,18 +42,10 @@ function Rcheckempty(){
     }
     if(regex.test(em) === false) {  
     alert("Wrong E-mail format");
-<<<<<<< HEAD
     return;
     }  
     alert("Register Success");
     window.location.href="loginpage";
-=======
-    exit; 
-    } else {
-        alert("Register Success");
-        window.location.href="loginpage";
-    }
->>>>>>> cde05cdd687fd993ac63ed4daf1c7b3e43d17e1b
 
 }
 

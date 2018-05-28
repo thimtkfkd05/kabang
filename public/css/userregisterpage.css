@@ -27,7 +27,7 @@ body{
 }
 
 
-.btn2, .btn3{
+.form button{
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     outline: 0;
