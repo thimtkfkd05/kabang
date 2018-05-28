@@ -73,6 +73,7 @@ app.get('/registerStudent', routes.registerStudent);
 app.get('/map', routes.map);
 app.get('/roomlist', routes.getroom);
 app.get('/roomDetail', routes.roomDetail);
+app.get('/roomregister', routes.roomregister);
 
 app.post('/auth/login', routes.auth.login);
 app.post('/auth/logout', checker(), routes.auth.logout);

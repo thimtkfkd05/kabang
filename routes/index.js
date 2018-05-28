@@ -57,6 +57,10 @@ exports.roomDetail = function(req,res){
   res.render('roomDetail.html');
 };
 
+exports.roomregister = function(req,res){
+  res.render('roomregister.html');
+};
+
 exports.auth = function(req, res) {
   res.json(null);
 };
