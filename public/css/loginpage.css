@@ -1,5 +1,4 @@
 body{
-    background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6));
     height: 100vh;
     background-size: cover;
     background-position: center;
@@ -12,12 +11,14 @@ body{
 }
 
 .form{
+    
     position: relative;
     z-index: 1;
-    background: rgba(0, 40,195, 0.8);
+    background: rgba(0, 165,190, 0.9);
     max-width: 360px;
     margin: 0 auto 100px;
     padding: 45px;
+    background: rgba(0, 40,195, 0.8);
     text-align : center;
 }
 
@@ -55,7 +56,7 @@ body{
     font-size: 12px
 }
 .form .message a{
-    color: #4CAF50;
+    color: yellowgreen;
     text-decoration: none;
 }
 
