@@ -35,23 +35,27 @@ exports.index = function(req, res){
 
 exports.roomlist = function(req,res){
   res.render('roomlist.html');
-}
+};
 
 exports.loginpage = function(req,res){
   res.render('loginpage.html');
-}
+};
 
 exports.registerRoomOwner = function(req,res){
   res.render('registerRoomOwner.html');
-}
+};
 
 exports.registerStudent = function(req,res){
   res.render('registerStudent.html');
-}
+};
 
 exports.map = function(req,res){
   res.render('map.html');
-}
+};
+
+exports.roomDetail = function(req,res){
+  res.render('roomDetail.html');
+};
 
 exports.auth = function(req, res) {
   res.json(null);
