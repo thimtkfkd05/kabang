@@ -11,42 +11,56 @@
   </head>   
 
   <body>
+        <script src="/module/js/jquery-1.12.4.min.js"></script>
+        <script src="/module/js/jquery-ui.min.js"></script>
+        <script src="/module/js/bootstrap.min.js"></script>
+        <script src="/js/script.js"></script>
         <div class = "student-register">
           <div class = "form">
               <form class  = "register-form">
                   <table>
                       <tr><font  face = '궁서' color = 'yellow' size = '5' align = 'center'>Student Register<br></font></tr>
                         <tr>
+                        <div class = "form-group">
                           <td><label for="InputEmail"><font color = 'white'>E-mail</font></label></td>
                           <td><input type="text" class="form-control" id="EM"  placeholder="Email">
                             <font color = 'white'>@kaist.ac.kr<br>
                                 <font color = 'white' size = '1'>*E-mail address will be used as your ID
                                         <br>**We will send you Verification Mail to this KAIST e-mail address</font></font></td>
+                            </div>
                       </tr>
                       <tr>
+                          <div class = "form-group">
                           <td><label for="InputPassword"><font color = 'white'>Password</font></label></td>
                           <td><input type="password" class="form-control" id="pw"  placeholder="Password" onchange = "isSame()"></td>
+                          </div>
                           </tr>
                   <!-- <tr>
                       <td><font color = 'white'>Passwordcheck</font></td>
                   <td><input type = "password" placeholder = "password" name = "passwordcheck" id = "pwCheck" onchange ="isSame()"> -->
                     <tr>
+                        <div class = "form-group">
                         <td><label for="InputPasswordCheck"><font color = 'white'>Passwordcheck</font></label></td>
                         <td><input type="password" class="form-control" id="pwCheck"  placeholder="Passwordcheck" onchange = "isSame()">
                     <span id = "same"></span></td>
+                </div>
                 </tr>
                 <tr>
+                    <div class = "form-group">
                     <td><label for="InputNickname"><font color = 'white'>Nickname</font></label></td>
-                    <td><input type="text" class="form-control" id="NN"  placeholder="Nickname">
+                    <td><input type="text" class="form-control" id="NN"  placeholder="Nickname"></td>
+                    </div>
                 </tr>
                 <tr>
+                    <div class = "form-group">
                     <td><label for="InputPhoneNum"><font color = 'white'>PhoneNum</font></label></td>
-                    <td><input type="text" class="form-control" id="PN"  placeholder="PhoneNum">
+                    <td><input type="text" class="form-control" id="PN"  placeholder="PhoneNum"></td>
+                    </div>
                 </tr>
                 </table>
                   <br>
-                  <button type="submit" onclick="Scheckempty()" class="btn2">Send Verification</button>
-                  <button type="reset" onclick = "location.href='login'" class="btn3">Reset</button>
+                  <button type="submit" onclick="Scheckempty()" class="btn btn-primary">Send Verification</button>
+                  <button type="reset" onclick = "location.href='login'" class="btn btn-primary">Reset</button>
                   <p class="message">Already Registered? <a href="login">Log In</a> </p>
               </form> 
               
