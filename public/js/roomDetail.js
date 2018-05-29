@@ -6,10 +6,9 @@ $(document).ready(function(){
         ].join('');
     };
 
-    var room_img;
-    for(var i=1; i<=6; i++){
-        room_img = 'room_img.jpg';
-        var html = roomimg(room_img);
+    var room_img = ['room_img1', 'room_img2', 'room_img3', 'room_img4', 'room_img5','room_img6'];
+    for(var i=0; i<room_img.length; i++){
+        var html = roomimg(room_img[i]);
         $('div.room_img_btn').append(html);
     };
 
@@ -41,7 +40,12 @@ $(document).ready(function(){
     var roomstatus = 'Available';
     $('div.roomstatus').append(roomstatus);
 
-    var roomoption = 'wifi, fridge, bed';
-    $('div.roomoption').append(roomoption);
+    var roomoption = ["wifi", "fridge", "bed"];
+    for(var k=0; k<roomoption.length -1; k++){
+        var option = roomoption[k];
+        option += ', ';
+        $('div.roomoption').append(option);
+    }
+    $('div.roomoption').append(roomoption[roomoption.length -1]);
 
 });
