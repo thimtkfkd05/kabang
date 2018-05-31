@@ -1,5 +1,6 @@
 $(document).ready(function() {
-  $.get('/getroom', {}, function(res) {
+  var find_query = room_find_query || {};
+  $.get('/getroom', find_query, function(res) {
     var room_list = [];
     var roomNo = 0;
     if (res) {
