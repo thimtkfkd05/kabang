@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KABANG :: Room Register</title>
+    <link rel='stylesheet' href='/module/css/jquery-ui.min.css' />
+    <link rel='stylesheet' href='/module/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/module/font-awesome-4.7.0/css/font-awesome.min.css' />
+    <link rel='stylesheet' href='/css/style.css' />
+    <style type="text/css">
+
+      input[type=file] {
+          display: none;
+      }
+
+      .my_button {
+          display: inline-block;
+          width: 200px;
+          text-align: center;
+          padding: 10px;
+          background-color: #006BCC;
+          color: #fff;
+          text-decoration: none;
+          border-radius: 5px;
+      }
+
+
+
+      .imgs_wrap {
+
+          border: 2px solid #A8A8A8;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+
+      }
+      .imgs_wrap img {
+          max-width: 150px;
+          margin-left: 10px;
+          margin-right: 10px;
+      }
+
+  </style>
+    <style type = "text/css">
+      #map {
+        width: 100%;
+        height: 500px;
+        background-color: grey;
+      }
+    </style>
+  
+  </head>
+  <body>
+    <div>
+      <h2><b>Room Picture</b></h2>
+      <div class="input_wrap">
+          <input type="file" id="input_imgs" multiple/>
+          
+      </div>
+  </div>
+
+  <div>
+      <div class="imgs_wrap">
+          <img id="img" />
+      </div>
+  </div>
+
+  <a href="javascript:" onclick="fileUploadAction();" class="my_button">Upload file</a>
+
+          <form>
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="Deposit">Deposit</label>
+                <input type="text" class="form-control" id="deposit" placeholder="Deposit">
+              </div>
+              <div class="form-group col-md-6">  
+                <label for="Monthly">Monthly</label>
+                <input type="text" class="form-control" id="monthly" placeholder="Monthly">
+              </div>
+            </div>
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label for="Room type">Room type</label>
+                      <select id="roomtype" class="form-control">
+                        <option selected>Room type</option>
+                        <option value = "1">One-Room(반지하)</option>
+                        <option value = "2">One-Room(지상)</option>
+                        <option value = "3">Two-Room</option>
+                        <option value = "4">Three-Room</option>
+                      </select>
+                    </div>
+                      <div class="form-group col-md-6">
+                      <label for="Room type">Room status</label>
+                      <select id="roomstatus" class="form-control">
+                          <option selected>Room status</option>
+                          <option value = "1">Empty</option>
+                          <option value = "2">Will be empty</option>
+                          <option value = "3">Remodeling</option>
+                        </select>
+                      </div>
+                      </div>
+                      <div id="map"></div>
+                      <fieldset class="form-group">
+                          <div class="row">
+                            <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                            <div class="col-sm-10">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="washingmachine" id="washingmachine" value="washingmachine" >
+                                <label class="form-check-label" for="washingmachine">
+                                  Washing machine
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="Wifi" id="Wifi" value="Wifi">
+                                <label class="form-check-label" for="Wifi">
+                                  Wifi
+                                </label>
+                                </div>
+                                </div>
+                                <button id="add">추가</button>
+                                <div id = "dynamicCB"></div>
+                                </div>
+                                
+                                </fieldset>
+                                
+                                
+    
+                  <div class="form-group">
+                      <label for="Roomdescription">Room description</label>
+                      <textarea class="form-control" id="roomdescription" rows="7"></textarea>
+                    </div>
+    </form>
+    <script src="/module/js/jquery-1.12.4.min.js"></script>
+    <script src="/module/js/jquery-ui.min.js"></script>
+    <script src="/module/js/bootstrap.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script type='text/javascript' src='./js/jquery/jquery-1.11.0.min.js'></script>
+<script type="text/javascript"></script>
+    <script>
+      $(document).ready(function(){
+      $("#add").on("click", function(){
+        $("#dynamicCB").append("<br/><div class = 'form-check'><input class='form-check-input' type='radio' name= 'wifi' value ='Wifi'><label class = 'form-check-lable' for='wifi'>Wifi</label>")
+      })});
+      </script>
+
+       <script>
+          var sel_files = [];
+
+          $(document).ready(function(){
+            $("#input_imgs").on("change", handleImgsFileSelelct);
+          });
+          function fileUploadAction(){
+            console.log("fileUploadAction");
+            $("#input_imgs").trigger('click');
+          }
+
+          function handleImgsFileSelelct(e) {
+            sel_files = [];
+            $(".imgs_wrap").empty();
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+            
+            var index = 0;
+            filesArr.forEach(function(f){
+              if(!f.type.match("image.*")){
+                alret("only possible extension is img ");
+                return;
+              }
+
+              sel_files.push(f);
+
+              var reader = new FileReader();
+              reader.onload = function(e){
+                index++;
+              }
+              reader.readAsDataURL(f);
+            });
+          }
+        </script>
+          <script>
+              var marker;
+        
+              function initMap() {
+                var uluru = {lat: -25.363, lng: 131.044};
+                var image = {
+                  url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                };
+        
+                var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 15,
+                  center: uluru
+                });
+                
+                marker = new google.maps.Marker({
+                  map: map,
+                  draggable: true,
+                  animation: google.maps.Animation.DROP,
+                  position: uluru,
+                  title: 'uluru',
+                  icon: image
+                });
+                       
+                marker.addListener('click', toggleBounce); 
+                
+                var infoWindow = new google.maps.InfoWindow({map: map});
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                      lat: position.coords.latitude,
+                      lng: position.coords.longitude
+                    };
+        
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Location found. ');
+                    map.setCenter (pos);
+                    marker.setPosition (pos);
+                  }, function () {
+                    handleError (true, infoWindow, map.getCenter());
+                  });
+                } else {
+                  //Browser does not support Geo
+                  handleError (false, infoWindow, map.getCenter());
+                }
+        
+              }
+        
+              function handleError (hasGeo, infoWindow, pos) {
+                infoWindow.setPosition (pos);
+                infoWindow.setContent(hasGeo ? 'Error: Geo service failed.':'Error: browser not support geo');
+              }
+        
+              function toggleBounce() {
+                if (marker.getAnimation() !== null) {
+                  marker.setAnimation(null);
+                } else {
+                  marker.setAnimation(google.maps.Animation.BOUNCE);
+                }
+              }
+            </script>
+            <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsBQPgeFw1k9z4NL7dFePLS7LmVyZidME&callback=initMap">
+            </script>
+            <script>
+            
+            </script>
+            <script type="text/javascript" src="./js/jquery-3.1.0.min.js" charset="utf-8"></script>
+            <script type="text/javascript">
+        
+                // 이미지 정보들을 담을 배열
+                var sel_files = [];
+        
+        
+                $(document).ready(function() {
+                    $("#input_imgs").on("change", handleImgFileSelect);
+                }); 
+        
+                function fileUploadAction() {
+                    console.log("fileUploadAction");
+                    $("#input_imgs").trigger('click');
+                }
+        
+                function handleImgFileSelect(e) {
+        
+                    // 이미지 정보들을 초기화
+                    sel_files = [];
+                    $(".imgs_wrap").empty();
+        
+                    var files = e.target.files;
+                    var filesArr = Array.prototype.slice.call(files);
+        
+                    var index = 0;
+                    filesArr.forEach(function(f) {
+                        if(!f.type.match("image.*")) {
+                            alert("확장자는 이미지 확장자만 가능합니다.");
+                            return;
+                        }
+        
+                        sel_files.push(f);
+        
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+                            $(".imgs_wrap").append(html);
+                            index++;
+        
+                        }
+                        reader.readAsDataURL(f);
+                        
+                    });
+                }
+        
+        
+        
+                
+            </script>
+    
+    </body>
+    </html>
+

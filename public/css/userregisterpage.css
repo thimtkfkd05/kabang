@@ -27,7 +27,7 @@ body{
 }
 
 
-input[type= button], input[type = reset]{
+.form button{
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     outline: 0;
@@ -38,9 +38,6 @@ input[type= button], input[type = reset]{
     color: #ffffff;
     font-size: 14px;
     cursor: poiner;
-}
-input[type= button], input[type = reset]:hover ,input[type= button],input[type = reset]:active{
-    background: #43A047;
 }
 .form .message{
     margin: 15px 0 0;

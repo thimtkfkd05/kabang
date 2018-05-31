@@ -35,23 +35,30 @@ exports.index = function(req, res){
 
 exports.roomlist = function(req,res){
   res.render('roomlist.html');
-}
+};
 
 exports.loginpage = function(req,res){
   res.render('loginpage.html');
-}
+};
 
 exports.registerRoomOwner = function(req,res){
   res.render('registerRoomOwner.html');
-}
+};
 
 exports.registerStudent = function(req,res){
   res.render('registerStudent.html');
-}
+};
 
 exports.searchPage = function(req,res){
   res.render('searchpage.html');
 }
+exports.roomDetail = function(req,res){
+  res.render('roomDetail.html');
+};
+
+exports.roomregister = function(req,res){
+  res.render('roomregister.html');
+};
 
 exports.auth = function(req, res) {
   res.json(null);
@@ -244,4 +251,18 @@ exports.auth.logout = function(req, res) {
   delete req.session.user_type;
   
   res.json(true);
+};
+
+exports.getroom = function(req, res){
+  var room_db = db.collection('Rooms');
+  // res.json(room_db.find());
+  room_db.find({}).toArray(function(find_err, find_res) {
+    if (find_err) {
+      res.json(null);
+    } else {
+      res.json({
+        result: find_res
+      });
+    }
+  });
 };
