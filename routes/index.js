@@ -49,8 +49,8 @@ exports.registerStudent = function(req,res){
   res.render('registerStudent.html');
 }
 
-exports.map = function(req,res){
-  res.render('map.html');
+exports.searchPage = function(req,res){
+  res.render('searchpage.html');
 }
 
 exports.auth = function(req, res) {
