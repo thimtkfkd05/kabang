@@ -13,11 +13,11 @@ $(document).ready(function() {
     } else if (roomNo == 1) {
       $('div.row_adder').append(
         roomcard(
-          '#',
+          '/roomDetail',
           room_list[0].location,
           room_list[0].picture,
           room_list[0].deposit+'/'+room_list[0].monthly,
-          room_list[o].type
+          room_list[0].type
         )
       );
     } else {
@@ -25,7 +25,7 @@ $(document).ready(function() {
         var html = '<div class="row">';
         for (var j = 0; j < 2; j++){
           html += roomcard(
-            '#', 
+            '/roomDetail', 
             room_list[2*i+j].location,
             room_list[2*i+j].picture,
             room_list[2*i+j].deposit+'/'+room_list[2*i+j].monthly,

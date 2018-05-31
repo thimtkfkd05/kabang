@@ -286,7 +286,7 @@ exports.getroom = function(req, res){
 exports.detailRoom = function(req,res){
   var room_db = db.collection('Rooms');
   room_db.findOne({
-    //specific condition
+    'room_id': 'abcde'
   }, function(find_err, find_res){
     if(find_err){res.json(null);}
     else{
