@@ -255,14 +255,28 @@ exports.auth.logout = function(req, res) {
 
 exports.getroom = function(req, res){
   var room_db = db.collection('Rooms');
-  // res.json(room_db.find());
-  room_db.find({}).toArray(function(find_err, find_res) {
+  
+  room_db.find({
+    //specific condition
+  }).toArray(function(find_err, find_res) {
     if (find_err) {
       res.json(null);
     } else {
       res.json({
         result: find_res
       });
+    }
+  });
+};
+
+exports.detailRoom = function(req,res){
+  var room_db = db.collection('Rooms');
+  room_db.findOne({
+    //specific condition
+  }, function(find_err, find_res){
+    if(find_err){res.json(null);}
+    else{
+      res.json({result: find_res});
     }
   });
 };
