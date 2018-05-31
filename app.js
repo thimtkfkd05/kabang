@@ -77,6 +77,7 @@ app.get('/roomDetail', routes.roomDetail);
 app.get('/roomregister', routes.roomregister);
 app.get('/detailROom', routes.detailRoom);
 
+app.get('/mypage', /* checker(),*/ routes.mypage);
 app.post('/auth/login', routes.auth.login);
 app.post('/auth/logout', checker(), routes.auth.logout);
 app.post('/auth/signup', routes.auth.signup);

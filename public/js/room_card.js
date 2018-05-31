@@ -9,7 +9,7 @@ var roomcard = function(ref, loc, img, pri, typ) {
           '</div>',
           '<div class="card-footer">',
             '<div class="row">',
-              '<div class="col-6">',pri,'</div>',
+              '<div class="col-6">(deposit/monthly)',pri,'</div>',
               '<div class="col-6">',typ,'</div>',
             '</div>',
           '</div>',

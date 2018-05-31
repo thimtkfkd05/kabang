@@ -60,6 +60,16 @@ exports.roomregister = function(req,res){
   res.render('roomregister.html');
 };
 
+exports.mypage = function(req, res) {
+  if (req.session.type == 'room_owner') {
+    res.render('mypage.roomOwner.html');
+  } else if (req.session.type == 'student') {
+    res.render('mypage.student.html');
+  } else {
+    // res.redirect('/login');
+    res.render('mypage.roomOwner.html');
+  }
+}
 exports.auth = function(req, res) {
   res.json(null);
 };
@@ -255,10 +265,14 @@ exports.auth.logout = function(req, res) {
 
 exports.getroom = function(req, res){
   var room_db = db.collection('Rooms');
-  
-  room_db.find({
-    //specific condition
-  }).toArray(function(find_err, find_res) {
+  // res.json(room_db.find());
+  var find_query = {};
+  if (req.body) {
+    Object.keys(req.body).map(function(key) {
+      find_query[key] = req.body[key];
+    });
+  }
+  room_db.find(find_query).toArray(function(find_err, find_res) {
     if (find_err) {
       res.json(null);
     } else {
