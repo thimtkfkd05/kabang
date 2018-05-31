@@ -24,21 +24,25 @@ var roomcard = function(ref, loc, img, pri, typ) {
 };
 
 var roomNo = 7
-
+var room_list = []
 $.get('/roomlist', {}, function(res) {
   if (res) {
-    var room_list = res.result;
+    room_list = res.result;
   }
 })
 
-for (var i = 0; i < roomNo/2 ; i++) {
-  var html = '<div class="row">';
-  for (var j = 0; j < 2; j++){
-    html += roomcard('#', 'Location', 'img.jpg', 'Price', 'Type');
-    if(roomNo%2==1 && i > roomNo/2 -1){ break; }
+if(room_list.length == 0){ $('div.row_adder').append('<p>Result Not Found</p>') }
+else if(room_list.length == 1){ $('div.row_adder').append(roomcard('#','Location','img.jpg','Price','Type')) }
+else{
+  for (var i = 0; i < roomNo/2 ; i++) {
+    var html = '<div class="row">';
+    for (var j = 0; j < 2; j++){
+      html += roomcard('#', 'Location', 'img.jpg', 'Price', 'Type');
+      if(roomNo%2==1 && i > roomNo/2 -1){ break; }
+    }
+    html += '</div>';
+    $('div.row_adder').append(html);
   }
-  html += '</div>';
-  $('div.row_adder').append(html);
 }
 
 });
