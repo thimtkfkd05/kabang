@@ -14,9 +14,9 @@
       </li>
       <li class="nav-item">
         <% if (index == 1) { %>
-        <a class="nav-link active" href="/search"><i class="fa fa-sticky-note"></i> Room Search</a>
+        <a class="nav-link active" href="/search"><i class="fa fa-search"></i> Room Search</a>
         <% } else { %>
-        <a class="nav-link" href="/search"><i class="fa fa-sticky-note"></i> Room Search</a>
+        <a class="nav-link" href="/search"><i class="fa fa-search"></i> Room Search</a>
         <% } %>
       </li>
       <% } else { %>
@@ -29,9 +29,9 @@
       </li>
       <li class="nav-item">
         <% if (index == 1) { %>
-        <a class="nav-link active" href="/room_register"><i class="fa fa-sticky-note"></i> Room Register</a>
+        <a class="nav-link active" href="/room_register"><i class="fa fa-search"></i> Room Register</a>
         <% } else { %>
-        <a class="nav-link" href="/room_register"><i class="fa fa-sticky-note"></i> Room Register</a>
+        <a class="nav-link" href="/room_register"><i class="fa fa-search"></i> Room Register</a>
         <% } %>
       </li>
       <% } %>
@@ -39,7 +39,7 @@
   </div>
   <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
     <li class="nav-item">
-        <a class="nav-link btn-logout" href="#">
+        <a class="nav-link btn-logout" tabindex="-1">
         <i class="fa fa-user-o" aria-hidden="true"></i> Logout
       </a>
     </li>
