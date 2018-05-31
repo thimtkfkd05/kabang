@@ -1,0 +1,26 @@
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+#room_price {
+    margin-top: 50px
+}
+
+#map {
+    width: 60%;
+    height: 400px;
+    background-color: grey;
+    position: static;
+    left: 20%;
+    margin-top: 50px;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+}
+
+#buttons button{
+    margin : 50px 20px 20px 20px
+}

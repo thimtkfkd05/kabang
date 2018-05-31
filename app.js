@@ -70,8 +70,13 @@ app.get('/roomlist', routes.roomlist);
 app.get('/login', routes.loginpage);
 app.get('/registerRoomOwner', routes.registerRoomOwner);
 app.get('/registerStudent', routes.registerStudent);
+<<<<<<< HEAD
 app.get('/map', routes.map);
 app.get('/getroom', routes.getroom);
+=======
+app.get('/search', routes.searchPage);
+app.get('/roomlist', routes.getroom);
+>>>>>>> 9f06ecb8980b4b5dfa11157283a30657097b435c
 app.get('/roomDetail', routes.roomDetail);
 app.get('/roomregister', routes.roomregister);
 
