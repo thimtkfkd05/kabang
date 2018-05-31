@@ -79,6 +79,7 @@ app.post('/auth/login', routes.auth.login);
 app.post('/auth/logout', checker(), routes.auth.logout);
 app.post('/auth/signup', routes.auth.signup);
 app.post('/auth/send_verification', routes.auth.send_verification);
+app.post('/searchRoom', routes.searchroom);
 app.get('/auth/accept_verification', routes.auth.accept_verification);
 
 function connectDB() {
