@@ -6,7 +6,8 @@ const roomSchema = new Schema(
       room_id: { type: String, required: true, unique: true},
       picture: { type: Array, required : true},
       location: {type : Object, required : true},
-      price: { type : Number, required : true},
+      deposit: { type : Number, required : true},
+      monthly: {type : Number, required: true},
       option: { type : Array, required : true},
       description: {type : String, required : true},
       owner : {type : String, required : true},
@@ -14,6 +15,7 @@ const roomSchema = new Schema(
       status: {type : String, required : true},
       comments: {type: Array},
       request_list : {type : Array},
+      type : {type : String, required : true}
   },
   {
       collection: 'Rooms'
