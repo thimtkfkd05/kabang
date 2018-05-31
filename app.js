@@ -70,8 +70,9 @@ app.get('/roomlist', routes.roomlist);
 app.get('/login', routes.loginpage);
 app.get('/registerRoomOwner', routes.registerRoomOwner);
 app.get('/registerStudent', routes.registerStudent);
+app.get('/map', routes.map);
+app.get('/getroom', routes.getroom);
 app.get('/search', routes.searchPage);
-app.get('/roomlist', routes.getroom);
 app.get('/roomDetail', routes.roomDetail);
 app.get('/roomregister', routes.roomregister);
 
