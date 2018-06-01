@@ -6,7 +6,7 @@ $(document).ready(function(){
 
         var roomimg = function(img) {
             return [
-                '<img id="subimg" src="',img,'" class="img-thumbnail" alt="etc img" style="width: 100px; height: 100px; object-fit: contain;" onclick="changeimg()">',   
+                '<img id="subimg" src="',img,'" class="img-thumbnail" alt="etc img" style="width: 100px; height: 100px; object-fit: contain;">',   
             ].join('');
         };
 
@@ -50,4 +50,8 @@ $(document).ready(function(){
 
     })
 
+});
+
+$(document).on('click', '.img-thumbnail', function() {
+	$('#img').attr('src', $(this).attr('src'));
 });
