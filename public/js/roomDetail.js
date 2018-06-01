@@ -15,7 +15,7 @@ $(document).ready(function(){
             var html = roomimg(room_img[i]);
             $('div.room_img_btn').append(html);
         };
-
+    
         var comment = room_info.comments;
         for(var j=0; j<comment.length; j++){
             var comm = comment[j];

@@ -27,17 +27,18 @@
 
   <div class="row">
     <div class="col-6">
-        <script>
-          var changeimg = function(){
-            document.getElementById("img").src = this.src;
-          };
-          
-        </script>
+        
       <div class="row">
           <img id="img" style="margin-left: auto; margin-right: auto; display: block; width: 300px; height: 300px; object-fit: container;" src="" class="img-thumbnail" alt="room img">
       </div>
       <div class="room_img_btn"></div>
     </div>
+    <script>
+        var changeimg = function(){
+          console.log($(this).src);
+          document.getElementById("img").src = this.src;
+        };
+    </script>
     <div class="col-1"></div>
     <div class="col-5">
         <div class="row"> 
