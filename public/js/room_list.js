@@ -15,8 +15,8 @@ $(document).ready(function() {
         roomcard(
           '/roomDetail',
           room_list[0].location,
-          room_list[0].picture,
-          room_list[0].deposit+'/'+room_list[0].monthly,
+          room_list[0].picture[0],
+          room_list[0].deposit+', '+room_list[0].monthly+'/month',
           room_list[0].type
         )
       );
@@ -27,8 +27,8 @@ $(document).ready(function() {
           html += roomcard(
             '/roomDetail', 
             room_list[2*i+j].location,
-            room_list[2*i+j].picture,
-            room_list[2*i+j].deposit+'/'+room_list[2*i+j].monthly,
+            room_list[2*i+j].picture[0],
+            room_list[2*i+j].deposit+', '+room_list[2*i+j].monthly+'/month',
             room_list[2*i+j].type
           );
           if(roomNo%2==1 && i > roomNo/2 -1){ break; }

@@ -3,11 +3,10 @@ $(document).ready(function(){
     $.get('/detailRoom',{},function(res){
 
         var room_info = res.result;
-        
 
         var roomimg = function(img) {
             return [
-                '<img src="',img,'" class="img-thumbnail" alt="etc img" width="50" height="50" onclick="changeimg()">',   
+                '<img id="subimg" src="',img,'" class="img-thumbnail" alt="etc img" style="width: 100px; height: 100px; object-fit: contain;" onclick="changeimg()">',   
             ].join('');
         };
 
