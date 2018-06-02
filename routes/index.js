@@ -266,3 +266,19 @@ exports.getroom = function(req, res){
     }
   });
 };
+
+exports.searchroom = function (req, res){
+  
+  var room_db = db.collection('Rooms');
+  
+  var room_type = req.body.room_type;
+  var lat = req.body.lat;
+  var lng = req.body.lng;
+  var room_price_d_min = req.body.room_price_d_min;
+  var room_price_d_max = req.body.room_price_d_max;
+  var room_price_m_min = req.body.room_price_m_min;
+  var room_price_m_max = req.body.room_price_m_max;
+
+  db.find
+  
+};
