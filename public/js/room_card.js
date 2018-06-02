@@ -5,7 +5,7 @@ var roomcard = function(ref, loc, img, pri, typ) {
         '<div class="card">',
           '<div class="card-header">',loc,'</div>',
           '<div class="card-body">',
-            '<img class="card-img-top" src="',img,'" alt="Card image">',
+            '<img class="card-img-top" style="width: 300px; height: 300px; object-fit: container;" src="',img,'" alt="Card image">',
           '</div>',
           '<div class="card-footer">',
             '<div class="row">',
