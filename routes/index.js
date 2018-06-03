@@ -131,7 +131,6 @@ exports.roomDetail = function(req,res){
                         });
                         return _request;
                       });
-                      console.log(request_res);
                       find_res['request_list'] = request_res;
                       res.render('roomDetail.html', find_res);
                     }

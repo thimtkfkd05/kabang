@@ -20,19 +20,22 @@
       "email" : "abc001@kaist.ac.kr",
       "password" : "YWJjMTIz",
       "is_verified" : true,
-      "type" : "student"
+      "type" : "student",
+      "contact": "01012345678"
     },{
       "id" : "abc002_cCCXP2OPYv3bS",
       "email" : "abc002@kaist.ac.kr",
       "password" : "YWJjMTIz",
       "is_verified" : true,
-      "type" : "student"
+      "type" : "student",
+      "contact": "01098765432"
     },{
       "id" : "abc003_cCCXP2OPYv4bS",
       "email" : "abc002@kaist.ac.kr",
       "password" : "YWJjMTIz",
       "is_verified" : true,
-      "type" : "student"
+      "type" : "student",
+      "contact": "01031425364"
     }
   ],
   "room_db": [
