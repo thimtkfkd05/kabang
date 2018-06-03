@@ -309,28 +309,31 @@ exports.register_room = function(req, res){
   var room_date = req.body.enrolled_date
   var room_description = req.body.description;
   var room_option = req.body.option;
+  var room_location = req.body.location;
   
   
     var room_obj = {
       room_id: make_random_string(13),
       picture: room_picture,
-      deposit: room_deposit,
-      monthly: room_monthly,
+      deposit: Number(room_deposit),
+      monthly: Number(room_monthly),
       type: room_type,
       status: room_status,
-      // location: room_location,
+      location: room_location,
       description: room_description,
       option: room_option,
       enrolled_date: room_date
     };
     room_db.save(room_obj, function(save_err, save_res) {
       if(save_err) {
+        console.log("fail!!");
         res.json({
           result: false,
           err: save_err
           
+          
         });
-        console.log("fail!!");
+
       }else{
         res.json({
           result: true,

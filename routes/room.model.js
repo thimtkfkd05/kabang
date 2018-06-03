@@ -5,7 +5,7 @@ const roomSchema = new Schema(
   {
       room_id: { type: String, required: true, unique: true},
       picture: { type: Array, required : true},
-      location: {type : Object, required : true},
+      location: {lat: Number, lng : Number, required : true},
       deposit: { type : Number, required : true},
       monthly: {type : Number, required: true},
       option: { type : Array, required : true},
