@@ -169,7 +169,7 @@ exports.roomregister = function(req,res){
       if(find_err){
         res.redirect("/mypage");
       }else{
-        res.render("roomupdate.html");
+        res.render("roomupdate.html", find_res);
       }
     });
   }else{
