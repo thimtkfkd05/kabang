@@ -534,6 +534,33 @@ exports.register_room = function(req, res){
   
   }
 
+exports.delete_room = function(req, res) {
+  var room_db = db.collection('Rooms');
+  var room_id = req.body.room_id;
+
+  room_db.findOne({
+    room_id: room_id
+  }, {
+    owner: 1
+  }, function(find_err, find_res) {
+    if (find_err || !find_res) {
+      res.json(false);
+    } else if (req.session.user_id !== find_res.owner) {
+      res.json(false);
+    } else {
+      room_db.remove({
+        room_id: room_id
+      }, function(remove_err, remove_res) {
+        if (remove_err || !remove_res) {
+          res.json(false);
+        } else {
+          res.json(true);
+        }
+      });
+    }
+  });
+};
+
 exports.saveComment = function(req, res) {
   var comment_db = db.collection('Comments');
   var user_id = req.session.user_id;
