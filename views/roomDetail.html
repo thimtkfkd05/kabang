@@ -40,7 +40,7 @@
               </div>
             <% } %>
           </div>
-          <% } else { %>
+          <% } else if (user_type != 'student') { %>
           <button id="send_request" class="btn btn-block btn-primary">Send Request</button>
           <% } %>
         </div>
