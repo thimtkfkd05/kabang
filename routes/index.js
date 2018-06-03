@@ -53,7 +53,31 @@ exports.searchPage = function(req,res){
   res.render('searchpage.html');
 }
 exports.roomDetail = function(req,res){
-  res.render('roomDetail.html');
+  var room_db = db.collection('Rooms');
+  if (req.query.type && req.query.room_id) {
+    room_db.findOne({
+      'room_id': req.query.room_id
+    }, function(find_err, find_res) {
+      if(find_err){
+        res.redirect('/mypage');
+      }
+      else{
+        console.log(find_res);
+        res.render('roomDetail.html', find_res);
+      }
+    });
+  } else {
+    room_db.findOne({
+      'room_id': 'room0'
+    }, function(find_err, find_res){
+      if(find_err){
+        res.redirect('/mypage');
+      }
+      else{
+        res.render('roomDetail.html', find_res);
+      }
+    });
+  }
 };
 
 exports.roomregister = function(req,res){
@@ -218,19 +242,18 @@ exports.auth.login = function(req, res) {
   var user_db = db.collection('Users');
   var email = req.body.email;
   var password = req.body.password;
-  console.log('??', email, password);
 
   if (email && password) {
     var find_query = {
       email: email,
-      password: new Buffer(password, 'base64').toString()
+      password: password
     };
-    console.log(find_query.password);
     user_db.findOne(find_query, {
       id: 1,
       type: 1,
       is_verified: 1
     }, function(find_err, find_res) {
+      console.log(find_err, find_res);
       if (find_err || !find_res) {
         res.json({
           result: false,
@@ -321,28 +344,31 @@ exports.register_room = function(req, res){
   var room_date = req.body.enrolled_date
   var room_description = req.body.description;
   var room_option = req.body.option;
+  var room_location = req.body.location;
   
   
     var room_obj = {
       room_id: make_random_string(13),
       picture: room_picture,
-      deposit: room_deposit,
-      monthly: room_monthly,
+      deposit: Number(room_deposit),
+      monthly: Number(room_monthly),
       type: room_type,
       status: room_status,
-      // location: room_location,
+      location: room_location,
       description: room_description,
       option: room_option,
       enrolled_date: room_date
     };
     room_db.save(room_obj, function(save_err, save_res) {
       if(save_err) {
+        console.log("fail!!");
         res.json({
           result: false,
           err: save_err
           
+          
         });
-        console.log("fail!!");
+
       }else{
         res.json({
           result: true,
