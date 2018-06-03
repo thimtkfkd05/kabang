@@ -42,7 +42,7 @@ function initMap() {
 //     handleError (false, infoWindow, map.getCenter());
 //     }
 
-// }
+}
 
 function handleError (hasGeo, infoWindow, pos) {
     infoWindow.setPosition (pos);
@@ -122,5 +122,5 @@ $(document).ready(function(){
 });
 
 $(document).on('click', '.img-thumbnail', function() {
-	$('#img').attr('src', $(this).attr('src'));
+    $('#img').attr('src', $(this).attr('src'));
 });

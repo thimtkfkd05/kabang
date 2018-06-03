@@ -63,8 +63,15 @@
           <p>Comments</p> 
           <div class="comment">
             <div class="comment_text">
-              <% for (var j = 0; j < comments.length; j++) { %>
-                <%= comments[j].content %><br /><br />
+              <% if (user_type == 'student') { %>
+                <div class="form-group">
+                  <label for="write_comment">Comment</label>
+                  <textarea class="form-control" id="write_comment" rows="3"></textarea>
+                </div>
+              <% } else { %>
+                <% for (var j = 0; j < comments.length; j++) { %>
+                  <%= comments[j].content %><br /><br />
+                <% } %>
               <% } %>
             </div>
           </div>
