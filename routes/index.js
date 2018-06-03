@@ -82,34 +82,32 @@ exports.roomDetail = function(req,res){
                 if (request_err) {
                   res.redirect('/mypage');
                 } else {
-                  var stars = '';
-                  if (comment_res && comment_res.length) {
-                    var star_rating = 0;
-                    comment_res.map(function(comment) {
-                      star_rating += comment.star_rating;
-                    });
-                    star_rating /= comment_res.length;
-                    var star_rating_floor = Math.floor(star_rating);
-                    var star_rating_round = Math.round(star_rating);
-                    for (var m = 0; m < star_rating_floor; m++) {
-                      stars += '<i class="fa fa-star"></i>';
+                  var user_db = db.collection('Users');
+                  var user_id_list = request_res.map(function(request) {
+                    return request.requested_user_id;
+                  });
+                  user_db.find({
+                    id: {$in: user_id_list}
+                  }, {
+                    id: 1,
+                    name: 1
+                  }).toArray(function(user_err, user_res) {
+                    if (user_err) {
+                      res.redirect('/mypage');
+                    } else {
+                      request_res.map(function(_request) {
+                        user_res.some(function(user) {
+                          if (user.id == _request.requested_user_id) {
+                            _request['requested_user_name'] = user.name;
+                            return true;
+                          }
+                        });
+                        return _request;
+                      });
+                      find_res['request_list'] = request_res;
+                      res.render('roomDetail.html', find_res);
                     }
-                    if (star_rating_floor < star_rating_round) {
-                      stars += '<i class="fa fa-star-half-o"></i>';
-                    }
-                    for (var n = 5; n > star_rating_round; n--) {
-                      stars += '<i class="fa fa-star-o"></i>';
-                    }
-                  } else {
-                    for (var m = 0; m < 5; m++) {
-                      stars += '<i class="fa fa-star-o"></i>';
-                    }
-                  }
-                  find_res['request_list'] = request_res;
-                  find_res['comments'] = comment_res;
-                  find_res['stars'] = stars;
-                  find_res['user_type'] = req.query.type;
-                  res.render('roomDetail.html', find_res);
+                  });
                 }
               });
             } else {
@@ -169,7 +167,7 @@ exports.auth.send_verification = function(req, res) {
           err: 'not_signup'
         });
       } else {
-        var verify_code = new Buffer(user_id + '_' + new Date().getTime() + '_' + make_random_string(13)).toString('base64');
+        var verify_code = new Buffer(user_id + '-' + new Date().getTime() + '_' + make_random_string(13)).toString('base64');
         user_db.update({
           id: user_id,
           email: user_email,
@@ -229,7 +227,7 @@ exports.auth.accept_verification = function(req, res) {
   
   if (before_verify_code) {
     var verify_code = new Buffer(before_verify_code, 'base64').toString();
-    var user_id = verify_code.substring(0, verify_code.indexOf('_'));
+    var user_id = verify_code.substring(0, verify_code.indexOf('-'));
     user_db.update({
       id: user_id,
       type: 'student',
@@ -555,9 +553,39 @@ exports.controlRequest = function(req, res) {
         result: false
       });
     } else {
-      res.json({
-        result: true
-      });
+      if (status == 'accept') {
+        request_db.findOne({
+          request_id: request_id
+        }, {
+          requested_user_id: 1
+        }, function(request_err, request_res) {
+          if (request_err || !request_res) {
+            res.json({
+              err: request_err,
+              result: false
+            });
+          } else {
+            var user_db = db.collection('Users');
+            user_db.findOne({
+              id: request_res.requested_user_id
+            }, {
+              contact: 1
+            }, function(user_err, user_res) {
+              if (user_err || !user_res) {
+                res.json({
+                  err: user_err,
+                  result: false
+                });
+              } else {
+                res.json({
+                  result: true,
+                  contact: user_res.contact
+                });
+              }
+            });
+          }
+        });
+      }
     }
   });
 };
