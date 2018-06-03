@@ -51,7 +51,7 @@ $(document).ready(function() {
             room_list[2*i+j].room_id, 
             room_list[2*i+j].address,
             room_list[2*i+j].picture[0],
-            room_list[2*i+j].deposit+', '+room_list[2*i+j].monthly+'/month',
+            room_list[2*i+j].deposit+'만원, '+room_list[2*i+j].monthly+'만원/월',
             room_list[2*i+j].type
           );
           if(roomNo%2==1 && i > roomNo/2 -1){ break; }

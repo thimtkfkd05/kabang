@@ -74,6 +74,33 @@ exports.roomDetail = function(req,res){
           if (comment_err) {
             res.redirect('/mypage');
           } else {
+            var stars = '';
+            if (comment_res && comment_res.length) {
+              var star_rating = 0;
+              comment_res.map(function(comment) {
+                star_rating += comment.star_rating;
+              });
+              star_rating /= comment_res.length;
+              var star_rating_floor = Math.floor(star_rating);
+              var star_rating_round = Math.round(star_rating);
+              for (var m = 0; m < star_rating_floor; m++) {
+                stars += '<i class="fa fa-star"></i>';
+              }
+              if (star_rating_floor < star_rating_round) {
+                stars += '<i class="fa fa-star-half-o"></i>';
+              }
+              for (var n = 5; n > star_rating_round; n--) {
+                stars += '<i class="fa fa-star-o"></i>';
+              }
+            } else {
+              for (var m = 0; m < 5; m++) {
+                stars += '<i class="fa fa-star-o"></i>';
+              }
+            }
+            find_res['comments'] = comment_res;
+            find_res['stars'] = stars;
+            find_res['user_type'] = req.query.type;
+            
             if (req.query.type == 'room_owner') {
               var request_db = db.collection('Requests');
               request_db.find({
@@ -82,33 +109,7 @@ exports.roomDetail = function(req,res){
                 if (request_err) {
                   res.redirect('/mypage');
                 } else {
-                  var stars = '';
-                  if (comment_res && comment_res.length) {
-                    var star_rating = 0;
-                    comment_res.map(function(comment) {
-                      star_rating += comment.star_rating;
-                    });
-                    star_rating /= comment_res.length;
-                    var star_rating_floor = Math.floor(star_rating);
-                    var star_rating_round = Math.round(star_rating);
-                    for (var m = 0; m < star_rating_floor; m++) {
-                      stars += '<i class="fa fa-star"></i>';
-                    }
-                    if (star_rating_floor < star_rating_round) {
-                      stars += '<i class="fa fa-star-half-o"></i>';
-                    }
-                    for (var n = 5; n > star_rating_round; n--) {
-                      stars += '<i class="fa fa-star-o"></i>';
-                    }
-                  } else {
-                    for (var m = 0; m < 5; m++) {
-                      stars += '<i class="fa fa-star-o"></i>';
-                    }
-                  }
                   find_res['request_list'] = request_res;
-                  find_res['comments'] = comment_res;
-                  find_res['stars'] = stars;
-                  find_res['user_type'] = req.query.type;
                   res.render('roomDetail.html', find_res);
                 }
               });
