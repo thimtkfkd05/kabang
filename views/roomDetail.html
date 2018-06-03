@@ -10,36 +10,19 @@
   <link rel='stylesheet' href='/css/roomdetail.css' />
 </head>
 <body>
-<<<<<<< HEAD
-<%- include("./navbar.ejs", {"type": "student", "index": 0}) %>
-<div class="container">
-  <h2>Room Detail</h2>
-
-  <div class="row">
-    <div class="col-6">
-        
-      <div class="row">
-        <img id="img" style="margin-left: auto; margin-right: auto; display: block; width: 300px; height: 300px; object-fit: container;" src="<%= picture[0] %>" class="img-thumbnail" alt="room img">
-      </div>
-      <div class="room_img_btn">
-        <% for (var i = 0; i < picture.length; i++) { %>
-        <img id="subimg" src="<%= picture[i] %>" class="img-thumbnail" alt="etc img" style="width: 100px; height: 100px; object-fit: contain;">
-        <% } %>
-=======
   <%- include("./navbar.ejs", {"type": "student", "index": 0}) %>
   <div class="container">
     <h2>Room Detail</h2>
     <div class="row">
       <div class="col-6">
         <div class="row">
-          <img id="img" src="" class="img-thumbnail" alt="room img">
+          <img id="img" src="<%= picture[0] %>" class="img-thumbnail" alt="room img">
         </div>
         <div class="room_img_btn">
           <% for (var i = 0; i < picture.length; i++) { %>
           <img class="subimg" src="<%= picture[i] %>" class="img-thumbnail" alt="etc img">
           <% } %>
         </div>
->>>>>>> b2f9c75efcaf22efc5e11311d787928e95d2a7ef
       </div>
       <div class="col-1"></div>
       <div class="col-5">
@@ -80,7 +63,7 @@
           <div class="comment">
             <div class="comment_text">
               <% for (var j = 0; j < comments.length; j++) { %>
-                <%= comments[j] %><br /><br />
+                <%= comments[j].content %><br /><br />
               <% } %>
             </div>
           </div>

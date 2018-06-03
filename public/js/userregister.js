@@ -45,7 +45,19 @@ function Rcheckempty(){
         return;
     } else {
         alert("Register Success");
-        window.location.href="loginpage";
+        $.post('/auth/signup', {
+            email: em,
+            password: pw,
+            name: NN,
+            type: 'room_owner'
+        }, function(signup_result) {
+            if (signup_result.err || !signup_result.result) {
+                alert("Register Failed. Try Again.");
+            } else {
+                alert("Register Success");
+                window.location.href="/login";
+            }
+        });
     }
 }
 
