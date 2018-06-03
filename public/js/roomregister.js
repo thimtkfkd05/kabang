@@ -133,16 +133,13 @@ $(document).ready(function() {
     lng : myMarker.getPosition().lng(),
   }
 
-  console.log ('1', location_obj);
   var geocoder = new google.maps.Geocoder;
-  console.log(geocoder);
   geocoder.geocode ({'location': location_obj}, function (results, status){
-    console.log ('2');
+
     if (status == 'OK') {
 
       console.log ('ok');
       if (results[1]) {
-        
         $.post('/register_room',{
           address : results[1].formatted_address,
           deposit : $('#deposit').val(),
