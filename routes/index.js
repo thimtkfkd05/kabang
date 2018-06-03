@@ -283,21 +283,63 @@ exports.getroom = function(req, res){
   });
 };
 
+//code for replying room search 
 exports.searchroom = function (req, res){
   
   var room_db = db.collection('Rooms');
   
   var room_type = req.body.room_type;
-  var lat = req.body.lat;
-  var lng = req.body.lng;
-  var room_price_d_min = req.body.room_price_d_min;
-  var room_price_d_max = req.body.room_price_d_max;
-  var room_price_m_min = req.body.room_price_m_min;
-  var room_price_m_max = req.body.room_price_m_max;
+  var lat = parseFloat (req.body.lat);
+  var lng = parseFloat (req.body.lng);
+  const room_price_d_min = parseInt (req.body.room_price_d_min);
+  const room_price_d_max = parseInt (req.body.room_price_d_max);
+  const room_price_m_min = parseInt (req.body.room_price_m_min);
+  const room_price_m_max = parseInt (req.body.room_price_m_max);
 
-  db.find
+  /*
+  room_db.remove ( {type : 'one-room-1'}, 
+    function (re_err, re_res){
+      
+      if (re_err)
+        throw re_err;
+
+      console.log(re_res);
+    });
+  */
   
+  /*
+  room_db.insert( {type: room_type,
+    deposit: 15, monthly: 15,
+    location: {lat: lat, lng: lng}}, 
+    function (in_err, in_res) {
+      
+      if (in_err)
+        throw in_err;
+      
+      console.log (in_res);
+ 
+  });  */
+
+  //console.log(lat + " "+ lng);
+  var d = 0.0035;
+
+  room_db.find({
+    type: room_type, 
+    deposit: { $gt: room_price_d_min, $lt: room_price_d_max},
+    monthly: { $gt: room_price_m_min, $lt: room_price_m_max},
+    'location.lat': { $gt: lat - d, $lt: lat + d},
+    'location.lng': { $gt: lng - d, $lt: lng + d}
+  }).toArray (function (find_err, find_res) {
+
+    if (find_err)
+      throw err;
+    
+    console.log (find_res);
+    res.send (find_res);
+  }); 
+
 };
+
 exports.detailRoom = function(req,res){
   var room_db = db.collection('Rooms');
   room_db.findOne({
