@@ -86,7 +86,7 @@ function handleImgFileSelect(e) {
 
         var reader = new FileReader();
         reader.onload = function(e) {
-            var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+            var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' ></a>";
             $(".imgs_wrap").append(html);
             $(".imgs_wrap").append(index);
             index++;
@@ -124,8 +124,8 @@ $(document).ready(function() {
   })
 
   var location_obj = {
-    lat : myMarker.position.lat,
-    lng : myMarker.position.lng,
+    lat : myMarker.getPosition().lat(),
+    lng : myMarker.getPosition().lng(),
   }
 
       
@@ -137,7 +137,7 @@ $(document).ready(function() {
     description : $('#description').val(),
     type : $('#type').val(), 
     picture : fileNameArr,
-  location : location_obj,
+    location : location_obj,
     enrolled_date : new Date().toISOString()},
     
 

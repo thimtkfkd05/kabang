@@ -388,8 +388,8 @@ exports.register_room = function(req, res){
   var room_option = req.body.option;
   var room_location = req.body.location;
   var room_owner = req.session.user_id;
-  
-  
+  room_location.lat  = Number(room_location.lat);
+  room_location.lng  = Number(room_location.lng);
     var room_obj = {
       room_id: make_random_string(13),
       picture: room_picture,
