@@ -11,7 +11,7 @@ const roomSchema = new Schema(
       option: { type : Array, required : true},
       description: {type : String, required : true},
       owner : {type : String, required : true},
-      enrolled_date: {type : Date, require : true},
+      enrolled_date: {type : String, require : true},
       status: {type : String, required : true},
       comments: {type: Array},
       request_list : {type : Array},

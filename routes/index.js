@@ -53,7 +53,31 @@ exports.searchPage = function(req,res){
   res.render('searchpage.html');
 }
 exports.roomDetail = function(req,res){
-  res.render('roomDetail.html');
+  var room_db = db.collection('Rooms');
+  if (req.query.type && req.query.room_id) {
+    room_db.findOne({
+      'room_id': req.query.room_id
+    }, function(find_err, find_res) {
+      if(find_err){
+        res.redirect('/mypage');
+      }
+      else{
+        console.log(find_res);
+        res.render('roomDetail.html', find_res);
+      }
+    });
+  } else {
+    room_db.findOne({
+      'room_id': 'room0'
+    }, function(find_err, find_res){
+      if(find_err){
+        res.redirect('/mypage');
+      }
+      else{
+        res.render('roomDetail.html', find_res);
+      }
+    });
+  }
 };
 
 exports.roomregister = function(req,res){
@@ -214,19 +238,18 @@ exports.auth.login = function(req, res) {
   var user_db = db.collection('Users');
   var email = req.body.email;
   var password = req.body.password;
-  console.log('??', email, password);
 
   if (email && password) {
     var find_query = {
       email: email,
-      password: new Buffer(password, 'base64').toString()
+      password: password
     };
-    console.log(find_query.password);
     user_db.findOne(find_query, {
       id: 1,
       type: 1,
       is_verified: 1
     }, function(find_err, find_res) {
+      console.log(find_err, find_res);
       if (find_err || !find_res) {
         res.json({
           result: false,
@@ -269,7 +292,9 @@ exports.getroom = function(req, res){
   var find_query = {};
   if (req.body) {
     Object.keys(req.body).map(function(key) {
-      find_query[key] = req.body[key];
+      if (key == 'owner' && key == true) {
+        find_query['owner'] = req.session.user_id;
+      } else find_query[key] = req.body[key];
     });
   }
   room_db.find(find_query).toArray(function(find_err, find_res) {
@@ -283,14 +308,25 @@ exports.getroom = function(req, res){
   });
 };
 
-exports.detailRoom = function(req,res){
-  var room_db = db.collection('Rooms');
-  room_db.findOne({
-    'room_id': 'room0'
-  }, function(find_err, find_res){
-    if(find_err){res.json(null);}
-    else{
-      res.json({result: find_res});
-    }
-  });
-};
+// exports.detailRoom = function(req,res){
+//   var room_db = db.collection('Rooms');
+//   if (req.query.type && req.query.room_id) {
+//     room_db.findOne({
+//       'room_id': req.query.room_id
+//     }, function(find_err, find_res) {
+//       if(find_err){res.json(null);}
+//       else{
+//         res.json({result: find_res});
+//       }
+//     });
+//   } else {
+//     room_db.findOne({
+//       'room_id': 'room0'
+//     }, function(find_err, find_res){
+//       if(find_err){res.json(null);}
+//       else{
+//         res.json({result: find_res});
+//       }
+//     });
+//   }
+// };
