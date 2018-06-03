@@ -35,7 +35,7 @@
   "room_db": [
     {
       "room_id": "test_room_001",
-      "picture": [],
+      "picture": ["/imgs/r1.png","/imgs/r2.png","/imgs/r3.png","/imgs/r4.png"],
       "location": {"lat": 36.364114, "lng": 127.357992},
       "deposit": 100,
       "monthly": 30,
@@ -50,7 +50,7 @@
       "address" : "대전광역시 유성구 어은동 111-9"
     }, {
       "room_id": "test_room_002",
-      "picture": [],
+      "picture": ["/imgs/r5.png","/imgs/r6.png","/imgs/r7.png","/imgs/r8.png"],
       "location": {"lat": 36.363764, "lng": 127.357552},
       "deposit": 200,
       "monthly": 50,
@@ -65,7 +65,7 @@
       "address" : "대전광역시 유성구 온천2동 317"
     }, {
       "room_id": "test_room_003",
-      "picture": [],
+      "picture": ["/imgs/r9.png","/imgs/r1.png","/imgs/r2.png","/imgs/r3.png"],
       "location": {"lat": 36.363553, "lng": 127.357364},
       "deposit": 80,
       "monthly": 20,
@@ -80,7 +80,7 @@
       "address" : "대전광역시 유성구 어은동 111-1"
     }, {
       "room_id": "test_room_004",
-      "picture": [],
+      "picture": ["/imgs/r4.png","/imgs/r5.png","/imgs/r6.png","/imgs/r7.png"],
       "location": {"lat": 36.363337, "lng": 127.358266},
       "deposit": 180,
       "monthly": 40,
@@ -95,7 +95,7 @@
       "address" : "대전광역시 유성구 어은로48번길 25"
     }, {
       "room_id": "test_room_005",
-      "picture": [],
+      "picture": ["/imgs/r8.png","/imgs/r9.png","/imgs/r1.png","/imgs/r2.png"],
       "location": {"lat": 36.363132, "lng": 127.358628},
       "deposit": 250,
       "monthly": 70,
@@ -110,7 +110,7 @@
       "address" : "대전광역시 유성구 온천2동 114-10"
     }, {
       "room_id": "test_room_006",
-      "picture": [],
+      "picture": ["/imgs/r3.png","/imgs/r4.png","/imgs/r5.png","/imgs/r6.png"],
       "location": {"lat": 36.365635, "lng": 127.357096},
       "deposit": 1000,
       "monthly": 350,
