@@ -73,6 +73,7 @@ app.get('/registerStudent', routes.registerStudent);
 app.get('/map', routes.map);
 app.get('/getroom', routes.getroom);
 app.get('/get_student_room_list', routes.get_student_room_list);
+app.post('/getcomment', routes.getcomment);
 app.get('/search', routes.searchPage);
 app.get('/roomDetail', routes.roomDetail);
 app.get('/detailRoom', routes.detailRoom);

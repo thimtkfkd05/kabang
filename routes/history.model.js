@@ -5,7 +5,7 @@ const historySchema = new Schema(
   {
       history_id: {type : String, required: true, unique : true},
       room_id = {type: String, required: true},
-      date = {type : Date, required : true},
+      date = {type : String, required : true},
       price = {type : Number, required : true},
       owner = {type : String, required : true}
 

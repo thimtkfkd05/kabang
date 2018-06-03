@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const smtpPool = require('nodemailer-smtp-pool');
 const keys = require('../service-key.json');
+const async = require('async');
 
 const host = 'localhost:3000';
 const config = {
@@ -62,7 +63,7 @@ exports.searchPage = function(req,res){
 }
 exports.roomDetail = function(req,res){
   var room_db = db.collection('Rooms');
-  if (req.query.type && req.query.room_id) {
+  if (req.query.room_id) {
     room_db.findOne({
       'room_id': req.query.room_id
     }, function(find_err, find_res) {
@@ -70,7 +71,6 @@ exports.roomDetail = function(req,res){
         res.redirect('/mypage');
       }
       else{
-        console.log(find_res);
         res.render('roomDetail.html', find_res);
       }
     });
@@ -86,10 +86,6 @@ exports.roomDetail = function(req,res){
       }
     });
   }
-};
-
-exports.roomregister = function(req,res){
-  res.render('roomregister.html');
 };
 
 exports.roomregister = function(req,res){
@@ -338,6 +334,32 @@ exports.get_student_room_list = function(req, res) {
   } else {
     res.json(null);
   }
+};
+
+exports.getcomment = function(req, res) {
+  var comment_db = db.collection('Comments');
+  var room_list = req.body.rooms;
+  async.map(room_list, function(room, next) {
+    if (!room.comments || !room.comments.length) {
+      next(null);
+    } else {
+      comment_db.find({
+        comment_id: {$in: room.comments}
+      }).toArray(function(find_err, find_res) {
+        if (find_err) {
+          next(null);
+        } else {
+          next(find_res);
+        }
+      });
+    }
+  }, function(async_err, comment_list) {
+    if (async_err) {
+      res.json(null);
+    } else {
+      res.json(comment_list);
+    }
+  });
 };
 
 //code for replying room search 
