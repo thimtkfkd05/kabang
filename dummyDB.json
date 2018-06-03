@@ -19,16 +19,19 @@
       "id" : "abc001_cCCXP2OPYv2bS",
       "email" : "abc001@kaist.ac.kr",
       "password" : "YWJjMTIz",
+      "is_verified" : true,
       "type" : "student"
     },{
       "id" : "abc002_cCCXP2OPYv3bS",
       "email" : "abc002@kaist.ac.kr",
       "password" : "YWJjMTIz",
+      "is_verified" : true,
       "type" : "student"
     },{
       "id" : "abc003_cCCXP2OPYv4bS",
       "email" : "abc002@kaist.ac.kr",
       "password" : "YWJjMTIz",
+      "is_verified" : true,
       "type" : "student"
     }
   ],

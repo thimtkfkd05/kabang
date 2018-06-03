@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-6">
         <div class="row">
-          <img id="img" src="" class="img-thumbnail" alt="room img">
+          <img id="img" src="<%= picture[0] %>" class="img-thumbnail" alt="room img">
         </div>
         <div class="room_img_btn">
           <% for (var i = 0; i < picture.length; i++) { %>
@@ -64,7 +64,7 @@
           <div class="comment">
             <div class="comment_text">
               <% for (var j = 0; j < comments.length; j++) { %>
-                <%= comments[j] %><br /><br />
+                <%= comments[j].content %><br /><br />
               <% } %>
             </div>
           </div>
@@ -77,9 +77,9 @@
       <tr>
         <td width="25%" bgcolor="whitesmoke">Room Price</td>
         <td width="19%" bgcolor="whitesmoke">Deposit</td>
-        <td width="19%"><div class="deposit"><%= deposit %> KRW</div></td>
+        <td width="19%"><div class="deposit"><%= deposit %> 만원</div></td>
         <td width="19%" bgcolor="whitesmoke">Monthly</td>
-        <td width="19%"><div class="monthly"><%= monthly %> KRW</div></td>
+        <td width="19%"><div class="monthly"><%= monthly %> 만원</div></td>
       </tr>
     </table>
     <table style="width:100%; text-align: center;">

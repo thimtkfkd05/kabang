@@ -38,7 +38,7 @@ $(document).ready(function() {
           room_list[0].room_id,
           room_list[0].address,
           room_list[0].picture[0],
-          room_list[0].deposit+', '+room_list[0].monthly+'/month',
+          room_list[0].deposit+'만원, '+room_list[0].monthly+'만윈/월',
           room_list[0].type
         )
       );
