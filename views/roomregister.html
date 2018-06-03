@@ -6,78 +6,45 @@
     <link rel='stylesheet' href='/module/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/module/font-awesome-4.7.0/css/font-awesome.min.css' />
     <link rel='stylesheet' href='/css/style.css' />
-    <style type="text/css">
-
-      input[type=file] {
-          display: none;
-      }
-
-      .my_button {
-          display: inline-block;
-          width: 200px;
-          text-align: center;
-          padding: 10px;
-          background-color: #006BCC;
-          color: #fff;
-          text-decoration: none;
-          border-radius: 5px;
-      }
-
-
-
-      .imgs_wrap {
-
-          border: 2px solid #A8A8A8;
-          margin-top: 30px;
-          margin-bottom: 30px;
-          padding-top: 10px;
-          padding-bottom: 10px;
-
-      }
-      .imgs_wrap img {
-          max-width: 150px;
-          margin-left: 10px;
-          margin-right: 10px;
-      }
-
-  </style>
-    <style type = "text/css">
-      #map {
-        width: 100%;
-        height: 500px;
-        background-color: grey;
-      }
-    </style>
+    <link rel="stylesheet" href='/css/roomregister.css'>
   
   </head>
   <body>
+      <%- include("./navbar.ejs", {"type": "student", "index": 1}) %>
+      <h1>Room Register</h1>
+      <div class = 'room-register'>
           <form id ='registerAction' > 
-          <div class = "form-group">
-              <label for="Picture">Picture</label>
+          <div class = "form-row">
+            <div class = 'col-1'>
+              <label for="Picture"><h5>Picture</h5></label>
+            </div>
+              <div class= 'col-2'>
               <div class="input_wrap">
                   <input type="file" class= "form-control-file" id="input_imgs" multiple/>
               </div>
             </div>
-        
-            <div class = "form-group">
-                <div class="imgs_wrap">
-                    <img id="img" />
-                </div>
-            </div>  
-            <button type="button" href="javascript:" onclick="fileUploadAction();" class="btn btn-primary">Upload</button>
+              <div class="imgs_wrap">
+                  <img id="img" />
+              </div>
+         <button type="button" href="javascript:" onclick="fileUploadAction();" class="btn btn-primary">Upload</button>
+          </div>
+         <br><br>
+          
           <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="Deposit">Deposit</label>
+                <label for="Deposit"><h5>Deposit</h5></label>
                 <input type="text" class="form-control" id="deposit" placeholder="Deposit">
               </div>
               <div class="form-group col-md-6">  
-                <label for="Monthly">Monthly</label>
+                <label for="Monthly"><h5>Monthly</h5></label>
                 <input type="text" class="form-control" id="monthly" placeholder="Monthly">
               </div>
             </div>
+            <br><br>
+          
               <div class="form-row">
                   <div class="form-group col-md-6">
-                      <label for="Room type">Room type</label>
+                      <label for="Room type"><h5>Room type</h5></label>
                       <select id="type" class="form-control">
                         <option selected>Room type</option>
                         <option value = "One-Room(반지하)">One-Room(반지하)</option>
@@ -87,7 +54,7 @@
                       </select>
                     </div>
                       <div class="form-group col-md-6">
-                      <label for="Room status">Room status</label>
+                      <label for="Room status"><h5>Room status</h5></label>
                       <select id="status" class="form-control">
                           <option selected>Room status</option>
                           <option value = "Empty">Empty</option>
@@ -96,28 +63,48 @@
                         </select>
                       </div>
                       </div>
+                      <h5><br>Location</h5>
                       <div id="map"></div>
+                      <br><br>
                       <div class= "form-check">
-                      <div id="cblist">
-                        
-                        <input type="checkbox" value="first checkbox" id="cb1" /> 
-                        <label for="cb1">Option1</label>
+                          <label for= 'option'><h5>Option</h5></label>
+                      <div id="cblist">  
+                        <input type="checkbox" value="Washing Machine" id="cb1" /> 
+                        <label for="cb1">Washing Machine </label>
+                        <input type="checkbox" value="Wi-Fi" id="cb2" /> 
+                        <label for="cb2">Wi-Fi </label>
+                        <input type="checkbox" value="Shoe closet" id="cb3" /> 
+                        <label for="cb3">Shoe closet </label>
+                        <input type="checkbox" value="Refrigerator" id="cb4" /> 
+                        <label for="cb4">Refrigerator </label>
+                        <input type="checkbox" value="Desk" id="cb5" /> 
+                        <label for="cb5">Desk</label>
+                        <input type="checkbox" value="Kitchen" id="cb6" /> 
+                        <label for="cb6">Kitchen </label>
+                        <input type="checkbox" value="Air Conditioner" id="cb7" /> 
+                        <label for="cb7">Air Conditioner</label>
+                        <input type="checkbox" value="Bed" id="cb8" /> 
+                        <label for="cb8">Bed </label>
                       </div>
                     </div>
                     <div class = "form-row">
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-1">
                     <input class="form-control" type="text" placeholder="option" id="txtName">
                   </div>
-                    <button type="button" class="btn btn-primary btn-sm" id = "btnSave">Add option</button>
+                  <button id="btnSave" type="button" class="btn btn-primary" style="height:40px; width:70px;">Add</button>
+                    
                   </div>        
                   <div class="form-group">
-                      <label for="Roomdescription">Room description</label>
+                      <label for="Roomdescription"><h5>Room description</h5></label>
                       <textarea class="form-control" id="description" rows="7"></textarea>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                           <button type="submit" class="btn btn-primary" id = 'register' >Register</button>
+                          <button id="cancel" type="button" class="btn btn-danger" onclick="location.href='mypage'">Cancel</button>
                         </div>
+                        </div>
+
     </form>
     <script src="/module/js/jquery-1.12.4.min.js"></script>
     <script src="/module/js/jquery-ui.min.js"></script>
@@ -132,4 +119,5 @@
             
     </body>
     </html>
+
 

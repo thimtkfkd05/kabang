@@ -1,0 +1,69 @@
+{
+  "user_db": [
+    {
+      "id" : "abc123_iQKXPdL6Yv1aS",
+      "email" : "abc123@abc.com",
+      "password" : "YWJjMTIz",
+      "type" : "room_owner"
+    }, {}, {}
+  ],
+  "room_db": [
+    {
+      "room_id": "randomrandom1",
+      "picture": [],
+      "location": {"lat": 36, "lng": 127},
+      "deposit": 300,
+      "monthly": 30,
+      "option": [],
+      "description": "Test Room1",
+      "owner" : "abc123_iQKXPdL6Yv1aS",
+      "enrolled_date": "2018-06-03T06:39:54.622Z",
+      "status": "empty",
+      "comments": [],
+      "request_list" : [],
+      "type" : "oneroom"
+    }, {
+      "room_id": "randomrandom2",
+      "picture": [],
+      "location": {"lat": 36, "lng": 127},
+      "deposit": 300,
+      "monthly": 30,
+      "option": [],
+      "description": "Test Room2",
+      "owner" : "abc123_iQKXPdL6Yv1aS",
+      "enrolled_date": "2018-06-03T06:39:54.622Z",
+      "status": "empty",
+      "comments": [],
+      "request_list" : [],
+      "type" : "oneroom"
+    }, {
+      "room_id": "randomrandom3",
+      "picture": [],
+      "location": {"lat": 36, "lng": 127},
+      "deposit": 300,
+      "monthly": 30,
+      "option": [],
+      "description": "Test Room3",
+      "owner" : "abc123_iQKXPdL6Yv1aS",
+      "enrolled_date": "2018-06-03T06:39:54.622Z",
+      "status": "empty",
+      "comments": [],
+      "request_list" : [],
+      "type" : "oneroom"
+    }, {
+      "room_id": "randomrandom4",
+      "picture": [],
+      "location": {"lat": 36, "lng": 127},
+      "deposit": 300,
+      "monthly": 30,
+      "option": [],
+      "description": "Test Room4",
+      "owner" : "abc123_iQKXPdL6Yv1aS",
+      "enrolled_date": "2018-06-03T06:39:54.622Z",
+      "status": "empty",
+      "comments": [],
+      "request_list" : [],
+      "type" : "oneroom"
+    }
+  ]
+}

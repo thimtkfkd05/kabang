@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const smtpPool = require('nodemailer-smtp-pool');
 const keys = require('../service-key.json');
+const async = require('async');
 
 const host = 'localhost:3000';
 const config = {
@@ -62,7 +63,6 @@ exports.roomDetail = function(req,res){
         res.redirect('/mypage');
       }
       else{
-        console.log(find_res);
         res.render('roomDetail.html', find_res);
       }
     });
@@ -78,10 +78,6 @@ exports.roomDetail = function(req,res){
       }
     });
   }
-};
-
-exports.roomregister = function(req,res){
-  res.render('roomregister.html');
 };
 
 exports.roomregister = function(req,res){
@@ -322,6 +318,52 @@ exports.getroom = function(req, res){
   });
 };
 
+exports.get_student_room_list = function(req, res) {
+  if (req.session.type == 'student') {
+    var user_db = db.collection('Users');
+    user_db.findOne({
+      id: req.session.user_id,
+      type: req.session.type
+    }, {
+      room_list: 1
+    }, function(find_err, find_res) {
+      if (find_err) {
+        res.json(null);
+      } else {
+        res.json(find_res);
+      }
+    });
+  } else {
+    res.json(null);
+  }
+};
+
+exports.getcomment = function(req, res) {
+  var comment_db = db.collection('Comments');
+  var room_list = req.body.rooms;
+  async.map(room_list, function(room, next) {
+    if (!room.comments || !room.comments.length) {
+      next(null);
+    } else {
+      comment_db.find({
+        comment_id: {$in: room.comments}
+      }).toArray(function(find_err, find_res) {
+        if (find_err) {
+          next(null);
+        } else {
+          next(find_res);
+        }
+      });
+    }
+  }, function(async_err, comment_list) {
+    if (async_err) {
+      res.json(null);
+    } else {
+      res.json(comment_list);
+    }
+  });
+};
+  
 exports.detailRoom = function(req,res){
   var room_db = db.collection('Rooms');
   room_db.findOne({
@@ -345,6 +387,7 @@ exports.register_room = function(req, res){
   var room_description = req.body.description;
   var room_option = req.body.option;
   var room_location = req.body.location;
+  var room_owner = req.session.user_id;
   
   
     var room_obj = {
@@ -357,7 +400,8 @@ exports.register_room = function(req, res){
       location: room_location,
       description: room_description,
       option: room_option,
-      enrolled_date: room_date
+      enrolled_date: room_date,
+      owner : room_owner,
     };
     room_db.save(room_obj, function(save_err, save_res) {
       if(save_err) {

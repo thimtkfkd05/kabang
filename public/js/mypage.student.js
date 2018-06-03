@@ -1,8 +1,8 @@
 $(document).ready(function() {
   $.get('/get_student_room_list', {}, function(_res) {
-    if (_res) {
+    if (_res && _res.length) {
       var find_query = {
-        room_id: {$in: _res.result}
+        room_id: {$in: _res}
       };
       $.get('/getroom', find_query, function(res) {
         var room_list = [];

@@ -52,10 +52,7 @@ function handleError (hasGeo, infoWindow, pos) {
     }
   }
 
-$(document).ready(function(){
-    $("#add").on("click", function(){
-      $("#dynamicCB").append("<br/><div class = 'form-check'><input class='form-check-input' type='radio' name= 'wifi' value ='Wifi'><label class = 'form-check-lable' for='wifi'>Wifi</label>")
-    })});
+
 
 // 이미지 정보들을 담을 배열
 var sel_files = [];
@@ -108,72 +105,78 @@ $(document).ready(function() {
       addCheckbox($('#txtName').val());
   });
 });
+
+
 var optionNum;
 function addCheckbox(name) {
  var container = $('#cblist');
  var inputs = container.find('input');
  optionNum = inputs.length+1;
+ 
 
  $('<input />', { type: 'checkbox', id: 'cb'+ optionNum, value: name }).appendTo(container);
- $('<label />', { 'for': 'cb'+ optionNum, text: name }).appendTo(container);
+ $('<label />', { 'for': 'cb'+ optionNum, text:  name}).appendTo(container);
 }
 
 
 
 
 $(document).ready(function() {    
-$('#register').click(function(){
-var chkedArr = new Array;
-$("input:checkbox:checked").each(function(index){
-  chkedArr.push($(this).val());
-})
+  $('#register').click(function(){
+  var chkedArr = new Array;
+  $("input:checkbox:checked").each(function(index){
+    chkedArr.push($(this).val());
+  })
 
-var location_obj = {
-  lat : myMarker.position.lat,
-  lng : myMarker.position.lng,
-}
-
-var address = geocodeLatLng (location_obj);
-console.log (address);
-
-$.post('/register_room',{
-  deposit : $('#deposit').val(),
-  monthly : $('#monthly').val(),
-  status : $('#status').val(),
-  option : chkedArr,
-  description : $('#description').val(),
-  type : $('#type').val(), 
-  picture : fileNameArr,
- location : location_obj,
-  enrolled_date : new Date().toISOString()},
-  
-
-  function(result){
-  if(result){
-    alert("Success!!");
+  var location_obj = {
+    lat : myMarker.getPosition().lat(),
+    lng : myMarker.getPosition().lng(),
   }
-  else{
-    alet("Register Faii!!");
-  }
-  });});}); 
 
-function geocodeLatLng (pos) {
-   
-  geocoder.geocode ({'location': pos}, function (results, status){
+  var geocoder = new google.maps.Geocoder;
+  geocoder.geocode ({'location': location_obj}, function (results, status){
 
     if (status == 'OK') {
-      
+
+      console.log ('ok');
       if (results[1]) {
-        return results[1].formatted_address;
+        
+        $.post('/register_room',{
+          address : results[1].formatted_address,
+          deposit : $('#deposit').val(),
+          monthly : $('#monthly').val(),
+          status : $('#status').val(),
+          option : chkedArr,
+          description : $('#description').val(),
+          type : $('#type').val(), 
+          picture : fileNameArr,
+          location : location_obj,
+          enrolled_date : new Date().toISOString()},
+          
+      
+          function(result){
+          if(result){
+            alert("Register Success!!");
+            //$(location).attr('href', 'mypage');
+      
+          }
+          else{
+            alet("Register Faii!!");
+            $(location).attr('href', 'roomregister');
+          }
+        });
       } else 
         console.log ('No results found');
       
     } else 
       console.log ("Geocoder failed due to: " + status);
   
-});
-    
-}
+  });      
+ 
+});}); 
+
+
+  
 
   
 
