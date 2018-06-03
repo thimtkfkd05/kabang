@@ -5,7 +5,11 @@ const roomSchema = new Schema(
   {
       room_id: { type: String, required: true, unique: true},
       picture: { type: Array, required : true},
+<<<<<<< HEAD
       location: {lat: Number, lng : Number, required : true},
+=======
+      location: {lat: Number, lng: Number, required : true},
+>>>>>>> 0ff7b5e28d3eaf83fee9ea2c7dce92d6f37c1dfb
       deposit: { type : Number, required : true},
       monthly: {type : Number, required: true},
       option: { type : Array, required : true},

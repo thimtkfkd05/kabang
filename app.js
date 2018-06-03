@@ -97,6 +97,10 @@ function connectDB() {
     if (err) throw err;
     console.log('DB connection success!');
     db = mongoclient.db('kabang');
+    // var dummy = require('./dummyDB.json');
+    // db.collection('Rooms').insertMany(dummy.room_db, function(ins_err, res) {
+    //   console.log(ins_err, res);
+    // });
   });
 };
 

@@ -1,7 +1,8 @@
 $(document).ready(function() {
+  console.log('11');
   $('#login').click(function() {
-    var email = $('#email').val();
-    var password = $('#password').val();
+    var email = $('#InputEmail1').val();
+    var password = $('#InputPassword1').val();
     console.log('??');
     if (email && password) {
       $.post('/auth/login', {
@@ -14,7 +15,7 @@ $(document).ready(function() {
             $('.alert').hide();
           }, 2000);
         } else {
-          location.href = '/' + result.type;
+          location.href = '/mypage';
         }
       });
     } else {

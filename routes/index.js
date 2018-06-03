@@ -34,6 +34,14 @@ exports.index = function(req, res){
 };
 
 exports.roomlist = function(req,res){
+  var lat = req.query.lat;
+  var lng = req.query.lng;
+  var price_d_min = req.query.d_min;
+  var price_d_max = req.query.d_max;
+  var price_m_min = req.query.m_min;
+  var price_m_max = req.query.m_max;
+  var room_type = req.query.room_type;
+  
   res.render('roomlist.html');
 };
 
@@ -53,7 +61,31 @@ exports.searchPage = function(req,res){
   res.render('searchpage.html');
 }
 exports.roomDetail = function(req,res){
-  res.render('roomDetail.html');
+  var room_db = db.collection('Rooms');
+  if (req.query.type && req.query.room_id) {
+    room_db.findOne({
+      'room_id': req.query.room_id
+    }, function(find_err, find_res) {
+      if(find_err){
+        res.redirect('/mypage');
+      }
+      else{
+        console.log(find_res);
+        res.render('roomDetail.html', find_res);
+      }
+    });
+  } else {
+    room_db.findOne({
+      'room_id': 'room0'
+    }, function(find_err, find_res){
+      if(find_err){
+        res.redirect('/mypage');
+      }
+      else{
+        res.render('roomDetail.html', find_res);
+      }
+    });
+  }
 };
 
 exports.roomregister = function(req,res){
@@ -218,19 +250,18 @@ exports.auth.login = function(req, res) {
   var user_db = db.collection('Users');
   var email = req.body.email;
   var password = req.body.password;
-  console.log('??', email, password);
 
   if (email && password) {
     var find_query = {
       email: email,
-      password: new Buffer(password, 'base64').toString()
+      password: password
     };
-    console.log(find_query.password);
     user_db.findOne(find_query, {
       id: 1,
       type: 1,
       is_verified: 1
     }, function(find_err, find_res) {
+      console.log(find_err, find_res);
       if (find_err || !find_res) {
         res.json({
           result: false,
@@ -273,7 +304,9 @@ exports.getroom = function(req, res){
   var find_query = {};
   if (req.body) {
     Object.keys(req.body).map(function(key) {
-      find_query[key] = req.body[key];
+      if (key == 'owner' && key == true) {
+        find_query['owner'] = req.session.user_id;
+      } else find_query[key] = req.body[key];
     });
   }
   room_db.find(find_query).toArray(function(find_err, find_res) {
@@ -287,17 +320,74 @@ exports.getroom = function(req, res){
   });
 };
 
-exports.detailRoom = function(req,res){
+//code for replying room search 
+exports.searchroom = function (req, res){
+  
   var room_db = db.collection('Rooms');
-  room_db.findOne({
-    'room_id': 'room0'
-  }, function(find_err, find_res){
-    if(find_err){res.json(null);}
-    else{
-      res.json({result: find_res});
-    }
-  });
+  
+  var room_type = req.body.room_type;
+  var lat = parseFloat (req.body.lat);
+  var lng = parseFloat (req.body.lng);
+  const room_price_d_min = parseInt (req.body.room_price_d_min);
+  const room_price_d_max = parseInt (req.body.room_price_d_max);
+  const room_price_m_min = parseInt (req.body.room_price_m_min);
+  const room_price_m_max = parseInt (req.body.room_price_m_max);
+
+  /*
+  room_db.remove ( {type : 'one-room-1'}, 
+    function (re_err, re_res){
+      
+      if (re_err)
+        throw re_err;
+
+      console.log(re_res);
+    });
+  */
+  
+  /*
+  room_db.insert( {type: room_type,
+    deposit: 15, monthly: 15,
+    location: {lat: lat, lng: lng}}, 
+    function (in_err, in_res) {
+      
+      if (in_err)
+        throw in_err;
+      
+      console.log (in_res);
+ 
+  });  */
+
+  //console.log(lat + " "+ lng);
+  var d = 0.0035;
+
+  room_db.find({
+    type: room_type, 
+    deposit: { $gt: room_price_d_min, $lt: room_price_d_max},
+    monthly: { $gt: room_price_m_min, $lt: room_price_m_max},
+    'location.lat': { $gt: lat - d, $lt: lat + d},
+    'location.lng': { $gt: lng - d, $lt: lng + d}
+  }).toArray (function (find_err, find_res) {
+
+    if (find_err)
+      throw err;
+    
+    console.log (find_res);
+    res.send (find_res);
+  }); 
+
 };
+
+// exports.detailRoom = function(req,res){
+//   var room_db = db.collection('Rooms');
+//   room_db.findOne({
+//     'room_id': 'room0'
+//   }, function(find_err, find_res){
+//     if(find_err){res.json(null);}
+//     else{
+//       res.json({result: find_res});
+//     }
+//   });
+// };
 
 exports.register_room = function(req, res){
   var room_db = db.collection('Rooms');
