@@ -32,7 +32,18 @@ function initMap() {
   } else {
       //Browser does not support Geo
       handleError (false, infoWindow, map.getCenter());
-  }        
+  }
+  
+  /*
+  google.maps.event.addListener (map, 'click', function (e){
+    
+    var myPos = myMarker.getPosition ();
+    var d = 0.0035
+    var point = new google.maps.LatLng(myPos.lat() - d, myPos.lng() + d);    
+    var dist = google.maps.geometry.spherical.computeDistanceBetween(point, myPos);
+    
+    console.log (dist);
+  }); */
 }
 
 function handleError (hasGeo, infoWindow, pos) {
@@ -42,13 +53,50 @@ function handleError (hasGeo, infoWindow, pos) {
 
 $(document).ready(function() {
   $("#search").click(function(){
+   
+    var room_type;
+    var query = '/roomlist?';
+    query += myMarker.getPosition ().lat () + '&';
+    query += myMarker.getPosition ().lng () + '&';
+    query += $('#d-min').val() + '&';
+    query += $('#d-max').val() + '&';
+    query += $('#m-min').val() + '&';
+    query += $('#m-max').val() + '&';
     
     if ($("#one-room-1").is(":checked"))
-      console.log("one-room-1");
+      room_type = "one-room-1";
     else if ($("#one-room-2").is(":checked"))
-      console.log("one-room-2");     
+      room_type = "one-room-2";
     else if ($("#two-room").is(":checked"))
-      console.log("two-room");
+      room_type = "two-room";
+    else if ($("#three-room").is(":checked"))
+      room_type = "three-room";
+    
+    query += room_type;
+    console.log(query);
+
+    window.location.href = query;
+    /*
+    //code for asking room search
+    $.post ('/searchRoom', {
+      lat : myMarker.getPosition ().lat(),
+      lng : myMarker.getPosition ().lng(),
+      room_type : room_type,
+      room_price_d_min : room_price_d_min,
+      room_price_d_max : room_price_d_max,
+      room_price_m_min : room_price_m_min,
+      room_price_m_max : room_price_m_max
+    }, function (data){
+      
+      console.log (data);
+      
+    }); */
+
+  });
+
+
+  $('#cancel').click (function (){
+    console.log ("cancel clicked");
+    window.location.href = '/mypage';
   });
 });
-//var dist = google.maps.geometry.spherical.computeDistanceBetween(event.latLng, myMarker.getPosition());
