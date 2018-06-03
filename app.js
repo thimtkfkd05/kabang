@@ -79,6 +79,9 @@ app.get('/search', checker('student'), routes.searchPage);
 app.get('/roomDetail', checker(), routes.roomDetail);
 app.get('/detailRoom', checker(), routes.detailRoom);
 app.get('/roomregister', checker('room_owner'), routes.roomregister);
+app.get('/roomregister/:room_id', checker('room_owner'), routes.roomregister);
+app.post('/register_room/:room_id', checker('room_owner'), routes.register_room);
+
 
 app.post('/register_room', checker('room_owner'), routes.register_room);
 
