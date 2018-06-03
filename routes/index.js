@@ -161,7 +161,20 @@ exports.roomDetail = function(req,res){
 };
 
 exports.roomregister = function(req,res){
-  res.render('roomregister.html');
+  if(req.params.room_id){
+    var room_db = db.collection("Rooms");
+    room_db.findOne({
+      room_id: req.params.room_id
+    }, function(find_err,find_res){
+      if(find_err){
+        res.redirect("/mypage");
+      }else{
+        res.render("roomupdate.html");
+      }
+    });
+  }else{
+    res.render('roomregister.html');
+  }
 };
 
 exports.mypage = function(req, res) {
