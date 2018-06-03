@@ -13,7 +13,7 @@
       <%- include("./navbar.ejs", {"type": "roomOnwer", "index": 1}) %>
       <h1>Room Register</h1>
       <div class = 'room-register'>
-          <form id ='registerAction' > 
+          <div id ='registerAction' > 
           <div class = "form-row">
             <div class = 'col-1'>
               <label for="Picture"><h5>Picture</h5></label>
@@ -100,12 +100,12 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                          <button type="submit" class="btn btn-primary" id = 'register' >Register</button>
+                          <button  class="btn btn-primary" id = 'register' >Register</button>
                           <button id="cancel" type="button" class="btn btn-danger" onclick="location.href='mypage'">Cancel</button>
                         </div>
                         </div>
 
-    </form>
+                      </div>
     <script src="/module/js/jquery-1.12.4.min.js"></script>
     <script src="/module/js/jquery-ui.min.js"></script>
     <script src="/module/js/bootstrap.min.js"></script>
