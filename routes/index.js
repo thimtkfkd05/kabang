@@ -534,6 +534,42 @@ exports.register_room = function(req, res){
   
   }
 
+exports.saveComment = function(req, res) {
+  var comment_db = db.collection('Comments');
+  var user_id = req.session.user_id;
+  var room_id = req.body.room_id;
+  var star_rating = req.body.star_rating;
+  var content = req.body.comment;
+  var comment_id = 'comment_' + make_random_string(13);
+
+  var comment_obj = {
+    comment_id: comment_id,
+    edit_time: new Date().toISOString(),
+    editor_id: user_id,
+    content : content,
+    star_rating : star_rating
+  };
+  comment_db.save(comment_obj, function(save_err, save_res) {
+    if (save_err) {
+      res.json(false);
+    } else {
+      var room_db = db.collection('Rooms');
+      room_db.update({
+        room_id: room_id
+      }, {
+        $push: {
+          comments: comment_id
+        }
+      }, function(update_err, update_res) {
+        if (update_err) {
+          res.json(false);
+        } else {
+          res.json(true);
+        }
+      });
+    }
+  });
+};
 
 exports.sendRequest = function(req, res) {
   var room_db = db.collection('Rooms');
