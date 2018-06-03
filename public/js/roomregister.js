@@ -1,11 +1,14 @@
 var myMarker;
+var geocoder;
+var map;
 
 function initMap() {
     
   var seoul = {lat: 37, lng: 126};
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15, center: seoul});
 
+  geocoder = new google.maps.Geocoder;
   myMarker = new google.maps.Marker({
     map: map,
     draggable: true,
@@ -29,6 +32,7 @@ function initMap() {
       handleError (true, infoWindow, map.getCenter()); 
     });
 
+    
   } else {
       //Browser does not support Geo
       handleError (false, infoWindow, map.getCenter());
@@ -95,6 +99,7 @@ function handleImgFileSelect(e) {
         
     });
 }
+
 $(document).ready(function() {
   $('#btnSave').click(function() {
       addCheckbox($('#txtName').val());
@@ -128,30 +133,48 @@ $(document).ready(function() {
     lng : myMarker.getPosition().lng(),
   }
 
+  var geocoder = new google.maps.Geocoder;
+  geocoder.geocode ({'location': location_obj}, function (results, status){
+
+    if (status == 'OK') {
+
+      console.log ('ok');
+      if (results[1]) {
+        
+        $.post('/register_room',{
+          address : results[1].formatted_address,
+          deposit : $('#deposit').val(),
+          monthly : $('#monthly').val(),
+          status : $('#status').val(),
+          option : chkedArr,
+          description : $('#description').val(),
+          type : $('#type').val(), 
+          picture : fileNameArr,
+          location : location_obj,
+          enrolled_date : new Date().toISOString()},
+          
       
-  $.post('/register_room',{
-    deposit : $('#deposit').val(),
-    monthly : $('#monthly').val(),
-    status : $('#status').val(),
-    option : chkedArr,
-    description : $('#description').val(),
-    type : $('#type').val(), 
-    picture : fileNameArr,
-    location : location_obj,
-    enrolled_date : new Date().toISOString()},
-    
+          function(result){
+          if(result){
+            alert("Register Success!!");
+            //$(location).attr('href', 'mypage');
+      
+          }
+          else{
+            alet("Register Faii!!");
+            $(location).attr('href', 'roomregister');
+          }
+        });
+      } else 
+        console.log ('No results found');
+      
+    } else 
+      console.log ("Geocoder failed due to: " + status);
+  
+  });      
+ 
+});}); 
 
-    function(result){
-    if(result){
-      alert("Register Success!!");
-      $(location).attr('href', 'mypage');
-
-    }
-    else{
-      alet("Register Faii!!");
-      $(location).attr('href', 'roomregister');
-    }
-  });});}); 
 
   
 
