@@ -5,65 +5,394 @@
       "email" : "abc123@abc.com",
       "password" : "YWJjMTIz",
       "type" : "room_owner"
-    }, {}, {}
+    },{
+      "id" : "abc998_iQKXP2OPYv1aS",
+      "email" : "abc998@abc.com",
+      "password" : "YWJjMTIz",
+      "type" : "room_owner"
+    },{
+      "id" : "abc423_cCCXP2OPYv1aS",
+      "email" : "abc423@abc.com",
+      "password" : "YWJjMTIz",
+      "type" : "room_owner"
+    },{
+      "id" : "abc001_cCCXP2OPYv2bS",
+      "email" : "abc001@kaist.ac.kr",
+      "password" : "YWJjMTIz",
+      "type" : "student"
+    },{
+      "id" : "abc002_cCCXP2OPYv3bS",
+      "email" : "abc002@kaist.ac.kr",
+      "password" : "YWJjMTIz",
+      "type" : "student"
+    },{
+      "id" : "abc003_cCCXP2OPYv4bS",
+      "email" : "abc002@kaist.ac.kr",
+      "password" : "YWJjMTIz",
+      "type" : "student"
+    }
   ],
   "room_db": [
     {
-      "room_id": "randomrandom1",
-      "picture": [],
-      "location": {"lat": 36, "lng": 127},
-      "deposit": 300,
+      "room_id": "test_room_001",
+      "picture": ["/imgs/r1.png","/imgs/r2.png","/imgs/r3.png","/imgs/r4.png"],
+      "location": {"lat": 36.364114, "lng": 127.357992},
+      "deposit": 100,
       "monthly": 30,
-      "option": [],
-      "description": "Test Room1",
+      "option": ["Washing Machine", "Wi-Fi"],
+      "description": "This room is very nice!",
       "owner" : "abc123_iQKXPdL6Yv1aS",
       "enrolled_date": "2018-06-03T06:39:54.622Z",
       "status": "empty",
-      "comments": [],
-      "request_list" : [],
-      "type" : "oneroom"
+      "comments": ["comment_01_01", "comment_01_02", "comment_01_03"],
+      "request_list" : ["request_01_01"],
+      "type" : "One-Room(지상)",
+      "address" : "대전광역시 유성구 어은동 111-9"
     }, {
-      "room_id": "randomrandom2",
-      "picture": [],
-      "location": {"lat": 36, "lng": 127},
-      "deposit": 300,
-      "monthly": 30,
-      "option": [],
-      "description": "Test Room2",
+      "room_id": "test_room_002",
+      "picture": ["/imgs/r5.png","/imgs/r6.png","/imgs/r7.png","/imgs/r8.png"],
+      "location": {"lat": 36.363764, "lng": 127.357552},
+      "deposit": 200,
+      "monthly": 50,
+      "option": ["Washing Machine", "Wi-Fi", "Shoe Closet", "Desk"],
+      "description": "This room is very nice!",
       "owner" : "abc123_iQKXPdL6Yv1aS",
-      "enrolled_date": "2018-06-03T06:39:54.622Z",
+      "enrolled_date": "2018-06-02T12:39:54.622Z",
       "status": "empty",
-      "comments": [],
-      "request_list" : [],
-      "type" : "oneroom"
+      "comments": ["comment_02_01", "comment_02_02", "comment_02_03"],
+      "request_list" : ["request_02_01"],
+      "type" : "Two-Room",
+      "address" : "대전광역시 유성구 온천2동 317"
     }, {
-      "room_id": "randomrandom3",
-      "picture": [],
-      "location": {"lat": 36, "lng": 127},
-      "deposit": 300,
-      "monthly": 30,
-      "option": [],
-      "description": "Test Room3",
-      "owner" : "abc123_iQKXPdL6Yv1aS",
-      "enrolled_date": "2018-06-03T06:39:54.622Z",
-      "status": "empty",
-      "comments": [],
-      "request_list" : [],
-      "type" : "oneroom"
+      "room_id": "test_room_003",
+      "picture": ["/imgs/r9.png","/imgs/r1.png","/imgs/r2.png","/imgs/r3.png"],
+      "location": {"lat": 36.363553, "lng": 127.357364},
+      "deposit": 80,
+      "monthly": 20,
+      "option": ["Washing Machine", "Shoe Closet"],
+      "description": "This room is very nice!",
+      "owner" : "abc998_iQKXP2OPYv1aS",
+      "enrolled_date": "2018-06-01T06:22:54.622Z",
+      "status": "Will be empty",
+      "comments": ["comment_03_01", "comment_03_02", "comment_03_03"],
+      "request_list" : ["request_03_01"],
+      "type" : "Owo-Room(반지하)",
+      "address" : "대전광역시 유성구 어은동 111-1"
     }, {
-      "room_id": "randomrandom4",
-      "picture": [],
-      "location": {"lat": 36, "lng": 127},
-      "deposit": 300,
+      "room_id": "test_room_004",
+      "picture": ["/imgs/r4.png","/imgs/r5.png","/imgs/r6.png","/imgs/r7.png"],
+      "location": {"lat": 36.363337, "lng": 127.358266},
+      "deposit": 180,
+      "monthly": 40,
+      "option": ["Washing Machine", "Wi-Fi", "Shoe Closet", "Desk"],
+      "description": "This room is very nice!",
+      "owner" : "abc998_iQKXP2OPYv1aS",
+      "enrolled_date": "2018-06-03T18:10:54.622Z",
+      "status": "Remodeling",
+      "comments": ["comment_04_01", "comment_04_02", "comment_04_03"],
+      "request_list" : ["request_04_01"],
+      "type" : "Two-Room",
+      "address" : "대전광역시 유성구 어은로48번길 25"
+    }, {
+      "room_id": "test_room_005",
+      "picture": ["/imgs/r8.png","/imgs/r9.png","/imgs/r1.png","/imgs/r2.png"],
+      "location": {"lat": 36.363132, "lng": 127.358628},
+      "deposit": 250,
+      "monthly": 70,
+      "option": ["Washing Machine", "Wi-Fi", "Shoe Closet", "Desk", "Kitchen", "Air Conditioner"],
+      "description": "This room is very nice!",
+      "owner" : "abc423_cCCXP2OPYv1aS",
+      "enrolled_date": "2018-06-02T11:11:11.622Z",
+      "status": "Empty",
+      "comments": ["comment_05_01", "comment_05_02", "comment_05_03"],
+      "request_list" : ["request_05_01"],
+      "type" : "Three-Room",
+      "address" : "대전광역시 유성구 온천2동 114-10"
+    }, {
+      "room_id": "test_room_006",
+      "picture": ["/imgs/r3.png","/imgs/r4.png","/imgs/r5.png","/imgs/r6.png"],
+      "location": {"lat": 36.365635, "lng": 127.357096},
+      "deposit": 1000,
+      "monthly": 350,
+      "option": ["Washing Machine", "Wi-Fi", "Shoe Closet", "Desk", "Kitchen", "Air Conditioner", "Refrigerator"],
+      "description": "This room is very nice!",
+      "owner" : "abc423_cCCXP2OPYv1aS",
+      "enrolled_date": "2018-06-01T10:09:08.622Z",
+      "status": "Remodeling",
+      "comments": ["comment_06_01", "comment_06_02", "comment_06_03"],
+      "request_list" : ["request_06_01"],
+      "type" : "Three-Room",
+      "address" : "118 한빛아파트 대전광역시 온천2동"
+    }
+  ], "comment_db" : [
+    {
+      "comment_id": "comment_01_01",
+      "edit_time" : "2018-06-08T10:20:08.622Z",
+      "editor_id" : "abc001_cCCXP2OPYv2bS",
+      "content" : "Room Owner is very kind!!!",
+      "star_rating" : 4
+    },{
+      "comment_id": "comment_01_02",
+      "edit_time" : "2018-06-09T10:20:08.622Z",
+      "editor_id" : "abc002_cCCXP2OPYv3bS",
+      "content" : "Room Owner is very unkind!!!",
+      "star_rating" : 1
+    },{
+      "comment_id": "comment_01_03",
+      "edit_time" : "2018-06-10T10:20:08.622Z",
+      "editor_id" : "abc003_cCCXP2OPYv4bS",
+      "content" : "Room Owner is ugly!!!",
+      "star_rating" : 2
+    },{
+      "comment_id": "comment_02_01",
+      "edit_time" : "2018-06-08T10:20:08.622Z",
+      "editor_id" : "abc001_cCCXP2OPYv2bS",
+      "content" : "Room Owner is very kind!!!",
+      "star_rating" : 4
+    },{
+      "comment_id": "comment_02_02",
+      "edit_time" : "2018-06-09T10:20:08.622Z",
+      "editor_id" : "abc002_cCCXP2OPYv3bS",
+      "content" : "Room Owner is very unkind!!!",
+      "star_rating" : 1
+    },{
+      "comment_id": "comment_02_03",
+      "edit_time" : "2018-06-10T10:20:08.622Z",
+      "editor_id" : "abc003_cCCXP2OPYv4bS",
+      "content" : "Room Owner is ugly!!!",
+      "star_rating" : 2
+    },{
+      "comment_id": "comment_03_01",
+      "edit_time" : "2018-06-08T10:20:08.622Z",
+      "editor_id" : "abc001_cCCXP2OPYv2bS",
+      "content" : "Room Owner is very kind!!!",
+      "star_rating" : 4
+    },{
+      "comment_id": "comment_03_02",
+      "edit_time" : "2018-06-09T10:20:08.622Z",
+      "editor_id" : "abc002_cCCXP2OPYv3bS",
+      "content" : "Room Owner is very unkind!!!",
+      "star_rating" : 1
+    },{
+      "comment_id": "comment_03_03",
+      "edit_time" : "2018-06-10T10:20:08.622Z",
+      "editor_id" : "abc003_cCCXP2OPYv4bS",
+      "content" : "Room Owner is ugly!!!",
+      "star_rating" : 2
+    },{
+      "comment_id": "comment_04_01",
+      "edit_time" : "2018-06-08T10:20:08.622Z",
+      "editor_id" : "abc001_cCCXP2OPYv2bS",
+      "content" : "Room Owner is very kind!!!",
+      "star_rating" : 4
+    },{
+      "comment_id": "comment_04_02",
+      "edit_time" : "2018-06-09T10:20:08.622Z",
+      "editor_id" : "abc002_cCCXP2OPYv3bS",
+      "content" : "Room Owner is very unkind!!!",
+      "star_rating" : 1
+    },{
+      "comment_id": "comment_04_03",
+      "edit_time" : "2018-06-10T10:20:08.622Z",
+      "editor_id" : "abc003_cCCXP2OPYv4bS",
+      "content" : "Room Owner is ugly!!!",
+      "star_rating" : 2
+    },{
+      "comment_id": "comment_05_01",
+      "edit_time" : "2018-06-08T10:20:08.622Z",
+      "editor_id" : "abc001_cCCXP2OPYv2bS",
+      "content" : "Room Owner is very kind!!!",
+      "star_rating" : 4
+    },{
+      "comment_id": "comment_05_02",
+      "edit_time" : "2018-06-09T10:20:08.622Z",
+      "editor_id" : "abc002_cCCXP2OPYv3bS",
+      "content" : "Room Owner is very unkind!!!",
+      "star_rating" : 1
+    },{
+      "comment_id": "comment_05_03",
+      "edit_time" : "2018-06-10T10:20:08.622Z",
+      "editor_id" : "abc003_cCCXP2OPYv4bS",
+      "content" : "Room Owner is ugly!!!",
+      "star_rating" : 2
+    },{
+      "comment_id": "comment_06_01",
+      "edit_time" : "2018-06-08T10:20:08.622Z",
+      "editor_id" : "abc001_cCCXP2OPYv2bS",
+      "content" : "Room Owner is very kind!!!",
+      "star_rating" : 4
+    },{
+      "comment_id": "comment_06_02",
+      "edit_time" : "2018-06-09T10:20:08.622Z",
+      "editor_id" : "abc002_cCCXP2OPYv3bS",
+      "content" : "Room Owner is very nice!!!",
+      "star_rating" : 5
+    },{
+      "comment_id": "comment_06_03",
+      "edit_time" : "2018-06-10T10:20:08.622Z",
+      "editor_id" : "abc003_cCCXP2OPYv4bS",
+      "content" : "Room Owner is good!!!",
+      "star_rating" : 4
+    }
+  ], "request_db":[
+    {
+      "request_id" : "request_01_01",
+      "status" : "accept",
+      "room_id" : "test_room_001",
+      "requested_user_id": "abc001_cCCXP2OPYv2bS" 
+    },{
+      "request_id" : "request_02_01",
+      "status" : "wait",
+      "room_id" : "test_room_002",
+      "requested_user_id": "abc002_cCCXP2OPYv3bS" 
+    },{
+      "request_id" : "request_03_01",
+      "status" : "reject",
+      "room_id" : "test_room_003",
+      "requested_user_id": "abc003_cCCXP2OPYv4bS" 
+    },{
+      "request_id" : "request_04_01",
+      "status" : "accept",
+      "room_id" : "test_room_004",
+      "requested_user_id": "abc001_cCCXP2OPYv2bS" 
+    },{
+      "request_id" : "request_05_01",
+      "status" : "reject",
+      "room_id" : "test_room_005",
+      "requested_user_id": "abc002_cCCXP2OPYv3bS" 
+    },{
+      "request_id" : "request_06_01",
+      "status" : "wait",
+      "room_id" : "test_room_006",
+      "requested_user_id": "abc003_cCCXP2OPYv4bS" 
+    }
+  ], "history_db":[
+    {
+      "history_id": "history_01_01",
+      "room_id": "test_room_001",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 100,
       "monthly": 30,
-      "option": [],
-      "description": "Test Room4",
-      "owner" : "abc123_iQKXPdL6Yv1aS",
-      "enrolled_date": "2018-06-03T06:39:54.622Z",
-      "status": "empty",
-      "comments": [],
-      "request_list" : [],
-      "type" : "oneroom"
+      "user_id": "abc001_cCCXP2OPYv2bS"
+    },{
+      "history_id": "history_01_02",
+      "room_id": "test_room_002",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 200,
+      "monthly": 50,
+      "user_id": "abc001_cCCXP2OPYv2bS"
+    },{
+      "history_id": "history_01_03",
+      "room_id": "test_room_003",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 80,
+      "monthly": 20,
+      "user_id": "abc001_cCCXP2OPYv2bS"
+    },{
+      "history_id": "history_01_04",
+      "room_id": "test_room_004",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 180,
+      "monthly": 40,
+      "user_id": "abc001_cCCXP2OPYv2bS"
+    },{
+      "history_id": "history_01_05",
+      "room_id": "test_room_005",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 250,
+      "monthly": 70,
+      "user_id": "abc001_cCCXP2OPYv2bS"
+    },{
+      "history_id": "history_01_06",
+      "room_id": "test_room_006",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 1000,
+      "monthly": 350,
+      "user_id": "abc001_cCCXP2OPYv2bS"
+    },{
+      "history_id": "history_02_01",
+      "room_id": "test_room_001",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 100,
+      "monthly": 30,
+      "user_id": "abc002_cCCXP2OPYv3bS"
+    },{
+      "history_id": "history_02_02",
+      "room_id": "test_room_002",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 200,
+      "monthly": 50,
+      "user_id": "abc002_cCCXP2OPYv3bS"
+    },{
+      "history_id": "history_02_03",
+      "room_id": "test_room_003",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 80,
+      "monthly": 20,
+      "user_id": "abc002_cCCXP2OPYv3bS"
+    },{
+      "history_id": "history_02_04",
+      "room_id": "test_room_004",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 180,
+      "monthly": 40,
+      "user_id": "abc002_cCCXP2OPYv3bS"
+    },{
+      "history_id": "history_02_05",
+      "room_id": "test_room_005",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 250,
+      "monthly": 70,
+      "user_id": "abc002_cCCXP2OPYv3bS"
+    },{
+      "history_id": "history_02_06",
+      "room_id": "test_room_006",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 1000,
+      "monthly": 350,
+      "user_id": "abc002_cCCXP2OPYv3bS"
+    },{
+      "history_id": "history_03_01",
+      "room_id": "test_room_001",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 100,
+      "monthly": 30,
+      "user_id": "abc003_cCCXP2OPYv4bS"
+    },{
+      "history_id": "history_03_02",
+      "room_id": "test_room_002",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 200,
+      "monthly": 50,
+      "user_id": "abc003_cCCXP2OPYv4bS"
+    },{
+      "history_id": "history_03_03",
+      "room_id": "test_room_003",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 80,
+      "monthly": 20,
+      "user_id": "abc003_cCCXP2OPYv4bS"
+    },{
+      "history_id": "history_03_04",
+      "room_id": "test_room_004",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 180,
+      "monthly": 40,
+      "user_id": "abc003_cCCXP2OPYv4bS"
+    },{
+      "history_id": "history_03_05",
+      "room_id": "test_room_005",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 250,
+      "monthly": 70,
+      "user_id": "abc003_cCCXP2OPYv4bS"
+    },{
+      "history_id": "history_03_06",
+      "room_id": "test_room_006",
+      "date": "2018-06-09T10:20:08.622Z",
+      "deposit": 1000,
+      "monthly": 350,
+      "user_id": "abc003_cCCXP2OPYv4bS"
     }
   ]
 }

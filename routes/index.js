@@ -330,7 +330,7 @@ exports.auth.logout = function(req, res) {
 exports.getroom = function(req, res){
   
   var room_db = db.collection('Rooms');
-  var d = 1;
+  var d = 0.0035;
   var d_min = parseInt (req.query.d_min)-1;
   var d_max = parseInt (req.query.d_max)+1;
   var m_min = parseInt (req.query.m_min)-1;
@@ -453,8 +453,11 @@ exports.register_room = function(req, res){
   var room_option = req.body.option;
   var room_location = req.body.location;
   var room_owner = req.session.user_id;
-  
-  
+  var room_comment = [];
+  var room_address = req.body.address;
+  console.log(room_address);
+  room_location.lat  = Number(room_location.lat);
+  room_location.lng  = Number(room_location.lng);
     var room_obj = {
       room_id: make_random_string(13),
       picture: room_picture,
@@ -467,6 +470,8 @@ exports.register_room = function(req, res){
       option: room_option,
       enrolled_date: room_date,
       owner : room_owner,
+      comments : room_comment,
+      address : room_address, 
     };
     room_db.save(room_obj, function(save_err, save_res) {
       if(save_err) {

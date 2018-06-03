@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const roomSchema = new Schema(
   {
       room_id: { type: String, required: true, unique: true},
-      picture: { type: Array, required : true},
+      picture: { type: Array, required : true, default : []},
       location: {lat: Number, lng : Number, required : true},
       deposit: { type : Number, required : true},
       monthly: {type : Number, required: true},
@@ -13,9 +13,10 @@ const roomSchema = new Schema(
       owner : {type : String, required : true},
       enrolled_date: {type : String, require : true},
       status: {type : String, required : true},
-      comments: {type: Array},
+      comments: {type: Array, default : []},
       request_list : {type : Array},
-      type : {type : String, required : true}
+      type : {type : String, required : true},
+      address : { type: String}
   },
   {
       collection: 'Rooms'
