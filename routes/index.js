@@ -116,7 +116,6 @@ exports.roomregister = function(req,res){
 };
 
 exports.mypage = function(req, res) {
-  console.log(req.session.user_type, req.session.user_id);
   if (req.session.user_type == 'room_owner') {
     res.render('mypage.roomOwner.html');
   } else if (req.session.user_type == 'student') {
@@ -133,16 +132,13 @@ exports.auth.send_verification = function(req, res) {
   var user_db = db.collection('Users');
   var user_id = req.body.user_id;
   var user_email = req.body.user_email;
-  console.log('DEBUG 1: ', user_id, user_email);
 
   if (user_email && user_email.indexOf('@kaist.ac.kr') > -1) {
-    console.log('DEBUG 1-1');
     user_db.findOne({
       id: user_id,
       email: user_email,
       type: 'student'
     }, function(find_err, find_res) {
-      console.log('DEBUG 2: ', find_err, find_res);
       if (find_err || !find_res) {
         res.json({
           result: false,
@@ -159,7 +155,6 @@ exports.auth.send_verification = function(req, res) {
             verify_code: verify_code
           }
         }, function(update_err, update_res) {
-          console.log('DEBUG 3: ', update_err, update_res);
           if (update_err) {
             res.json({
               result: false,
@@ -181,7 +176,6 @@ exports.auth.send_verification = function(req, res) {
             };
 
             transporter.sendMail(mail_options, function(err, info) {
-              console.log(err, info);
               if (err) {
                 res.json({
                   result: false,
@@ -212,7 +206,6 @@ exports.auth.accept_verification = function(req, res) {
   if (before_verify_code) {
     var verify_code = new Buffer(before_verify_code, 'base64').toString();
     var user_id = verify_code.substring(0, verify_code.indexOf('_'));
-    console.log(verify_code, user_id);
     user_db.update({
       id: user_id,
       type: 'student',
@@ -407,19 +400,18 @@ exports.getcomment = function(req, res) {
   var comment_db = db.collection('Comments');
   var room_list = req.body.rooms;
   async.map(room_list, function(room, next) {
-    if (!room.comments || !room.comments.length) {
-      next(null);
-    } else {
-      comment_db.find({
-        comment_id: {$in: room.comments}
-      }).toArray(function(find_err, find_res) {
-        if (find_err) {
-          next(null);
-        } else {
-          next(find_res);
-        }
-      });
+    if (!room.comments) {
+      room.comments = [];
     }
+    comment_db.find({
+      comment_id: {$in: room.comments}
+    }).toArray(function(find_err, find_res) {
+      if (find_err) {
+        next(null);
+      } else {
+        next(null, find_res);
+      }
+    });
   }, function(async_err, comment_list) {
     if (async_err) {
       res.json(null);
