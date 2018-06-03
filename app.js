@@ -72,11 +72,9 @@ app.get('/registerRoomOwner', routes.registerRoomOwner);
 app.get('/registerStudent', routes.registerStudent);
 app.get('/map', routes.map);
 app.get('/getroom', routes.getroom);
-app.get('/get_student_room_list', routes.get_student_room_list);
-app.post('/getcomment', routes.getcomment);
 app.get('/search', routes.searchPage);
 app.get('/roomDetail', routes.roomDetail);
-app.get('/detailRoom', routes.detailRoom);
+app.get('/detailROom', routes.detailRoom);
 app.get('/roomregister', routes.roomregister);
 
 app.post('/register_room',  routes.register_room);
@@ -99,10 +97,10 @@ function connectDB() {
     if (err) throw err;
     console.log('DB connection success!');
     db = mongoclient.db('kabang');
-    // var dummy = require('./dummyDB.json');
-    // db.collection('Rooms').insertMany(dummy.room_db, function(ins_err, res) {
-    //   console.log(ins_err, res);
-    // });
+    var dummy = require('./dummyDB.json');
+    db.collection('Users').insertMany(dummy.user_db, function(ins_err, res) {
+    console.log(ins_err, res);
+    });
   });
 };
 
