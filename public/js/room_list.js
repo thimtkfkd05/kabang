@@ -13,7 +13,7 @@ $(document).ready(function() {
     } else if (roomNo == 1) {
       $('div.row_adder').append(
         roomcard(
-          '/roomDetail',
+          room_list[0].room_id,
           room_list[0].location,
           room_list[0].picture[0],
           room_list[0].deposit+', '+room_list[0].monthly+'/month',
@@ -25,7 +25,7 @@ $(document).ready(function() {
         var html = '<div class="row">';
         for (var j = 0; j < 2; j++){
           html += roomcard(
-            '/roomDetail', 
+            room_list[2*i+j].room_id, 
             room_list[2*i+j].location,
             room_list[2*i+j].picture[0],
             room_list[2*i+j].deposit+', '+room_list[2*i+j].monthly+'/month',
@@ -38,4 +38,12 @@ $(document).ready(function() {
       }
     }
   });
+});
+
+$(document).on('click', '.card', function(){
+
+  var query = "/roomDetail?room_id=";
+  query += $(this).find('.card-img-top').attr('value');
+  window.location.href = query;
+
 });

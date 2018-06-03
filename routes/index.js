@@ -41,7 +41,7 @@ exports.roomlist = function(req,res){
   var price_m_min = req.query.m_min;
   var price_m_max = req.query.m_max;
   var room_type = req.query.room_type;
-  
+  console.log(req.query)
   res.render('roomlist.html');
 };
 
@@ -62,7 +62,7 @@ exports.searchPage = function(req,res){
 }
 exports.roomDetail = function(req,res){
   var room_db = db.collection('Rooms');
-  if (req.query.type && req.query.room_id) {
+  if (req.query.room_id) {
     room_db.findOne({
       'room_id': req.query.room_id
     }, function(find_err, find_res) {
