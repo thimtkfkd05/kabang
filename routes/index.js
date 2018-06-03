@@ -54,7 +54,7 @@ exports.searchPage = function(req,res){
 }
 exports.roomDetail = function(req,res){
   var room_db = db.collection('Rooms');
-  if (req.query.type && req.query.room_id) {
+  if (req.query.room_id) {
     room_db.findOne({
       'room_id': req.query.room_id
     }, function(find_err, find_res) {
