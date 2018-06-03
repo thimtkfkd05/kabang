@@ -293,11 +293,11 @@ exports.auth.logout = function(req, res) {
 exports.getroom = function(req, res){
   
   var room_db = db.collection('Rooms');
-  var d = 0.0035;
-  var d_min = parseInt (req.query.d_min);
-  var d_max = parseInt (req.query.d_max);
-  var m_min = parseInt (req.query.m_min);
-  var m_max = parseInt (req.query.m_max);
+  var d = 1;
+  var d_min = parseInt (req.query.d_min)-1;
+  var d_max = parseInt (req.query.d_max)+1;
+  var m_min = parseInt (req.query.m_min)-1;
+  var m_max = parseInt (req.query.m_max)+1;
   var lat = parseFloat (req.query.lat);
   var lng = parseFloat (req.query.lng);
   

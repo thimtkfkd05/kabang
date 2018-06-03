@@ -64,13 +64,13 @@ $(document).ready(function() {
     query += 'm_max=' + $('#m-max').val() + '&';
     
     if ($("#one-room-1").is(":checked"))
-      room_type = "one-room-1";
+      room_type = "one_room";
     else if ($("#one-room-2").is(":checked"))
-      room_type = "one-room-2";
+      room_type = "one_room";
     else if ($("#two-room").is(":checked"))
-      room_type = "two-room";
+      room_type = "two_room";
     else if ($("#three-room").is(":checked"))
-      room_type = "three-room";
+      room_type = "three_room";
     
     query += 'room_type=' + room_type;
     console.log(query);
