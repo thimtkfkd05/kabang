@@ -56,12 +56,12 @@ $(document).ready(function() {
    
     var room_type;
     var query = '/roomlist?';
-    query += myMarker.getPosition ().lat () + '&';
-    query += myMarker.getPosition ().lng () + '&';
-    query += $('#d-min').val() + '&';
-    query += $('#d-max').val() + '&';
-    query += $('#m-min').val() + '&';
-    query += $('#m-max').val() + '&';
+    query += 'lat=' + myMarker.getPosition ().lat () + '&';
+    query += 'lng=' + myMarker.getPosition ().lng () + '&';
+    query += 'd_min=' + $('#d-min').val() + '&';
+    query += 'd_max=' + $('#d-max').val() + '&';
+    query += 'm_min=' + $('#m-min').val() + '&';
+    query += 'm_max=' + $('#m-max').val() + '&';
     
     if ($("#one-room-1").is(":checked"))
       room_type = "one-room-1";
@@ -72,7 +72,7 @@ $(document).ready(function() {
     else if ($("#three-room").is(":checked"))
       room_type = "three-room";
     
-    query += room_type;
+    query += 'room_type=' + room_type;
     console.log(query);
 
     window.location.href = query;

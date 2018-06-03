@@ -34,6 +34,14 @@ exports.index = function(req, res){
 };
 
 exports.roomlist = function(req,res){
+  var lat = req.query.lat;
+  var lng = req.query.lng;
+  var price_d_min = req.query.d_min;
+  var price_d_max = req.query.d_max;
+  var price_m_min = req.query.m_min;
+  var price_m_max = req.query.m_max;
+  var room_type = req.query.room_type;
+  
   res.render('roomlist.html');
 };
 
