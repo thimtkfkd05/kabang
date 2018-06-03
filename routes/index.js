@@ -60,6 +60,10 @@ exports.roomregister = function(req,res){
   res.render('roomregister.html');
 };
 
+exports.roomregister = function(req,res){
+  res.render('roomregister.html');
+};
+
 exports.mypage = function(req, res) {
   if (req.session.type == 'room_owner') {
     res.render('mypage.roomOwner.html');
@@ -294,3 +298,45 @@ exports.detailRoom = function(req,res){
     }
   });
 };
+
+exports.register_room = function(req, res){
+  var room_db = db.collection('Rooms');
+  var room_picture = req.body.picture;
+  var room_deposit = req.body.deposit;
+  var room_monthly = req.body.monthly;
+  var room_type = req.body.type;
+  var room_status = req.body.status;
+  //var room_location = req.body.location;
+  var room_description = req.body.description;
+  var room_option = req.body.option;
+  
+  
+    var room_obj = {
+      room_id: make_random_string(13),
+      picture: room_picture,
+      deposit: room_deposit,
+      monthly: room_monthly,
+      type: room_type,
+      status: room_status,
+      // location: room_location,
+      description: room_description,
+      option: room_option,
+      enrolled_date: Date.now()
+    };
+    room_db.save(room_obj, function(save_err, save_res) {
+      if(save_err) {
+        res.json({
+          result: false,
+          err: save_err
+          
+        });
+        console.log("fail!!");
+      }else{
+        res.json({
+          result: true,
+        });
+        console.log("Success!!");
+      }
+    });
+  
+  }

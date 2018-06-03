@@ -51,23 +51,20 @@
   
   </head>
   <body>
-    <div>
-      <h2><b>Room Picture</b></h2>
-      <div class="input_wrap">
-          <input type="file" id="input_imgs" multiple/>
-          
-      </div>
-  </div>
-
-  <div>
-      <div class="imgs_wrap">
-          <img id="img" />
-      </div>
-  </div>
-
-  <a href="javascript:" onclick="fileUploadAction();" class="my_button">Upload file</a>
-
-          <form>
+          <form id ='registerAction' > 
+          <div class = "form-group">
+              <label for="Picture">Picture</label>
+              <div class="input_wrap">
+                  <input type="file" class= "form-control-file" id="input_imgs" multiple/>
+              </div>
+            </div>
+        
+            <div class = "form-group">
+                <div class="imgs_wrap">
+                    <img id="img" />
+                </div>
+            </div>  
+            <button type="button" href="javascript:" onclick="fileUploadAction();" class="btn btn-primary">Upload</button>
           <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="Deposit">Deposit</label>
@@ -81,54 +78,46 @@
               <div class="form-row">
                   <div class="form-group col-md-6">
                       <label for="Room type">Room type</label>
-                      <select id="roomtype" class="form-control">
+                      <select id="type" class="form-control">
                         <option selected>Room type</option>
-                        <option value = "1">One-Room(반지하)</option>
-                        <option value = "2">One-Room(지상)</option>
-                        <option value = "3">Two-Room</option>
-                        <option value = "4">Three-Room</option>
+                        <option value = "One-Room(반지하)">One-Room(반지하)</option>
+                        <option value = "One-Room(지상)">One-Room(지상)</option>
+                        <option value = "Two-Room">Two-Room</option>
+                        <option value = "Three-Room">Three-Room</option>
                       </select>
                     </div>
                       <div class="form-group col-md-6">
-                      <label for="Room type">Room status</label>
-                      <select id="roomstatus" class="form-control">
+                      <label for="Room status">Room status</label>
+                      <select id="status" class="form-control">
                           <option selected>Room status</option>
-                          <option value = "1">Empty</option>
-                          <option value = "2">Will be empty</option>
-                          <option value = "3">Remodeling</option>
+                          <option value = "Empty">Empty</option>
+                          <option value = "Will be empty">Will be empty</option>
+                          <option value = "Remodeling">Remodeling</option>
                         </select>
                       </div>
                       </div>
                       <div id="map"></div>
-                      <fieldset class="form-group">
-                          <div class="row">
-                            <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-                            <div class="col-sm-10">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="washingmachine" id="washingmachine" value="washingmachine" >
-                                <label class="form-check-label" for="washingmachine">
-                                  Washing machine
-                                </label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="Wifi" id="Wifi" value="Wifi">
-                                <label class="form-check-label" for="Wifi">
-                                  Wifi
-                                </label>
-                                </div>
-                                </div>
-                                <button id="add">추가</button>
-                                <div id = "dynamicCB"></div>
-                                </div>
-                                
-                                </fieldset>
-                                
-                                
-    
+                      <div class= "form-check">
+                      <div id="cblist">
+                        
+                        <input type="checkbox" value="first checkbox" id="cb1" /> 
+                        <label for="cb1">Option1</label>
+                      </div>
+                    </div>
+                    <div class = "form-row">
+                    <div class="form-group col-md-2">
+                    <input class="form-control" type="text" placeholder="option" id="txtName">
+                  </div>
+                    <button type="button" class="btn btn-primary btn-sm" id = "btnSave">Add option</button>
+                  </div>        
                   <div class="form-group">
                       <label for="Roomdescription">Room description</label>
-                      <textarea class="form-control" id="roomdescription" rows="7"></textarea>
+                      <textarea class="form-control" id="description" rows="7"></textarea>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                          <button type="submit" class="btn btn-primary" id = 'register' >Register</button>
+                        </div>
     </form>
     <script src="/module/js/jquery-1.12.4.min.js"></script>
     <script src="/module/js/jquery-ui.min.js"></script>
@@ -142,41 +131,15 @@
         $("#dynamicCB").append("<br/><div class = 'form-check'><input class='form-check-input' type='radio' name= 'wifi' value ='Wifi'><label class = 'form-check-lable' for='wifi'>Wifi</label>")
       })});
       </script>
+          <script>
 
-       <script>
-          var sel_files = [];
+            // $(document).ready(function() {
+              
 
-          $(document).ready(function(){
-            $("#input_imgs").on("change", handleImgsFileSelelct);
-          });
-          function fileUploadAction(){
-            console.log("fileUploadAction");
-            $("#input_imgs").trigger('click');
-          }
-
-          function handleImgsFileSelelct(e) {
-            sel_files = [];
-            $(".imgs_wrap").empty();
-            var files = e.target.files;
-            var filesArr = Array.prototype.slice.call(files);
+            // });
             
-            var index = 0;
-            filesArr.forEach(function(f){
-              if(!f.type.match("image.*")){
-                alret("only possible extension is img ");
-                return;
-              }
-
-              sel_files.push(f);
-
-              var reader = new FileReader();
-              reader.onload = function(e){
-                index++;
-              }
-              reader.readAsDataURL(f);
-            });
-          }
-        </script>
+            
+          </script>
           <script>
               var marker;
         
@@ -248,10 +211,15 @@
         
                 // 이미지 정보들을 담을 배열
                 var sel_files = [];
+                var index = 0;
+                var fileNameArr = new Array();
         
         
                 $(document).ready(function() {
                     $("#input_imgs").on("change", handleImgFileSelect);
+                    $("#input_imgs").on("change", function(){
+                      fileNameArr.push($('#input_imgs').val());
+                    });
                 }); 
         
                 function fileUploadAction() {
@@ -262,13 +230,11 @@
                 function handleImgFileSelect(e) {
         
                     // 이미지 정보들을 초기화
-                    sel_files = [];
-                    $(".imgs_wrap").empty();
         
                     var files = e.target.files;
                     var filesArr = Array.prototype.slice.call(files);
-        
-                    var index = 0;
+                    
+                    
                     filesArr.forEach(function(f) {
                         if(!f.type.match("image.*")) {
                             alert("확장자는 이미지 확장자만 가능합니다.");
@@ -281,19 +247,59 @@
                         reader.onload = function(e) {
                             var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
                             $(".imgs_wrap").append(html);
+                            $(".imgs_wrap").append(index);
                             index++;
-        
                         }
                         reader.readAsDataURL(f);
                         
                     });
                 }
-        
-        
-        
-                
+                $(document).ready(function() {
+                  $('#btnSave').click(function() {
+                      addCheckbox($('#txtName').val());
+                  });
+              });
+              var optionNum;
+              function addCheckbox(name) {
+                 var container = $('#cblist');
+                 var inputs = container.find('input');
+                 optionNum = inputs.length+1;
+              
+                 $('<input />', { type: 'checkbox', id: 'cb'+ optionNum, value: name }).appendTo(container);
+                 $('<label />', { 'for': 'cb'+ optionNum, text: name }).appendTo(container);
+              }
+              
+              
+              
+              
+              $(document).ready(function() {    
+                $('#register').click(function(){
+                var chkedArr = new Array;
+                $("input:checkbox:checked").each(function(index){
+                  chkedArr.push($(this).val());
+                })
+              
+                    
+                $.post('/register_room',{
+                  deposit : $('#deposit').val(),
+                  monthly : $('#monthly').val(),
+                  status : $('#status').val(),
+                  option : chkedArr,
+                  description : $('#description').val(),
+                  type : $('#type').val(), 
+                  picture : fileNameArr},
+
+                  function(result){
+                  if(result){
+                    alert("Register Success!!");
+                  }
+                  else{
+                    alet("Register Faii!!");
+                  }
+                  });});}); 
+
             </script>
-    
+            
     </body>
     </html>
 
