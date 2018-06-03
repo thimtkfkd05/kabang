@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $('.btn-logout').click(function() {
     $.post('/auth/logout', {}, function(result) {
-      href.location = '/login';
+      location.href = '/login';
     });
   });
 });

@@ -2,7 +2,7 @@ $(document).ready(function() {
   var find_query = {
     owner: true
   };
-  $.get('/getroom', find_query, function(res) {
+  $.get('/get_room_owner_room_list', find_query, function(res) {
     var room_list = [];
     var roomNo = 0;
     if (res) {

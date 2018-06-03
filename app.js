@@ -40,7 +40,7 @@ app.configure('development', function(){
 // if feature needs login, use this before routes function
 function checker(type) {
   return function(req, res, next) {
-    var user_db = app.get('db').collection('Users');
+    var user_db = db.collection('Users');
     var user_id = req.session.user_id;
     var user_type = req.session.user_type;
     
@@ -53,7 +53,7 @@ function checker(type) {
           res.redirect('/login');
         } else {
           if (find_res.type == 'student' && !find_res.is_verified) {
-            res.redirect('/need_verification');
+            res.redirect('/login');
           } else {
             next();
           }
@@ -66,28 +66,31 @@ function checker(type) {
 };
 
 app.get('/', routes.index);
-app.get('/roomlist', routes.roomlist);
+app.get('/roomlist', checker('student'), routes.roomlist);
 app.get('/login', routes.loginpage);
 app.get('/registerRoomOwner', routes.registerRoomOwner);
 app.get('/registerStudent', routes.registerStudent);
 app.get('/map', routes.map);
-app.get('/getroom', routes.getroom);
-app.get('/get_student_room_list', routes.get_student_room_list);
-app.post('/getcomment', routes.getcomment);
-app.get('/search', routes.searchPage);
-app.get('/roomDetail', routes.roomDetail);
-app.get('/detailRoom', routes.detailRoom);
-app.get('/roomregister', routes.roomregister);
+app.get('/getroom', checker('student'), routes.getroom);
+app.get('/get_room_owner_room_list', checker('room_owner'), routes.get_room_owner_room_list);
+app.get('/get_student_room_list', checker('student'), routes.get_student_room_list);
+app.post('/getcomment', checker(), routes.getcomment);
+app.get('/search', checker('student'), routes.searchPage);
+app.get('/roomDetail', checker(), routes.roomDetail);
+app.get('/detailRoom', checker(), routes.detailRoom);
+app.get('/roomregister', checker('room_owner'), routes.roomregister);
 
-app.post('/register_room',  routes.register_room);
+app.post('/register_room', checker('room_owner'), routes.register_room);
 
-app.get('/mypage', /* checker(),*/ routes.mypage);
+app.get('/mypage', checker(), routes.mypage);
 app.post('/auth/login', routes.auth.login);
 app.post('/auth/logout', checker(), routes.auth.logout);
 app.post('/auth/signup', routes.auth.signup);
 app.post('/auth/send_verification', routes.auth.send_verification);
-app.post('/searchRoom', routes.searchroom);
+app.post('/searchRoom', checker('student'), routes.searchroom);
 app.get('/auth/accept_verification', routes.auth.accept_verification);
+app.post('/sendRequest', checker('student'), routes.sendRequest);
+app.post('/controlRequest', checker('room_owner'), routes.controlRequest);
 
 function connectDB() {
   var dbUrl = 'mongodb://localhost:27017';

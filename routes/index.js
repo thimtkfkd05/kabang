@@ -8,11 +8,15 @@ const config = {
   service: 'Gmail',
   host: 'localhost',
   port: 465,
+  // auth: {
+  //   type: 'OAuth2',
+  //   user: 'thimtkfkd05@gmail.com',
+  //   serviceClient: keys.client_id,
+  //   privateKey: keys.private_key
+  // },
   auth: {
-    type: 'oauth2',
-    user: keys.client_email,
-    serviceClient: keys.client_id,
-    privateKey: keys.private_key
+    user: keys.user_email,
+    pass: new Buffer(keys.user_pass, 'base64').toString()
   },
   tls: {
     rejectUnauthorize: false,
@@ -63,7 +67,34 @@ exports.roomDetail = function(req,res){
         res.redirect('/mypage');
       }
       else{
-        res.render('roomDetail.html', find_res);
+        var comment_db = db.collection('Comments');
+        comment_db.find({
+          comment_id: {$in: find_res.comments}
+        }).toArray(function(comment_err, comment_res) {
+          if (comment_err) {
+            res.redirect('/mypage');
+          } else {
+            if (req.query.type == 'room_owner') {
+              var request_db = db.collection('Requests');
+              request_db.find({
+                room_id: req.query.room_id
+              }).toArray(function(request_err, request_res) {
+                if (request_err) {
+                  res.redirect('/mypage');
+                } else {
+                  find_res['request_list'] = request_res;
+                  find_res['comments'] = comment_res;
+                  find_res['user_type'] = req.query.type;
+                  res.render('roomDetail.html', find_res);
+                }
+              });
+            } else {
+              find_res['comments'] = comment_res;
+              find_res['user_type'] = req.query.type;
+              res.render('roomDetail.html', find_res);
+            }
+          }
+        });
       }
     });
   } else {
@@ -85,13 +116,13 @@ exports.roomregister = function(req,res){
 };
 
 exports.mypage = function(req, res) {
-  if (req.session.type == 'room_owner') {
+  console.log(req.session.user_type, req.session.user_id);
+  if (req.session.user_type == 'room_owner') {
     res.render('mypage.roomOwner.html');
-  } else if (req.session.type == 'student') {
+  } else if (req.session.user_type == 'student') {
     res.render('mypage.student.html');
   } else {
-    // res.redirect('/login');
-    res.render('mypage.roomOwner.html');
+    res.redirect('/login');
   }
 }
 exports.auth = function(req, res) {
@@ -102,13 +133,16 @@ exports.auth.send_verification = function(req, res) {
   var user_db = db.collection('Users');
   var user_id = req.body.user_id;
   var user_email = req.body.user_email;
+  console.log('DEBUG 1: ', user_id, user_email);
 
   if (user_email && user_email.indexOf('@kaist.ac.kr') > -1) {
+    console.log('DEBUG 1-1');
     user_db.findOne({
       id: user_id,
       email: user_email,
       type: 'student'
     }, function(find_err, find_res) {
+      console.log('DEBUG 2: ', find_err, find_res);
       if (find_err || !find_res) {
         res.json({
           result: false,
@@ -121,8 +155,11 @@ exports.auth.send_verification = function(req, res) {
           email: user_email,
           type: 'student'
         }, {
-          verify_code: verify_code
+          $set: {
+            verify_code: verify_code
+          }
         }, function(update_err, update_res) {
+          console.log('DEBUG 3: ', update_err, update_res);
           if (update_err) {
             res.json({
               result: false,
@@ -144,6 +181,7 @@ exports.auth.send_verification = function(req, res) {
             };
 
             transporter.sendMail(mail_options, function(err, info) {
+              console.log(err, info);
               if (err) {
                 res.json({
                   result: false,
@@ -169,28 +207,31 @@ exports.auth.send_verification = function(req, res) {
 
 exports.auth.accept_verification = function(req, res) {
   var user_db = db.collection('Users');
-  var verify_code = req.query.verify_code;
+  var before_verify_code = req.query.verify_code;
   
-  if (verify_code) {
-    verify_code = new Buffer(verify_code, 'base64').toString();
+  if (before_verify_code) {
+    var verify_code = new Buffer(before_verify_code, 'base64').toString();
     var user_id = verify_code.substring(0, verify_code.indexOf('_'));
+    console.log(verify_code, user_id);
     user_db.update({
       id: user_id,
       type: 'student',
       is_verified: false,
-      verify_code: verify_code
+      verify_code: before_verify_code
     }, {
-      is_verified: true
+      $set: {
+        is_verified: true
+      }
     }, function(update_err, update_res) {
       if (update_err) {
         // db update fail
         res.render('404.html');
       } else {
         req.session.user_id = user_id;
-        req.session.type = 'student';
-        res.redirect('/student');
+        req.session.user_type = 'student';
+        res.redirect('/mypage');
       }
-    })
+    });
   } else {
     // verify_code not found
     res.render('404.html');
@@ -222,7 +263,8 @@ exports.auth.signup = function(req, res) {
         });
       } else {
         res.json({
-          result: true
+          result: true,
+          user_id: user_obj.id
         });
       }
     });
@@ -249,7 +291,6 @@ exports.auth.login = function(req, res) {
       type: 1,
       is_verified: 1
     }, function(find_err, find_res) {
-      console.log(find_err, find_res);
       if (find_err || !find_res) {
         res.json({
           result: false,
@@ -309,8 +350,6 @@ exports.getroom = function(req, res){
     if (find_err) {
       throw find_err;
     } else {
-
-      console.log (find_res);
       res.json({
         result: find_res
       });
@@ -318,24 +357,50 @@ exports.getroom = function(req, res){
   });
 };
 
-exports.get_student_room_list = function(req, res) {
-  if (req.session.type == 'student') {
-    var user_db = db.collection('Users');
-    user_db.findOne({
-      id: req.session.user_id,
-      type: req.session.type
-    }, {
-      room_list: 1
-    }, function(find_err, find_res) {
+exports.get_room_owner_room_list = function(req, res) {
+  if (req.session.user_type == 'room_owner' && req.query.owner) {
+    var room_db = db.collection('Rooms');
+    room_db.find({
+      owner: req.session.user_id
+    }).toArray(function(find_err, find_res) {
       if (find_err) {
-        res.json(null);
+        throw find_err;
       } else {
-        res.json(find_res);
+        res.json({
+          result: find_res
+        });
       }
     });
   } else {
     res.json(null);
   }
+};
+
+exports.get_student_room_list = function(req, res) {
+  var history_db = db.collection('Histories');
+  history_db.find({
+    user_id: req.session.user_id
+  }, {
+    room_id: 1
+  }).toArray(function(find_err, find_res) {
+    if (find_err) {
+      res.json(null);
+    } else {
+      var room_id_list = find_res.map(function(history) {
+        return history.room_id;
+      });
+      var room_db = db.collection('Rooms');
+      room_db.find({
+        room_id: {$in: room_id_list}
+      }).toArray(function(room_err, room_res) {
+        if (room_err) {
+          res.json(null);
+        } else {
+          res.json(room_res);
+        }
+      });
+    }
+  });
 };
 
 exports.getcomment = function(req, res) {
@@ -422,3 +487,56 @@ exports.register_room = function(req, res){
     });
   
   }
+
+
+exports.sendRequest = function(req, res) {
+  var room_db = db.collection('Rooms');
+  var request_db = db.collection('Requests');
+  var room_id = req.body.room_id;
+  var user_id = req.session.user_id;
+
+  var request_obj = {
+    request_id: 'request_' + make_random_string(13),
+    status: 'wait',
+    room_id: room_id,
+    requested_user_id: user_id
+  };
+  request_db.save(request_obj, function(save_err, save_res) {
+    if (save_err || !save_res) {
+      res.json({
+        err: save_err,
+        result: false
+      });
+    } else {
+      res.json({
+        result: true
+      });
+    }
+  });
+};
+
+exports.controlRequest = function(req, res) {
+  var room_db = db.collection('Rooms');
+  var request_db = db.collection('Requests');
+  var request_id = req.body.request_id;
+  var status = req.body.status
+
+  request_db.update({
+    request_id: request_id
+  }, {
+    $set: {
+      status: status
+    }
+  }, function(update_err, update_res) {
+    if (update_err || !update_res) {
+      res.json({
+        err: update_err,
+        result: false
+      });
+    } else {
+      res.json({
+        result: true
+      });
+    }
+  });
+};
