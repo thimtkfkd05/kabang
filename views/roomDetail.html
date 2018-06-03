@@ -48,13 +48,14 @@
         <div class="row">
           <p>Rating</p>
           <div class="rating">
-            <% for (var j = 0; j < 5; j++) { %>
               <% if (user_type == 'student') { %>
-              <i class="fa fa-star-o" style="cursor: pointer;"></i>
+                <% for (var j = 0; j < 5; j++) { %>
+                <i class="fa fa-star-o" style="cursor: pointer;"></i>
+                <% } %>
               <% } else { %>
-              <i class="fa fa-star-o"></i>
+                <%- stars %>
+              <!-- <i class="fa fa-star-o"></i> -->
               <% } %>
-            <% } %>
           </div>
         </div>
         <div class="row"><p></p></div>

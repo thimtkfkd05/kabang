@@ -20,10 +20,10 @@ $(document).ready(function() {
         var comments = comments_list[0];
         if (comments && comments.length) {
           var star_rating = 0;
-          result.map(function(comment) {
+          comments.map(function(comment) {
             star_rating += comment.star_rating;
           });
-          star_rating /= result.length;
+          star_rating /= comments.length;
           var star_rating_floor = Math.floor(star_rating);
           var star_rating_round = Math.round(star_rating);
           for (var m = 0; m < star_rating_floor; m++) {
