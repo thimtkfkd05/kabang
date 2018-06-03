@@ -306,7 +306,7 @@ exports.register_room = function(req, res){
   var room_monthly = req.body.monthly;
   var room_type = req.body.type;
   var room_status = req.body.status;
-  //var room_location = req.body.location;
+  var room_date = req.body.enrolled_date
   var room_description = req.body.description;
   var room_option = req.body.option;
   
@@ -321,7 +321,7 @@ exports.register_room = function(req, res){
       // location: room_location,
       description: room_description,
       option: room_option,
-      enrolled_date: Date.now()
+      enrolled_date: room_date
     };
     room_db.save(room_obj, function(save_err, save_res) {
       if(save_err) {

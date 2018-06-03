@@ -278,6 +278,8 @@
                 $("input:checkbox:checked").each(function(index){
                   chkedArr.push($(this).val());
                 })
+                
+
               
                     
                 $.post('/register_room',{
@@ -287,11 +289,13 @@
                   option : chkedArr,
                   description : $('#description').val(),
                   type : $('#type').val(), 
-                  picture : fileNameArr},
+                  picture : fileNameArr,
+                  enrolled_date : new Date().toISOString()},
+                  
 
                   function(result){
                   if(result){
-                    alert("Register Success!!");
+                    alert("abcSuccess!!");
                   }
                   else{
                     alet("Register Faii!!");
