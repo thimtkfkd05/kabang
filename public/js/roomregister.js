@@ -1,11 +1,14 @@
 var myMarker;
+var geocoder;
+var map;
 
 function initMap() {
     
   var seoul = {lat: 37, lng: 126};
-  var map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15, center: seoul});
 
+  geocoder = new google.maps.Geocoder;
   myMarker = new google.maps.Marker({
     map: map,
     draggable: true,
@@ -29,6 +32,7 @@ function initMap() {
       handleError (true, infoWindow, map.getCenter()); 
     });
 
+    
   } else {
       //Browser does not support Geo
       handleError (false, infoWindow, map.getCenter());
@@ -98,6 +102,7 @@ function handleImgFileSelect(e) {
         
     });
 }
+
 $(document).ready(function() {
   $('#btnSave').click(function() {
       addCheckbox($('#txtName').val());
@@ -128,7 +133,9 @@ var location_obj = {
   lng : myMarker.position.lng,
 }
 
-    
+var address = geocodeLatLng (location_obj);
+console.log (address);
+
 $.post('/register_room',{
   deposit : $('#deposit').val(),
   monthly : $('#monthly').val(),
@@ -149,6 +156,24 @@ $.post('/register_room',{
     alet("Register Faii!!");
   }
   });});}); 
+
+function geocodeLatLng (pos) {
+   
+  geocoder.geocode ({'location': pos}, function (results, status){
+
+    if (status == 'OK') {
+      
+      if (results[1]) {
+        return results[1].formatted_address;
+      } else 
+        console.log ('No results found');
+      
+    } else 
+      console.log ("Geocoder failed due to: " + status);
+  
+});
+    
+}
 
   
 

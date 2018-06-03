@@ -15,7 +15,8 @@ const roomSchema = new Schema(
       status: {type : String, required : true},
       comments: {type: Array},
       request_list : {type : Array},
-      type : {type : String, required : true}
+      type : {type : String, required : true},
+      address : { type: String}
   },
   {
       collection: 'Rooms'
