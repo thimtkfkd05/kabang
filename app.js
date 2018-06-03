@@ -72,9 +72,10 @@ app.get('/registerRoomOwner', routes.registerRoomOwner);
 app.get('/registerStudent', routes.registerStudent);
 app.get('/map', routes.map);
 app.get('/getroom', routes.getroom);
+app.get('/get_student_room_list', routes.get_student_room_list);
 app.get('/search', routes.searchPage);
 app.get('/roomDetail', routes.roomDetail);
-app.get('/detailROom', routes.detailRoom);
+app.get('/detailRoom', routes.detailRoom);
 app.get('/roomregister', routes.roomregister);
 
 app.post('/register_room',  routes.register_room);

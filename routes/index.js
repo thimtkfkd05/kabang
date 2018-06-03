@@ -320,6 +320,26 @@ exports.getroom = function(req, res){
   });
 };
 
+exports.get_student_room_list = function(req, res) {
+  if (req.session.type == 'student') {
+    var user_db = db.collection('Users');
+    user_db.findOne({
+      id: req.session.user_id,
+      type: req.session.type
+    }, {
+      room_list: 1
+    }, function(find_err, find_res) {
+      if (find_err) {
+        res.json(null);
+      } else {
+        res.json(find_res);
+      }
+    });
+  } else {
+    res.json(null);
+  }
+};
+
 //code for replying room search 
 exports.searchroom = function (req, res){
   
