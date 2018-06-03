@@ -528,23 +528,45 @@ exports.register_room = function(req, res){
       comments : room_comment,
       address : room_address, 
     };
-    room_db.save(room_obj, function(save_err, save_res) {
-      if(save_err) {
-        console.log("fail!!");
-        res.json({
-          result: false,
-          err: save_err
-          
-          
-        });
+    if (req.params.room_id) {
+      delete room_obj.room_id;
+      room_db.update({
+        room_id: req.params.room_id
+      }, {
+        $set: room_obj
+      }, function(update_err, update_res) {
+        if(update_err) {
+          console.log("fail!!");
+          res.json({
+            result: false,
+            err: update_err
+          });
+        }else{
+          res.json({
+            result: true,
+          });
+          console.log("Success!!");
+        }
+      });
+    } else {
+      room_db.save(room_obj, function(save_err, save_res) {
+        if(save_err) {
+          console.log("fail!!");
+          res.json({
+            result: false,
+            err: save_err
+            
+            
+          });
 
-      }else{
-        res.json({
-          result: true,
-        });
-        console.log("Success!!");
-      }
-    });
+        }else{
+          res.json({
+            result: true,
+          });
+          console.log("Success!!");
+        }
+      });
+    }
   
   }
 
