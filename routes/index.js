@@ -298,11 +298,11 @@ exports.getroom = function(req, res){
   var lng = parseFloat (req.query.lng);
   
   var find_query = {
-    type: req.query.room_type,
+    //type: req.query.room_type,
     deposit: { $gt: d_min, $lt: d_max},
     monthly: { $gt: m_min, $lt: m_max},
-    'location.lat': { $gt: lat - d, $lt: lat + d},
-    'location.lng': { $gt: lng - d, $lt: lng + d}
+    //'location.lat': { $gt: lat - d, $lt: lat + d},
+    //'location.lng': { $gt: lng - d, $lt: lng + d}
   };
   
   room_db.find(find_query).toArray(function(find_err, find_res) {

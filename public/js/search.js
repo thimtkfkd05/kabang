@@ -64,13 +64,13 @@ $(document).ready(function() {
     query += 'm_max=' + $('#m-max').val() + '&';
     
     if ($("#one-room-1").is(":checked"))
-      room_type = "one_room";
+      room_type = "One-Room(반지하)";
     else if ($("#one-room-2").is(":checked"))
-      room_type = "one_room";
+      room_type = "One-Room(지상)";
     else if ($("#two-room").is(":checked"))
-      room_type = "two_room";
+      room_type = "Two-Room";
     else if ($("#three-room").is(":checked"))
-      room_type = "three_room";
+      room_type = "Three-Room";
     
     query += 'room_type=' + room_type;
     console.log(query);
