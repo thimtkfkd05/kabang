@@ -95,6 +95,7 @@ app.get('/auth/accept_verification', routes.auth.accept_verification);
 app.post('/saveComment', checker('student'), routes.saveComment);
 app.post('/sendRequest', checker('student'), routes.sendRequest);
 app.post('/controlRequest', checker('room_owner'), routes.controlRequest);
+app.post('/delete_room', checker('room_owner'), routes.delete_room);
 
 function connectDB() {
   var dbUrl = 'mongodb://localhost:27017';

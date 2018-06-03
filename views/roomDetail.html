@@ -112,7 +112,16 @@
     <p></p>
     <div class="form-group">
       <label for="comment">Room Description</label>
-      <div class="card"><div class="card-body"><div class="description_text"><%= description %></div></div>
+      <div class="card">
+        <div class="card-body">
+          <div class="description_text"><%= description %></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <a href="/roomregister/<%= room_id %>" class="btn btn-outline-dark" style="text-align: center;">
+        Edit Room
+      </a>
     </div>
   </div>
   <div id="room_id" style="display: none;"><%= room_id %></div>
