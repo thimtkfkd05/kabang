@@ -74,8 +74,10 @@ app.get('/map', routes.map);
 app.get('/getroom', routes.getroom);
 app.get('/search', routes.searchPage);
 app.get('/roomDetail', routes.roomDetail);
-app.get('/roomregister', routes.roomregister);
 app.get('/detailROom', routes.detailRoom);
+app.get('/roomregister', routes.roomregister);
+
+app.post('/register_room',  routes.register_room);
 
 app.get('/mypage', /* checker(),*/ routes.mypage);
 app.post('/auth/login', routes.auth.login);
