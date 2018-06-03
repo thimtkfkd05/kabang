@@ -1,5 +1,27 @@
 $(document).ready(function() {
-  var find_query = {};
+  
+  var query = window.location.href;
+  query = query.split('?');
+  query = query[1].split('&');
+
+  var lat = parseFloat (query[0].split('=')[1]);
+  var lng = parseFloat (query[1].split('=')[1]);
+  var d_min = parseInt (query[2].split('=')[1]);
+  var d_max = parseInt (query[3].split('=')[1]);
+  var m_min = parseInt (query[4].split('=')[1]);
+  var m_max = parseInt (query[5].split('=')[1]);
+  var room_type = query[6].split('=')[1];
+
+  var find_query = {
+    'lat' : lat,
+    'lng' : lng,
+    'room_type' : room_type,
+    'd_min' : d_min,
+    'd_max' : d_max,
+    'm_min' : m_min,
+    'm_max' : m_max
+  };
+
   $.get('/getroom', find_query, function(res) {
     var room_list = [];
     var roomNo = 0;
