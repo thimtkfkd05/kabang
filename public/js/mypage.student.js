@@ -3,7 +3,7 @@ $(document).ready(function() {
     var room_list = [];
     var roomNo = 0;
     if (res) {
-      room_list = res.result;
+      room_list = res;
       roomNo = room_list.length;
     }
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
         var html = '<div class="row">';
         for (var j = 0; j < 2; j++){
           html += roomcard(
-            '/roomDetail?type=student&room_id='+room_list[2*i+j].room_id, 
+            '/roomDetail?type=student&room_id='+room_list[2*i+j].room_id,
             room_list[2*i+j].location,
             room_list[2*i+j].picture[0],
             room_list[2*i+j].deposit+', '+room_list[2*i+j].monthly+'/month',
