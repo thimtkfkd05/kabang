@@ -89,6 +89,7 @@ app.post('/auth/signup', routes.auth.signup);
 app.post('/auth/send_verification', routes.auth.send_verification);
 app.post('/searchRoom', checker('student'), routes.searchroom);
 app.get('/auth/accept_verification', routes.auth.accept_verification);
+app.post('/saveComment', checker('student'), routes.saveComment);
 app.post('/sendRequest', checker('student'), routes.sendRequest);
 app.post('/controlRequest', checker('room_owner'), routes.controlRequest);
 
