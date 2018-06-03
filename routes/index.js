@@ -562,7 +562,6 @@ exports.sendRequest = function(req, res) {
 };
 
 exports.controlRequest = function(req, res) {
-  var room_db = db.collection('Rooms');
   var request_db = db.collection('Requests');
   var request_id = req.body.request_id;
   var status = req.body.status
@@ -604,9 +603,43 @@ exports.controlRequest = function(req, res) {
                   result: false
                 });
               } else {
-                res.json({
-                  result: true,
-                  contact: user_res.contact
+                var room_db = db.collection('Rooms');
+                room_db.findOne({
+                  room_id: request_res.room_id
+                }, {
+                  room_id: 1,
+                  monthly: 1,
+                  deposit: 1
+                }, function(room_err, room_res) {
+                  if (room_err || !room_res) {
+                    res.json({
+                      err: room_err,
+                      result: false
+                    });
+                  } else {
+                    var history_db = db.collection('Histories');
+                    var history_obj = {
+                      history_id: 'history_' + make_random_string(13),
+                      room_id : room_res.room_id,
+                      date : new Date().toISOString(),
+                      monthly : room_res.monthly,
+                      deposit : room_res.deposit,
+                      user_id : request_res.requested_user_id
+                    };
+                    history_db.save(history_obj, function(history_err, history_res) {
+                      if (history_err || !history_res) {
+                        res.json({
+                          err: history_err,
+                          result: false
+                        });
+                      } else {
+                        res.json({
+                          result: true,
+                          contact: user_res.contact
+                        });
+                      }
+                    });
+                  }
                 });
               }
             });
