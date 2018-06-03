@@ -48,10 +48,7 @@ function handleError (hasGeo, infoWindow, pos) {
     }
   }
 
-$(document).ready(function(){
-    $("#add").on("click", function(){
-      $("#dynamicCB").append("<br/><div class = 'form-check'><input class='form-check-input' type='radio' name= 'wifi' value ='Wifi'><label class = 'form-check-lable' for='wifi'>Wifi</label>")
-    })});
+
 
 // 이미지 정보들을 담을 배열
 var sel_files = [];
@@ -103,52 +100,60 @@ $(document).ready(function() {
       addCheckbox($('#txtName').val());
   });
 });
+
+
 var optionNum;
 function addCheckbox(name) {
  var container = $('#cblist');
  var inputs = container.find('input');
  optionNum = inputs.length+1;
+ 
 
  $('<input />', { type: 'checkbox', id: 'cb'+ optionNum, value: name }).appendTo(container);
- $('<label />', { 'for': 'cb'+ optionNum, text: name }).appendTo(container);
+ $('<label />', { 'for': 'cb'+ optionNum, text:  name}).appendTo(container);
 }
 
 
 
 
 $(document).ready(function() {    
-$('#register').click(function(){
-var chkedArr = new Array;
-$("input:checkbox:checked").each(function(index){
-  chkedArr.push($(this).val());
-})
+  $('#register').click(function(){
+  var chkedArr = new Array;
+  $("input:checkbox:checked").each(function(index){
+    chkedArr.push($(this).val());
+  })
 
-var location_obj = {
-  lat : myMarker.position.lat,
-  lng : myMarker.position.lng,
-}
+  var location_obj = {
+    lat : myMarker.position.lat,
+    lng : myMarker.position.lng,
+  }
 
+      
+  $.post('/register_room',{
+    deposit : $('#deposit').val(),
+    monthly : $('#monthly').val(),
+    status : $('#status').val(),
+    option : chkedArr,
+    description : $('#description').val(),
+    type : $('#type').val(), 
+    picture : fileNameArr,
+  location : location_obj,
+    enrolled_date : new Date().toISOString()},
     
-$.post('/register_room',{
-  deposit : $('#deposit').val(),
-  monthly : $('#monthly').val(),
-  status : $('#status').val(),
-  option : chkedArr,
-  description : $('#description').val(),
-  type : $('#type').val(), 
-  picture : fileNameArr,
- location : location_obj,
-  enrolled_date : new Date().toISOString()},
-  
 
-  function(result){
-  if(result){
-    alert("Success!!");
-  }
-  else{
-    alet("Register Faii!!");
-  }
+    function(result){
+    if(result){
+      alert("Register Success!!");
+      $(location).attr('href', 'mypage');
+
+    }
+    else{
+      alet("Register Faii!!");
+      $(location).attr('href', 'roomregister');
+    }
   });});}); 
+
+  
 
   
 
