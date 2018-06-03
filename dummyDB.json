@@ -5,7 +5,7 @@
       "email" : "abc123@abc.com",
       "password" : "YWJjMTIz",
       "type" : "room_owner"
-    }, {}, {}
+    }
   ],
   "room_db": [
     {
