@@ -141,7 +141,7 @@ $(document).ready(function() {
       console.log ('ok');
       if (results[1]) {
         
-        $.post('/register_room',{
+        $.post('/register_room', {
           address : results[1].formatted_address,
           deposit : $('#deposit').val(),
           monthly : $('#monthly').val(),
