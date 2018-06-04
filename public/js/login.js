@@ -1,9 +1,7 @@
 $(document).ready(function() {
-  console.log('11');
   $('#login').click(function() {
     var email = $('#InputEmail1').val();
     var password = $('#InputPassword1').val();
-    console.log('??');
     if (email && password) {
       $.post('/auth/login', {
         email: email,

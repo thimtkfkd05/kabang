@@ -45,11 +45,23 @@ function Rcheckempty(){
         return;
     } else {
         alert("Register Success");
-        window.location.href="loginpage";
+        $.post('/auth/signup', {
+            email: em,
+            password: pw,
+            name: NN,
+            type: 'room_owner'
+        }, function(signup_result) {
+            if (signup_result.err || !signup_result.result) {
+                alert("Register Failed. Try Again.");
+            } else {
+                alert("Register Success");
+                window.location.href="/login";
+            }
+        });
     }
 }
 
-function Scheckempty(){
+function sendVerification(){
     var em = document.getElementById("EM").value;
     var pw = document.getElementById("pw").value;
     var pwCK = document.getElementById("pwCheck").value;
@@ -71,12 +83,31 @@ function Scheckempty(){
     }else if(PN == ""){
         alert("Please input phone Number");
         return;
-    }
-    
-    if(pw != pwCK){
+    }else if(pw != pwCK){
         alert("password and passwordCheck are not same");
         return;
+    }else {
+        em = em += '@kaist.ac.kr';
+        $.post('/auth/signup', {
+            email: em,
+            password: pw,
+            name: NN,
+            type: 'student'
+        }, function(signup_result) {
+            if (signup_result.err || !signup_result.result) {
+                alert("Register Failed. Try Again.");
+            } else {
+                $.post('/auth/send_verification', {
+                    user_id: signup_result.user_id,
+                    user_email: em
+                }, function(send_result) {
+                    if (send_result.err || !send_result.result) {
+                        alert("Send Verification Failed. Try Again.");
+                    } else {
+                        alert("Please verify Kaist mail in 1 days");
+                    }
+                });
+            }
+        });
     }
-    alert("Please verify Kaist mail in 1 days");
-    window.location.href="loginpage";
 }

@@ -4,178 +4,143 @@
   <title>KABANG - Room Detail</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-  <style>
-    #map {
-      width: 100%;
-      height: 400px;
-      background-color: grey;
-    }
-  </style>
-  <style>
-    table, th, td {
-        border: 1px solid black;
-        
-        padding: 15px;
-    }
-  </style>
+  <link rel='stylesheet' href='/module/css/jquery-ui.min.css' />
+  <link rel='stylesheet' href='/module/css/bootstrap.min.css' />
+  <link rel='stylesheet' href='/module/font-awesome-4.7.0/css/font-awesome.min.css' />
+  <link rel='stylesheet' href='/css/roomdetail.css' />
 </head>
 <body>
-<%- include("./navbar.ejs", {"type": "student", "index": 0}) %>
-<div class="container">
-  <h2>Room Detail</h2>
-
-  <div class="row">
-    <div class="col-6">
-        
-      <div class="row">
-        <img id="img" style="margin-left: auto; margin-right: auto; display: block; width: 300px; height: 300px; object-fit: container;" src="" class="img-thumbnail" alt="room img">
-      </div>
-      <div class="room_img_btn">
-        <% for (var i = 0; i < picture.length; i++) { %>
-        <img id="subimg" src="<%= picture[i] %>" class="img-thumbnail" alt="etc img" style="width: 100px; height: 100px; object-fit: contain;">
-        <% } %>
-      </div>
-    </div>
-    <div class="col-1"></div>
-    <div class="col-5">
-        <div class="row"> 
-            <button type="button" class="btn btn-block btn-primary">Send Request</button>
+  <%- include("./navbar.ejs", {"type": user_type, "index": 0}) %>
+  <div class="container">
+    <h2>Room Detail</h2>
+    <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <img id="img" src="<%= picture[0] %>" class="img-thumbnail" alt="room img">
         </div>
-
+        <div class="room_img_btn">
+          <% for (var i = 0; i < picture.length; i++) { %>
+          <img class="subimg" src="<%= picture[i] %>" class="img-thumbnail" alt="etc img">
+          <% } %>
+        </div>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-5">
+        <div class="row">
+          <% if (user_type == 'room_owner') { %>
+          <p>Request</p>
+          <div id="request_list">
+            <% for (var i = 0; i < request_list.length; i++) { %>
+              <div class="request_info" data-request-id="<%= request_list[i].request_id %>">
+                <span class="requested_user">
+                  <%- request_list[i].requested_user_name %>
+                </span>
+                <button class="btn btn-primary request_accept">Accept</button>
+                <button class="btn btn-danger request_reject">Reject</button>
+              </div>
+            <% } %>
+          </div>
+          <% } else if (user_type != 'student') { %>
+          <button id="send_request" class="btn btn-block btn-primary">Send Request</button>
+          <% } %>
+        </div>
         <div class="row"><p></p></div>
-
         <div class="row">
           <p>Rating</p>
-            <div class="rating" style="margin-left: auto; margin-right: auto; display: block; font-size: 50px">
-              <span>☆  </span><span>☆  </span><span>☆  </span><span>☆  </span><span>☆</span>
-            </div>
-        </div>
-
-        <div class="row"><p></p></div>
-
-        <div class="row">
-            <p>Comments</p> 
-            <div style="overflow:scroll; width:100%; height:200px; padding:10px; background-color:whitesmoke;">
-              <div class="comment_text">
-                <% for (var j = 0; j < comments.length; j++) { %>
-                  <%= comments[j] %><br /><br />
+          <div class="rating">
+              <% if (user_type == 'student') { %>
+                <% for (var j = 0; j < 5; j++) { %>
+                <i class="fa fa-star-o" style="cursor: pointer;"></i>
                 <% } %>
-              </div>
-            </div>
+              <% } else { %>
+                <%- stars %>
+              <!-- <i class="fa fa-star-o"></i> -->
+              <% } %>
+          </div>
         </div>
+        <div class="row"><p></p></div>
+        <div class="row">
+          <p>Comments</p> 
+          <div class="comment">
+            <div class="comment_text">
+              <% if (user_type == 'student') { %>
+                <div class="form-group">
+                  <label for="write_comment">Comment</label>
+                  <textarea class="form-control" id="write_comment" rows="3"></textarea>
+                </div>
+              <% } else { %>
+                <% for (var j = 0; j < comments.length; j++) { %>
+                  <%= comments[j].content %><br /><br />
+                <% } %>
+              <% } %>
+            </div>
+          </div>
+          <% if (user_type == 'student') { %>
+          <button id="save_comment" class="btn btn-outline-dark">Save Star &amp; Comment</button>
+          <% } %>
+        </div>
+      </div>
     </div>
-  </div>
-
-
-  <p></p><p></p>
-  
-  <p>Room Property</p>
-  <table style="width:100%; text-align: center;">
+    <p></p><p></p>
+    <p>Room Property</p>
+    <table style="width:100%; text-align: center;">
       <tr>
         <td width="25%" bgcolor="whitesmoke">Room Price</td>
         <td width="19%" bgcolor="whitesmoke">Deposit</td>
-        <td width="19%"><div class="deposit"><%= deposit %> KRW</div></td>
+        <td width="19%"><div class="deposit"><%= deposit %> 만원</div></td>
         <td width="19%" bgcolor="whitesmoke">Monthly</td>
-        <td width="19%"><div class="monthly"><%= monthly %> KRW</div></td>
+        <td width="19%"><div class="monthly"><%= monthly %> 만원</div></td>
       </tr>
-  </table>
-  <table style="width:100%; text-align: center;">
+    </table>
+    <table style="width:100%; text-align: center;">
       <tr>
         <td width="25%" bgcolor="whitesmoke">Room Type</td>
         <td width="25%"><div class="roomtype"><%= type %></div></td>
         <td width="25%" bgcolor="whitesmoke">Room Status</td>
         <td width="25%"><div class="roomstatus"><%= status %></div></td>
       </tr>
-  </table>
-  <table style="width:100%; text-align: center;">
+    </table>
+    <table style="width:100%; text-align: center;">
       <tr>
         <td width="25%" bgcolor="whitesmoke">Room Option</td>
-        <td width="75%"><div class="roomoption"></div></td>
+        <td width="75%"><div class="roomoption"><%- option.join(',') %></div></td>
       </tr>
-  </table>
-
-
-  <p></p>
-  <p>Room Locations</p>
-  <div id="map"></div>
-  <script>
-    var marker;
-
-    function initMap() {
-      var uluru = {lat: -25.363, lng: 131.044};
-      var image = {
-        url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-      };
-
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
-        center: uluru
-      });
-      
-      marker = new google.maps.Marker({
-        map: map,
-        draggable: true,
-        animation: google.maps.Animation.DROP,
-        position: uluru,
-        title: 'uluru',
-        icon: image
-      });
-            
-      marker.addListener('click', toggleBounce); 
-      
-      var infoWindow = new google.maps.InfoWindow({map: map});
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('Location found. ');
-          map.setCenter (pos);
-          marker.setPosition (pos);
-        }, function () {
-          handleError (true, infoWindow, map.getCenter());
-        });
-      } else {
-        //Browser does not support Geo
-        handleError (false, infoWindow, map.getCenter());
-      }
-
-    }
-
-    function handleError (hasGeo, infoWindow, pos) {
-      infoWindow.setPosition (pos);
-      infoWindow.setContent(hasGeo ? 'Error: Geo service failed.':'Error: browser not support geo');
-    }
-
-    function toggleBounce() {
-      if (marker.getAnimation() !== null) {
-        marker.setAnimation(null);
-      } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-      }
-    }
-  </script>
-
-
-  <p></p>
-  <div class="form-group">
-    <label for="comment">Room Description</label>
-    <div class="card"><div class="card-body"><div class="description_text"><%= description %></div></div>
+    </table>
+    <p></p>
+    <p>Room Locations</p>
+    <div id="map"></div>
+    <p></p>
+    <div class="form-group">
+      <label for="comment">Room Description</label>
+      <div class="card">
+        <div class="card-body">
+          <div class="description_text"><%= description %></div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <a href="/roomregister/<%= room_id %>" class="btn btn-outline-dark" style="text-align: center;">
+        Edit Room
+      </a>
+    </div>
   </div>
-    
-
-
-</div>
-<script src="/module/js/jquery-1.12.4.min.js"></script>
-<script src="/module/js/jquery-ui.min.js"></script>
-<script src="/module/js/bootstrap.min.js"></script>
-<script src="/js/roomDetail.js"></script>
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsBQPgeFw1k9z4NL7dFePLS7LmVyZidME&callback=initMap">
-</script>
+  <div id="room_id" style="display: none;"><%= room_id %></div>
+  <div id="location" style="display: none;">
+    <span class="lat"><%- location.lat %></span>
+    <span class="lng"><%- location.lng %></span>
+  </div>
+  <script src="/module/js/jquery-1.12.4.min.js"></script>
+  <script src="/module/js/jquery-ui.min.js"></script>
+  <script src="/module/js/bootstrap.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script src="/js/roomDetail.js"></script>
+  <% if (user_type == 'student') { %>
+  <script src="/js/historyDetail.js"></script>
+  <% } else if (user_type == 'room_owner') { %>
+  <script src="/js/myRoomDetail.js"></script>
+  <% } %>
+  <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsBQPgeFw1k9z4NL7dFePLS7LmVyZidME&callback=initMap">
+  </script>
 </body>
 </html>

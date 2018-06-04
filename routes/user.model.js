@@ -9,7 +9,8 @@ const userSchema = new Schema(
         password: { type: String, required: true },
         type: { type: String, required: true },
         verify_code: String,
-        is_verified: { type: Boolean, default: false }
+        is_verified: { type: Boolean, default: false },
+        contact : {type : String, required: true}
     },
     {
         collection: 'Users'

@@ -33,11 +33,11 @@
           <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="Deposit"><h5>Deposit</h5></label>
-                <input type="text" class="form-control" id="deposit" placeholder="Deposit">
+                <input type="text" class="form-control" id="deposit" placeholder="Deposit" value="<%- deposit %>">
               </div>
               <div class="form-group col-md-6">  
                 <label for="Monthly"><h5>Monthly</h5></label>
-                <input type="text" class="form-control" id="monthly" placeholder="Monthly">
+                <input type="text" class="form-control" id="monthly" placeholder="Monthly" value="<%- monthly %>">
               </div>
             </div>
             <br><br>
@@ -46,20 +46,48 @@
                   <div class="form-group col-md-6">
                       <label for="Room type"><h5>Room type</h5></label>
                       <select id="type" class="form-control">
-                        <option selected>Room type</option>
+                        <option>Room type</option>
+                        <% if (type == 'One-Room(반지하)') { %>
+                        <option selected value = "One-Room(반지하)">One-Room(반지하)</option>
+                        <% } else { %>
                         <option value = "One-Room(반지하)">One-Room(반지하)</option>
+                        <% } %>
+                        <% if (type == 'One-Room(지상)') { %>
+                        <option selected value = "One-Room(지상)">One-Room(지상)</option>
+                        <% } else { %>
                         <option value = "One-Room(지상)">One-Room(지상)</option>
-                        <option value = "Two-Room">Two-Room</option>
+                        <% } %>
+                        <% if (type == 'Two-Room') { %>
+                        <option selected value = "Two-Room">Two-Room</option>
+                        <% } else { %>
                         <option value = "Three-Room">Three-Room</option>
+                        <% } %>
+                        <% if (type == 'Three-Room') { %>
+                        <option selected value = "Three-Room">Three-Room</option>
+                        <% } else { %>
+                        <option value = "Three-Room">Three-Room</option>
+                        <% } %>
                       </select>
                     </div>
                       <div class="form-group col-md-6">
                       <label for="Room status"><h5>Room status</h5></label>
                       <select id="status" class="form-control">
-                          <option selected>Room status</option>
-                          <option value = "Empty">Empty</option>
+                          <option>Room status</option>
+                          <% if (status == "empty") { %>
+                          <option selected value = "empty">Empty</option>
+                          <% } else { %>
+                          <option value = "empty">Empty</option>
+                          <% } %>
+                          <% if (status == "Will be empty") { %>
+                          <option selected value = "Will be empty">Will be empty</option>
+                          <% } else { %>
                           <option value = "Will be empty">Will be empty</option>
+                          <% } %>
+                          <% if (status == "Remodeling") { %>
+                          <option selected value = "Remodeling">Remodeling</option>
+                          <% } else { %>
                           <option value = "Remodeling">Remodeling</option>
+                          <% } %>
                         </select>
                       </div>
                       </div>
@@ -68,7 +96,7 @@
                       <br><br>
                       <div class= "form-check">
                           <label for= 'option'><h5>Option</h5></label>
-                      <div id="cblist">  
+                      <div id="cblist">
                         <input type="checkbox" value="Washing Machine" id="cb1" /> 
                         <label for="cb1">Washing Machine </label>
                         <input type="checkbox" value="Wi-Fi" id="cb2" /> 
@@ -96,12 +124,12 @@
                   </div>        
                   <div class="form-group">
                       <label for="Roomdescription"><h5>Room description</h5></label>
-                      <textarea class="form-control" id="description" rows="7"></textarea>
+                      <textarea class="form-control" id="description" rows="7" value="<%= description %>"></textarea>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                          <button  class="btn btn-primary" id = 'register' >Register</button>
-                          <button id="cancel" type="button" class="btn btn-danger" onclick="location.href='mypage'">Cancel</button>
+                          <button  class="btn btn-primary" id = 'edit' data-room-id="<%= room_id %>">Edit</button>
+                          <button id="cancel" type="button" class="btn btn-danger" onclick="location.href='/mypage'">Cancel</button>
                         </div>
                         </div>
 
@@ -109,6 +137,11 @@
     <script src="/module/js/jquery-1.12.4.min.js"></script>
     <script src="/module/js/jquery-ui.min.js"></script>
     <script src="/module/js/bootstrap.min.js"></script>
+    <script>
+      for (var i = 1; i <= 8; i++) {
+        $('#cb'+i).attr('checked', "<%- option %>".indexOf($('#cb'+i).val()) > -1);
+      }
+    </script>
     <script src="/js/script.js"></script>
     <script src="/js/roomregister.js"></script>
     <script async defer

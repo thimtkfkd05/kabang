@@ -21,22 +21,21 @@ function initMap() {
         
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
-    var pos = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
 
-    map.setCenter (pos);
-    myMarker.setPosition (pos);          
+      map.setCenter (pos);
+      myMarker.setPosition (pos);          
     }, function () {
       handleError (true, infoWindow, map.getCenter()); 
     });
-
-    
   } else {
-      //Browser does not support Geo
-      handleError (false, infoWindow, map.getCenter());
-  }        
+    //Browser does not support Geo
+    handleError (false, infoWindow, map.getCenter());
+  }
+
 }
 
 function handleError (hasGeo, infoWindow, pos) {
@@ -100,85 +99,110 @@ function handleImgFileSelect(e) {
     });
 }
 
-$(document).ready(function() {
-  $('#btnSave').click(function() {
-      addCheckbox($('#txtName').val());
-  });
-});
-
-
 var optionNum;
 function addCheckbox(name) {
  var container = $('#cblist');
  var inputs = container.find('input');
  optionNum = inputs.length+1;
  
-
  $('<input />', { type: 'checkbox', id: 'cb'+ optionNum, value: name }).appendTo(container);
  $('<label />', { 'for': 'cb'+ optionNum, text:  name}).appendTo(container);
 }
 
-
-
-
-$(document).ready(function() {    
+$(document).ready(function() {
+  $('#btnSave').click(function() {
+    addCheckbox($('#txtName').val());
+  });
   $('#register').click(function(){
-  var chkedArr = new Array;
-  $("input:checkbox:checked").each(function(index){
-    chkedArr.push($(this).val());
-  })
+    var chkedArr = new Array;
+    $("input:checkbox:checked").each(function(index){
+      chkedArr.push($(this).val());
+    })
 
-  var location_obj = {
-    lat : myMarker.getPosition().lat(),
-    lng : myMarker.getPosition().lng(),
-  }
+    var location_obj = {
+      lat : myMarker.getPosition().lat(),
+      lng : myMarker.getPosition().lng(),
+    }
 
-  var geocoder = new google.maps.Geocoder;
-  geocoder.geocode ({'location': location_obj}, function (results, status){
+    var geocoder = new google.maps.Geocoder;
+    geocoder.geocode ({'location': location_obj}, function (results, status){
+      if (status == 'OK') {
+        console.log ('ok');
+        if (results[1]) {
 
-    if (status == 'OK') {
+          $.post('/register_room',{
+            address : results[1].formatted_address,
+            deposit : $('#deposit').val(),
+            monthly : $('#monthly').val(),
+            status : $('#status').val(),
+            option : chkedArr,
+            description : $('#description').val(),
+            type : $('#type').val(), 
+            picture : fileNameArr,
+            location : location_obj,
+            enrolled_date : new Date().toISOString()
+          }, function(result){
+            if(result){
+              alert("Register Success!!");
+              location.href = '/mypage';
+            } else {
+              alet("Register Faii!!");
+              location.reload();
+            }
+          });
+        } else {
+          console.log ('No results found');
+        }
+      } else {
+        console.log ("Geocoder failed due to: " + status);
+      }
+    });
+  });
 
-      console.log ('ok');
-      if (results[1]) {
-        
-        $.post('/register_room', {
-          address : results[1].formatted_address,
-          deposit : $('#deposit').val(),
-          monthly : $('#monthly').val(),
-          status : $('#status').val(),
-          option : chkedArr,
-          description : $('#description').val(),
-          type : $('#type').val(), 
-          picture : fileNameArr,
-          location : location_obj,
-          enrolled_date : new Date().toISOString()},
-          
-      
-          function(result){
-          if(result){
-            alert("Register Success!!");
-            //$(location).attr('href', 'mypage');
-      
-          }
-          else{
-            alet("Register Faii!!");
-            $(location).attr('href', 'roomregister');
-          }
-        });
-      } else 
-        console.log ('No results found');
-      
-    } else 
-      console.log ("Geocoder failed due to: " + status);
-  
-  });      
- 
-});}); 
+  $('#update').click(function(){
+    var room_id = $(this).data('room_id');
+    var chkedArr = new Array;
+    $("input:checkbox:checked").each(function(index){
+      chkedArr.push($(this).val());
+    })
 
+    var location_obj = {
+      lat : myMarker.getPosition().lat(),
+      lng : myMarker.getPosition().lng(),
+    }
 
-  
+    var geocoder = new google.maps.Geocoder;
+    geocoder.geocode ({'location': location_obj}, function (results, status){
+      if (status == 'OK') {
+        console.log ('ok');
+        if (results[1]) {
 
-  
-
-  
-
+          console.log (results[1].formatted_address);
+          $.post('/register_room/'+room_id,{
+            address : results[1].formatted_address,
+            deposit : $('#deposit').val(),
+            monthly : $('#monthly').val(),
+            status : $('#status').val(),
+            option : chkedArr,
+            description : $('#description').val(),
+            type : $('#type').val(), 
+            picture : fileNameArr,
+            location : location_obj
+          }, function(result){
+            if(result){
+              alert("Register Success!!");
+              location.href = '/mypage';
+            } else {
+              alet("Register Faii!!");
+              location.reload();
+            }
+          });
+        } else {
+          console.log ('No results found');
+        }
+      } else {
+        console.log ("Geocoder failed due to: " + status);
+      }
+    });
+  });
+});
