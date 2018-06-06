@@ -10,12 +10,21 @@ $(document).ready(function() {
   var d_max = parseInt (query[3].split('=')[1]);
   var m_min = parseInt (query[4].split('=')[1]);
   var m_max = parseInt (query[5].split('=')[1]);
-  var room_type = query[6].split('=')[1];
+  var room_type = query[6].split('|');
 
+  or_arr = [];
+  for (var i=0; i<room_type.length -1 ; i++)
+  {
+    entry = room_type[i];    
+    console.log (entry);
+    or_arr += {'room_type': entry }
+  }
+
+  console.log (or_arr);
   var find_query = {
     'lat' : lat,
     'lng' : lng,
-    'room_type' : room_type,
+    $or : [or_arr], 
     'd_min' : d_min,
     'd_max' : d_max,
     'm_min' : m_min,
