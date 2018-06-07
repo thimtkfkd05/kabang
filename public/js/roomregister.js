@@ -18,8 +18,16 @@ function initMap() {
   });
   
   var infoWindow = new google.maps.InfoWindow({map: map});
-        
-  if (navigator.geolocation) {
+
+  if ($('#location .lat') && $('#location .lat').text()) {
+    var pos = {
+      lat: Number($('#location .lat').text()),
+      lng: Number($('#location .lng').text())
+    };
+
+    map.setCenter (pos);
+    myMarker.setPosition (pos);
+  } else if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
         lat: position.coords.latitude,
@@ -108,6 +116,44 @@ function addCheckbox(name) {
  $('<label />', { 'for': 'cb'+ optionNum, text:  name}).appendTo(container);
 }
 
+function getRoomInfo() {
+  var chkedArr = new Array;
+  $("input:checkbox:checked").each(function(index){
+    chkedArr.push($(this).val());
+  })
+
+  var location_obj = {
+    lat : myMarker.getPosition().lat(),
+    lng : myMarker.getPosition().lng(),
+  }
+
+  var geocoder = new google.maps.Geocoder;
+  geocoder.geocode ({'location': location_obj}, function (results, status){
+    if (status == 'OK') {
+      if (results[1]) {
+        return {
+          address : results[1].formatted_address,
+          deposit : $('#deposit').val(),
+          monthly : $('#monthly').val(),
+          status : $('#status').val(),
+          option : chkedArr,
+          description : $('#description').val(),
+          type : $('#type').val(), 
+          picture : fileNameArr,
+          location : location_obj,
+          enrolled_date : new Date().toISOString()
+        };
+      } else {
+        console.log ('No results found');
+        return null;
+      }
+    } else {
+      console.log ("Geocoder failed due to: " + status);
+      return null;
+    }
+  });
+};
+
 $(document).ready(function() {
   $('#btnSave').click(function() {
     if ($('#txtName').val()) {
@@ -115,90 +161,55 @@ $(document).ready(function() {
     }
   });
   $('#register').click(function(){
-    var chkedArr = new Array;
-    $("input:checkbox:checked").each(function(index){
-      chkedArr.push($(this).val());
-    })
-
-    var location_obj = {
-      lat : myMarker.getPosition().lat(),
-      lng : myMarker.getPosition().lng(),
-    }
-
-    var geocoder = new google.maps.Geocoder;
-    geocoder.geocode ({'location': location_obj}, function (results, status){
-      if (status == 'OK') {
-        if (results[1]) {
-
-          $.post('/register_room',{
-            address : results[1].formatted_address,
-            deposit : $('#deposit').val(),
-            monthly : $('#monthly').val(),
-            status : $('#status').val(),
-            option : chkedArr,
-            description : $('#description').val(),
-            type : $('#type').val(), 
-            picture : fileNameArr,
-            location : location_obj,
-            enrolled_date : new Date().toISOString()
-          }, function(result){
-            if(result){
-              alert("Register Success!!");
-              location.href = '/mypage';
-            } else {
-              alet("Register Faii!!");
-              location.reload();
-            }
-          });
+    var room_info = getRoomInfo();
+    if (room_info) {
+      $.post('/register_room', room_info, function(result){
+        if(result){
+          alert("Register Success!!");
+          location.href = '/mypage';
         } else {
-          console.log ('No results found');
+          alet("Register Fail!!");
+          location.reload();
         }
-      } else {
-        console.log ("Geocoder failed due to: " + status);
-      }
-    });
+      });
+    } else {
+      alert("Register Fail!!");
+      location.reload();
+    }
   });
 
-  $('#update').click(function(){
-    var room_id = $(this).data('room_id');
-    var chkedArr = new Array;
-    $("input:checkbox:checked").each(function(index){
-      chkedArr.push($(this).val());
-    })
-
-    var location_obj = {
-      lat : myMarker.getPosition().lat(),
-      lng : myMarker.getPosition().lng(),
-    }
-
-    var geocoder = new google.maps.Geocoder;
-    geocoder.geocode ({'location': location_obj}, function (results, status){
-      if (status == 'OK') {
-        if (results[1]) {
-          $.post('/register_room/'+room_id,{
-            address : results[1].formatted_address,
-            deposit : $('#deposit').val(),
-            monthly : $('#monthly').val(),
-            status : $('#status').val(),
-            option : chkedArr,
-            description : $('#description').val(),
-            type : $('#type').val(), 
-            picture : fileNameArr,
-            location : location_obj
-          }, function(result){
-            if(result){
-              alert("Register Success!!");
-              location.href = '/mypage';
-            } else {
-              alet("Register Faii!!");
-              location.reload();
-            }
-          });
+  $('#edit').click(function(){
+    var room_id = $(this).data('room-id');
+    var room_info = getRoomInfo();
+    
+    if (room_info && room_id) {
+      $.post('/register_room/'+room_id, room_info, function(result){
+        if(result){
+          alert("Edit Success!!");
+          location.href = '/mypage';
         } else {
-          console.log ('No results found');
+          alet("Edit Fail!!");
+          location.reload();
         }
+      });
+    } else {
+      alert("Edit Fail!!");
+      location.reload();
+    }
+  });
+
+  $('#delete').click(function() {
+    var room_id = $(this).data('room-id');
+    
+    $.post('/delete_room', {
+      room_id: room_id
+    }, function(result) {
+      if (result) {
+        alert("Delete Success!");
+        location.href = '/mypage';
       } else {
-        console.log ("Geocoder failed due to: " + status);
+        alert("Delete Fail!");
+        location.reload();
       }
     });
   });

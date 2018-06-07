@@ -573,10 +573,7 @@ exports.register_room = function(req, res){
           res.json({
             result: false,
             err: save_err
-            
-            
           });
-
         }else{
           res.json({
             result: true,
@@ -584,7 +581,6 @@ exports.register_room = function(req, res){
         }
       });
     }
-  
   }
 
 exports.delete_room = function(req, res) {
@@ -602,7 +598,8 @@ exports.delete_room = function(req, res) {
       res.json(false);
     } else {
       room_db.remove({
-        room_id: room_id
+        room_id: room_id,
+        owner: req.session.user_id
       }, function(remove_err, remove_res) {
         if (remove_err || !remove_res) {
           res.json(false);

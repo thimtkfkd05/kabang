@@ -10,130 +10,132 @@
   
   </head>
   <body>
-      <%- include("./navbar.ejs", {"type": "room_owner", "index": 1}) %>
-      <h1>Room Register</h1>
-      <div class = 'room-register'>
-          <div id ='registerAction' > 
-          <div class = "form-row">
-            <div class = 'col-1'>
-              <label for="Picture"><h5>Picture</h5></label>
-            </div>
-              <div class= 'col-2'>
-              <div class="input_wrap">
-                  <input type="file" class= "form-control-file" id="input_imgs" multiple/>
-              </div>
-            </div>
-              <div class="imgs_wrap">
-                  <img id="img" />
-              </div>
-         <button type="button" href="javascript:" onclick="fileUploadAction();" class="btn btn-primary">Upload</button>
+    <%- include("./navbar.ejs", {"type": "room_owner", "index": 1}) %>
+    <h1>Room Register</h1>
+    <div class = 'room-register'>
+      <div id ='registerAction' > 
+        <div class = "form-row">
+          <div class = 'col-1'>
+            <label for="Picture"><h5>Picture</h5></label>
           </div>
-         <br><br>
-          
-          <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="Deposit"><h5>Deposit</h5></label>
-                <input type="text" class="form-control" id="deposit" placeholder="Deposit" value="<%- deposit %>">
-              </div>
-              <div class="form-group col-md-6">  
-                <label for="Monthly"><h5>Monthly</h5></label>
-                <input type="text" class="form-control" id="monthly" placeholder="Monthly" value="<%- monthly %>">
-              </div>
+          <div class= 'col-2'>
+            <div class="input_wrap">
+                <input type="file" class= "form-control-file" id="input_imgs" multiple/>
             </div>
-            <br><br>
-          
-              <div class="form-row">
-                  <div class="form-group col-md-6">
-                      <label for="Room type"><h5>Room type</h5></label>
-                      <select id="type" class="form-control">
-                        <option>Room type</option>
-                        <% if (type == 'One-Room(반지하)') { %>
-                        <option selected value = "One-Room(반지하)">One-Room(반지하)</option>
-                        <% } else { %>
-                        <option value = "One-Room(반지하)">One-Room(반지하)</option>
-                        <% } %>
-                        <% if (type == 'One-Room(지상)') { %>
-                        <option selected value = "One-Room(지상)">One-Room(지상)</option>
-                        <% } else { %>
-                        <option value = "One-Room(지상)">One-Room(지상)</option>
-                        <% } %>
-                        <% if (type == 'Two-Room') { %>
-                        <option selected value = "Two-Room">Two-Room</option>
-                        <% } else { %>
-                        <option value = "Three-Room">Three-Room</option>
-                        <% } %>
-                        <% if (type == 'Three-Room') { %>
-                        <option selected value = "Three-Room">Three-Room</option>
-                        <% } else { %>
-                        <option value = "Three-Room">Three-Room</option>
-                        <% } %>
-                      </select>
-                    </div>
-                      <div class="form-group col-md-6">
-                      <label for="Room status"><h5>Room status</h5></label>
-                      <select id="status" class="form-control">
-                          <option>Room status</option>
-                          <% if (status == "empty") { %>
-                          <option selected value = "empty">Empty</option>
-                          <% } else { %>
-                          <option value = "empty">Empty</option>
-                          <% } %>
-                          <% if (status == "Will be empty") { %>
-                          <option selected value = "Will be empty">Will be empty</option>
-                          <% } else { %>
-                          <option value = "Will be empty">Will be empty</option>
-                          <% } %>
-                          <% if (status == "Remodeling") { %>
-                          <option selected value = "Remodeling">Remodeling</option>
-                          <% } else { %>
-                          <option value = "Remodeling">Remodeling</option>
-                          <% } %>
-                        </select>
-                      </div>
-                      </div>
-                      <h5><br>Location</h5>
-                      <div id="map"></div>
-                      <br><br>
-                      <div class= "form-check">
-                          <label for= 'option'><h5>Option</h5></label>
-                      <div id="cblist">
-                        <input type="checkbox" value="Washing Machine" id="cb1" /> 
-                        <label for="cb1">Washing Machine </label>
-                        <input type="checkbox" value="Wi-Fi" id="cb2" /> 
-                        <label for="cb2">Wi-Fi </label>
-                        <input type="checkbox" value="Shoe closet" id="cb3" /> 
-                        <label for="cb3">Shoe closet </label>
-                        <input type="checkbox" value="Refrigerator" id="cb4" /> 
-                        <label for="cb4">Refrigerator </label>
-                        <input type="checkbox" value="Desk" id="cb5" /> 
-                        <label for="cb5">Desk</label>
-                        <input type="checkbox" value="Kitchen" id="cb6" /> 
-                        <label for="cb6">Kitchen </label>
-                        <input type="checkbox" value="Air Conditioner" id="cb7" /> 
-                        <label for="cb7">Air Conditioner</label>
-                        <input type="checkbox" value="Bed" id="cb8" /> 
-                        <label for="cb8">Bed </label>
-                      </div>
-                    </div>
-                    <div class = "form-row">
-                    <div class="form-group col-md-1">
-                    <input class="form-control" type="text" placeholder="option" id="txtName">
-                  </div>
-                  <button id="btnSave" type="button" class="btn btn-primary" style="height:40px; width:70px;">Add</button>
-                    
-                  </div>        
-                  <div class="form-group">
-                      <label for="Roomdescription"><h5>Room description</h5></label>
-                      <textarea class="form-control" id="description" rows="7" value="<%= description %>"></textarea>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                          <button  class="btn btn-primary" id = 'edit' data-room-id="<%= room_id %>">Edit</button>
-                          <button id="cancel" type="button" class="btn btn-danger" onclick="location.href='/mypage'">Cancel</button>
-                        </div>
-                        </div>
-
-                      </div>
+          </div>
+          <div class="imgs_wrap">
+            <img id="img" />
+          </div>
+          <button type="button" href="javascript:" onclick="fileUploadAction();" class="btn btn-primary">Upload</button>
+        </div>
+        <br><br>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="Deposit"><h5>Deposit</h5></label>
+            <input type="text" class="form-control" id="deposit" placeholder="Deposit" value="<%- deposit %>">
+          </div>
+          <div class="form-group col-md-6">  
+            <label for="Monthly"><h5>Monthly</h5></label>
+            <input type="text" class="form-control" id="monthly" placeholder="Monthly" value="<%- monthly %>">
+          </div>
+        </div>
+        <br><br>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="Room type"><h5>Room type</h5></label>
+            <select id="type" class="form-control">
+              <option>Room type</option>
+              <% if (type == 'One-Room(반지하)') { %>
+              <option selected value = "One-Room(반지하)">One-Room(반지하)</option>
+              <% } else { %>
+              <option value = "One-Room(반지하)">One-Room(반지하)</option>
+              <% } %>
+              <% if (type == 'One-Room(지상)') { %>
+              <option selected value = "One-Room(지상)">One-Room(지상)</option>
+              <% } else { %>
+              <option value = "One-Room(지상)">One-Room(지상)</option>
+              <% } %>
+              <% if (type == 'Two-Room') { %>
+              <option selected value = "Two-Room">Two-Room</option>
+              <% } else { %>
+              <option value = "Three-Room">Three-Room</option>
+              <% } %>
+              <% if (type == 'Three-Room') { %>
+              <option selected value = "Three-Room">Three-Room</option>
+              <% } else { %>
+              <option value = "Three-Room">Three-Room</option>
+              <% } %>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="Room status"><h5>Room status</h5></label>
+            <select id="status" class="form-control">
+                <option>Room status</option>
+                <% if (status == "empty") { %>
+                <option selected value = "empty">Empty</option>
+                <% } else { %>
+                <option value = "empty">Empty</option>
+                <% } %>
+                <% if (status == "Will be empty") { %>
+                <option selected value = "Will be empty">Will be empty</option>
+                <% } else { %>
+                <option value = "Will be empty">Will be empty</option>
+                <% } %>
+                <% if (status == "Remodeling") { %>
+                <option selected value = "Remodeling">Remodeling</option>
+                <% } else { %>
+                <option value = "Remodeling">Remodeling</option>
+                <% } %>
+            </select>
+          </div>
+        </div>
+        <h5><br>Location</h5>
+        <div id="map"></div>
+        <br><br>
+        <div class= "form-check">
+          <label for= 'option'><h5>Option</h5></label>
+          <div id="cblist">
+            <input type="checkbox" value="Washing Machine" id="cb1" /> 
+            <label for="cb1">Washing Machine </label>
+            <input type="checkbox" value="Wi-Fi" id="cb2" /> 
+            <label for="cb2">Wi-Fi </label>
+            <input type="checkbox" value="Shoe closet" id="cb3" /> 
+            <label for="cb3">Shoe closet </label>
+            <input type="checkbox" value="Refrigerator" id="cb4" /> 
+            <label for="cb4">Refrigerator </label>
+            <input type="checkbox" value="Desk" id="cb5" /> 
+            <label for="cb5">Desk</label>
+            <input type="checkbox" value="Kitchen" id="cb6" /> 
+            <label for="cb6">Kitchen </label>
+            <input type="checkbox" value="Air Conditioner" id="cb7" /> 
+            <label for="cb7">Air Conditioner</label>
+            <input type="checkbox" value="Bed" id="cb8" /> 
+            <label for="cb8">Bed </label>
+          </div>
+        </div>
+        <div class = "form-row">
+          <div class="form-group col-md-1">
+            <input class="form-control" type="text" placeholder="option" id="txtName">
+          </div>
+          <button id="btnSave" type="button" class="btn btn-primary" style="height:40px; width:70px;">Add</button>   
+        </div>        
+        <div class="form-group">
+          <label for="Roomdescription"><h5>Room description</h5></label>
+          <textarea class="form-control" id="description" rows="7" value="<%= description %>"></textarea>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <button  class="btn btn-primary" id = 'edit' data-room-id="<%= room_id %>">Edit</button>
+            <button  class="btn btn-danger" id = 'delete' data-room-id="<%= room_id %>">Delete</button>
+            <button id="cancel" class="btn btn-outline-dark" onclick="history.back();">Go Back</button>
+          </div>
+        </div>
+      </div>
+      <div id="location" style="display: none;">
+        <span class="lat"><%- location.lat %></span>
+        <span class="lng"><%- location.lng %></span>
+      </div>
+    </div>
     <script src="/module/js/jquery-1.12.4.min.js"></script>
     <script src="/module/js/jquery-ui.min.js"></script>
     <script src="/module/js/bootstrap.min.js"></script>
