@@ -109,21 +109,21 @@ function connectDB() {
     db = mongoclient.db('kabang');
     var dummy = require('./dummyDB.json');
     
-    // db.collection('Users').insertMany(dummy.user_db, function(ins_err, res) {
-    // console.log(ins_err, res);
-    // });
-    // db.collection('Rooms').insertMany(dummy.room_db, function(ins_err, res) {
-    // console.log(ins_err, res);
-    // });
-    // db.collection('Histories').insertMany(dummy.history_db, function(ins_err, res) {
-    // console.log(ins_err, res);
-    // });
-    // db.collection('Comments').insertMany(dummy.comment_db, function(ins_err, res) {
-    // console.log(ins_err, res);
-    // });
-    // db.collection('Requests').insertMany(dummy.request_db, function(ins_err, res) {
-    // console.log(ins_err, res);
-    // });
+    db.collection('Users').insertMany(dummy.user_db, function(ins_err, res) {
+    console.log(ins_err, res);
+    });
+    db.collection('Rooms').insertMany(dummy.room_db, function(ins_err, res) {
+    console.log(ins_err, res);
+    });
+    db.collection('Histories').insertMany(dummy.history_db, function(ins_err, res) {
+    console.log(ins_err, res);
+    });
+    db.collection('Comments').insertMany(dummy.comment_db, function(ins_err, res) {
+    console.log(ins_err, res);
+    });
+    db.collection('Requests').insertMany(dummy.request_db, function(ins_err, res) {
+    console.log(ins_err, res);
+    });
   });
 };
 

@@ -82,7 +82,7 @@
       "status": "Will be empty",
       "comments": ["comment_03_01", "comment_03_02", "comment_03_03"],
       "request_list" : ["request_03_01"],
-      "type" : "Owo-Room(반지하)",
+      "type" : "One-Room(반지하)",
       "address" : "대전광역시 유성구 어은동 111-1"
     }, {
       "room_id": "test_room_004",
