@@ -1,15 +1,10 @@
 $(document).ready(function() {
   $.get('/get_student_room_list', {}, function(res) {
-    // var room_list = [];
     var favorite_list = [];
     var history_list = [];
-    // var roomNo = 0;
     var favoriteNo = 0;
     var historyNo = 0;
-    console.log(res);
     if (res) {
-      // room_list = res;
-      // roomNo = room_list.length;
       favorite_list = res.favorite_list;
       history_list = res.history_list;
       favoriteNo = favorite_list.length;
