@@ -24,7 +24,7 @@ $(document).ready(function() {
   var find_query = {
     'lat' : lat,
     'lng' : lng,
-    $or : [or_arr], 
+    //$or : [or_arr], 
     'd_min' : d_min,
     'd_max' : d_max,
     'm_min' : m_min,
@@ -38,6 +38,7 @@ $(document).ready(function() {
       room_list = res.result;
       roomNo = room_list.length;
     }
+    console.log(room_list[0].address);
 
     if (roomNo == 0) {
       $('div.row_adder').append('<p>Result Not Found</p>');

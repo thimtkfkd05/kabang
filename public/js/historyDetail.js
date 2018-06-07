@@ -22,4 +22,9 @@ $(document).ready(function() {
       }
     });
   });
+
+  $(document).on('click', '.img-thumbnail', function() {
+    $('#img').attr('src', $(this).attr('src'));
+  });
 });
+

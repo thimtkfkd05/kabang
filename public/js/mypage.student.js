@@ -13,9 +13,9 @@ $(document).ready(function() {
       $('div.row_adder').append(
         roomcard(
           '/roomDetail?type=student&room_id='+room_list[0].room_id,
-          room_list[0].location,
+          room_list[0].address,
           room_list[0].picture[0],
-          room_list[0].deposit+', '+room_list[0].monthly+'/month',
+          room_list[0].deposit+'만원, '+room_list[0].monthly+'만원/월',
           room_list[0].type
         )
       );
@@ -25,9 +25,9 @@ $(document).ready(function() {
         for (var j = 0; j < 2; j++){
           html += roomcard(
             '/roomDetail?type=student&room_id='+room_list[2*i+j].room_id,
-            room_list[2*i+j].location,
+            room_list[2*i+j].address,
             room_list[2*i+j].picture[0],
-            room_list[2*i+j].deposit+', '+room_list[2*i+j].monthly+'/month',
+            room_list[2*i+j].deposit+'만원, '+room_list[2*i+j].monthly+'만원/월',
             room_list[2*i+j].type
           );
           if(roomNo%2==1 && i > roomNo/2 -1){ break; }
