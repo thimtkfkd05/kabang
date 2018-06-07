@@ -393,9 +393,31 @@ exports.getroom = function(req, res){
   var m_max = parseInt (req.query.m_max)+1;
   var lat = parseFloat (req.query.lat);
   var lng = parseFloat (req.query.lng);
-  
+  var room_type = req.query.room_type;
+
+  room_type = room_type.split('|');
+  or_arr = [];
+  for (var i=0; i<room_type.length -1 ; i++)
+  {
+    entry = room_type[i];    
+    console.log (entry);
+
+    if (entry == "1")
+      or_arr.push({type: "One-Room(반지하)"});
+    
+    if (entry == "2")
+      or_arr.push({type: "One-Room(지상)"});
+ 
+    if (entry == "3")
+      or_arr.push({type: "Two-Room"});
+    
+    if (entry == "4")
+      or_arr.push({type: "Three-Room"});
+  }
+
+  console.log(or_arr);
   var find_query = {
-    type: req.query.room_type,
+    $or: or_arr,
     deposit: { $gt: d_min, $lt: d_max},
     monthly: { $gt: m_min, $lt: m_max},
     'location.lat': { $gt: lat - d, $lt: lat + d},
