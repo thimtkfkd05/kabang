@@ -67,7 +67,6 @@ $(document).ready(function() {
 }); 
 
 function fileUploadAction() {
-    console.log("fileUploadAction");
     $("#input_imgs").trigger('click');
 }
 
@@ -111,7 +110,9 @@ function addCheckbox(name) {
 
 $(document).ready(function() {
   $('#btnSave').click(function() {
-    addCheckbox($('#txtName').val());
+    if ($('#txtName').val()) {
+      addCheckbox($('#txtName').val());
+    }
   });
   $('#register').click(function(){
     var chkedArr = new Array;
@@ -127,7 +128,6 @@ $(document).ready(function() {
     var geocoder = new google.maps.Geocoder;
     geocoder.geocode ({'location': location_obj}, function (results, status){
       if (status == 'OK') {
-        console.log ('ok');
         if (results[1]) {
 
           $.post('/register_room',{
@@ -174,10 +174,7 @@ $(document).ready(function() {
     var geocoder = new google.maps.Geocoder;
     geocoder.geocode ({'location': location_obj}, function (results, status){
       if (status == 'OK') {
-        console.log ('ok');
         if (results[1]) {
-
-          console.log (results[1].formatted_address);
           $.post('/register_room/'+room_id,{
             address : results[1].formatted_address,
             deposit : $('#deposit').val(),

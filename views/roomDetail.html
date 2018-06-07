@@ -33,7 +33,7 @@
             <% for (var i = 0; i < request_list.length; i++) { %>
               <div class="request_info" data-request-id="<%= request_list[i].request_id %>">
                 <span class="requested_user">
-                  <%- request_list[i].requested_user_name %>
+                  Student Name : <%- request_list[i].requested_user_name %> / 
                 </span>
                 <button class="btn btn-primary request_accept">Accept</button>
                 <button class="btn btn-danger request_reject">Reject</button>

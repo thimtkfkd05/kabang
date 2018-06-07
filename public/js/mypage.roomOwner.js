@@ -21,7 +21,7 @@ $(document).ready(function() {
         if (comments && comments.length) {
           var star_rating = 0;
           comments.map(function(comment) {
-            star_rating += comment.star_rating;
+            star_rating += Number(comment.star_rating);
           });
           star_rating /= comments.length;
           var star_rating_floor = Math.floor(star_rating);
@@ -62,7 +62,7 @@ $(document).ready(function() {
             if (comments && comments.length) {
               var star_rating = 0;
               comments.map(function(comment) {
-                star_rating += comment.star_rating;
+                star_rating += Number(comment.star_rating);
               });
               star_rating /= comments.length;
               var star_rating_floor = Math.floor(star_rating);
