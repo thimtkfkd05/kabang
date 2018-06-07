@@ -12,7 +12,6 @@ $(document).ready(function() {
   var m_max = parseInt (query[5].split('=')[1]);
   var room_type = query[6];
 
-  console.log (room_type);
   var find_query = {
     'lat' : lat,
     'lng' : lng,

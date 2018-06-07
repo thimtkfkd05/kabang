@@ -53,6 +53,16 @@ img.subimg {
   margin: 0 5px;
 }
 
+#like, #send_request {
+  width: calc(50% - 15px);
+}
+#like {
+  margin-right: 15px;
+}
+#send_request {
+  margin-left: 15px;
+}
+
 .bottom_btn_row {
   padding: 0 40%;
 }

@@ -41,7 +41,12 @@
             <% } %>
           </div>
           <% } else if (user_type != 'student') { %>
-          <button id="send_request" class="btn btn-block btn-primary">Send Request</button>
+            <% if (is_favorite) { %>
+            <button id="unlike" class="btn btn-success"><i class="fa fa-heart"></i> Remove from Favorite</button>
+            <% } else { %>
+            <button id="like" class="btn btn-success"><i class="fa fa-heart"></i> Add to Favorite</button>
+            <% } %>
+            <button id="send_request" class="btn btn-primary"><i class="fa fa-send"></i> Send Request</button>
           <% } %>
         </div>
         <div class="row"><p></p></div>
