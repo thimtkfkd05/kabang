@@ -118,10 +118,15 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <a href="/roomregister/<%= room_id %>" class="btn btn-outline-dark" style="text-align: center;">
+    <div class="row bottom_btn_row">
+      <% if (user_type == 'room_owner') { %>
+      <a href="/roomregister/<%= room_id %>" class="btn btn-success" style="text-align: center;">
         Edit Room
       </a>
+      <% } %>
+      <button class="btn btn-danger" style="text-align: center;" onclick="history.back();">
+        Go Back
+      </button>
     </div>
   </div>
   <div id="room_id" style="display: none;"><%= room_id %></div>

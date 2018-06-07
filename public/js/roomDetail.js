@@ -1,8 +1,8 @@
-var marker;
+var marker; var map;
 function initMap() {
     
     var seoul = {lat: 37, lng: 126};
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15, center: seoul});
   
     myMarker = new google.maps.Marker({
@@ -13,25 +13,25 @@ function initMap() {
       title: 'My Location',          
     });
     
-    var infoWindow = new google.maps.InfoWindow({map: map});
+    // var infoWindow = new google.maps.InfoWindow({map: map});
           
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(function(position) {
+    //   var pos = {
+    //     lat: position.coords.latitude,
+    //     lng: position.coords.longitude
+    //   };
   
-      map.setCenter (pos);
-      myMarker.setPosition (pos);          
-      }, function () {
-        handleError (true, infoWindow, map.getCenter()); 
-      });
+    //   map.setCenter (pos);
+    //   myMarker.setPosition (pos);          
+    //   }, function () {
+    //     handleError (true, infoWindow, map.getCenter()); 
+    //   });
   
-    } else {
-        //Browser does not support Geo
-        handleError (false, infoWindow, map.getCenter());
-    }
+    // } else {
+    //     //Browser does not support Geo
+    //     handleError (false, infoWindow, map.getCenter());
+    // }
     
     /*
     google.maps.event.addListener (map, 'click', function (e){
@@ -120,8 +120,20 @@ $(document).ready(function(){
             }
         });
     });
+
+    var pos = {
+        'lat': Number($('#location .lat').text()),
+        'lng': Number($('#location .lng').text())
+    };
+    var interval = setInterval(function() {
+        if (map && pos.lat && pos.lng) {
+            map.setCenter (pos);
+            myMarker.setPosition (pos);
+            clearInterval(interval);
+        }
+    }, 1000);
 });
 
-$(document).on('click', '.img-thumbnail', function() {
+$(document).on('click', '.subimg', function() {
     $('#img').attr('src', $(this).attr('src'));
 });
