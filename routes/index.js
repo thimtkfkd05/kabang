@@ -78,7 +78,7 @@ exports.roomDetail = function(req,res){
             if (comment_res && comment_res.length) {
               var star_rating = 0;
               comment_res.map(function(comment) {
-                star_rating += comment.star_rating;
+                star_rating += Number(comment.star_rating);
               });
               star_rating /= comment_res.length;
               var star_rating_floor = Math.floor(star_rating);
@@ -169,7 +169,6 @@ exports.roomregister = function(req,res){
       if(find_err){
         res.redirect("/mypage");
       }else{
-        console.log(find_res);
         res.render("roomupdate.html", find_res);
       }
     });
@@ -400,7 +399,6 @@ exports.getroom = function(req, res){
   for (var i=0; i<room_type.length -1 ; i++)
   {
     entry = room_type[i];    
-    console.log (entry);
 
     if (entry == "1")
       or_arr.push({type: "One-Room(반지하)"});
@@ -415,14 +413,15 @@ exports.getroom = function(req, res){
       or_arr.push({type: "Three-Room"});
   }
 
-  console.log(or_arr);
   var find_query = {
-    $or: or_arr,
     deposit: { $gt: d_min, $lt: d_max},
     monthly: { $gt: m_min, $lt: m_max},
     'location.lat': { $gt: lat - d, $lt: lat + d},
     'location.lng': { $gt: lng - d, $lt: lng + d}
   };
+  if (or_arr.length) {
+    find_query['$or'] = or_arr;
+  }
   
   room_db.find(find_query).toArray(function(find_err, find_res) {
     if (find_err) {
@@ -532,7 +531,7 @@ exports.register_room = function(req, res){
   var room_owner = req.session.user_id;
   var room_comment = [];
   var room_address = req.body.address;
-  console.log(room_address);
+
   room_location.lat  = Number(room_location.lat);
   room_location.lng  = Number(room_location.lng);
     var room_obj = {
@@ -558,7 +557,6 @@ exports.register_room = function(req, res){
         $set: room_obj
       }, function(update_err, update_res) {
         if(update_err) {
-          console.log("fail!!");
           res.json({
             result: false,
             err: update_err
@@ -567,29 +565,22 @@ exports.register_room = function(req, res){
           res.json({
             result: true,
           });
-          console.log("Success!!");
         }
       });
     } else {
       room_db.save(room_obj, function(save_err, save_res) {
         if(save_err) {
-          console.log("fail!!");
           res.json({
             result: false,
             err: save_err
-            
-            
           });
-
         }else{
           res.json({
             result: true,
           });
-          console.log("Success!!");
         }
       });
     }
-  
   }
 
 exports.delete_room = function(req, res) {
@@ -607,7 +598,8 @@ exports.delete_room = function(req, res) {
       res.json(false);
     } else {
       room_db.remove({
-        room_id: room_id
+        room_id: room_id,
+        owner: req.session.user_id
       }, function(remove_err, remove_res) {
         if (remove_err || !remove_res) {
           res.json(false);

@@ -58,3 +58,7 @@ input[type = checkbox]{
     margin-inline-end: 100%
 
 }
+
+#edit, #delete, #cancel {
+    margin: 0 10px;
+}

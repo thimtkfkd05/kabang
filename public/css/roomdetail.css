@@ -44,11 +44,13 @@ img.subimg {
 }
 
 #request_list {
-  position: absolute;
-  left: calc(50% - 70px);
+  padding-left: 60px;
+}
+#request_list .request_info {
+  padding-bottom: 10px;
 }
 #request_list button {
-  margin: 0 7.5px;
+  margin: 0 5px;
 }
 
 .bottom_btn_row {
