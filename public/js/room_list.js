@@ -10,13 +10,12 @@ $(document).ready(function() {
   var d_max = parseInt (query[3].split('=')[1]);
   var m_min = parseInt (query[4].split('=')[1]);
   var m_max = parseInt (query[5].split('=')[1]);
-  var room_type = query[6].split('=')[1].split('.');
-  console.log(room_type);
+  var room_type = query[6];
 
   var find_query = {
     'lat' : lat,
     'lng' : lng,
-    'room_type' : room_type,
+    'room_type' : room_type, 
     'd_min' : d_min,
     'd_max' : d_max,
     'm_min' : m_min,

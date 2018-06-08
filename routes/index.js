@@ -74,6 +74,33 @@ exports.roomDetail = function(req,res){
           if (comment_err) {
             res.redirect('/mypage');
           } else {
+            var stars = '';
+            if (comment_res && comment_res.length) {
+              var star_rating = 0;
+              comment_res.map(function(comment) {
+                star_rating += Number(comment.star_rating);
+              });
+              star_rating /= comment_res.length;
+              var star_rating_floor = Math.floor(star_rating);
+              var star_rating_round = Math.round(star_rating);
+              for (var m = 0; m < star_rating_floor; m++) {
+                stars += '<i class="fa fa-star"></i>';
+              }
+              if (star_rating_floor < star_rating_round) {
+                stars += '<i class="fa fa-star-half-o"></i>';
+              }
+              for (var n = 5; n > star_rating_round; n--) {
+                stars += '<i class="fa fa-star-o"></i>';
+              }
+            } else {
+              for (var m = 0; m < 5; m++) {
+                stars += '<i class="fa fa-star-o"></i>';
+              }
+            }
+            find_res['comments'] = comment_res;
+            find_res['stars'] = stars;
+            find_res['user_type'] = req.query.type;
+            
             if (req.query.type == 'room_owner') {
               var request_db = db.collection('Requests');
               request_db.find({
@@ -111,9 +138,22 @@ exports.roomDetail = function(req,res){
                 }
               });
             } else {
-              find_res['comments'] = comment_res;
-              find_res['user_type'] = req.query.type;
-              res.render('roomDetail.html', find_res);
+              var user_db = db.collection('Users');
+              user_db.findOne({
+                id: req.session.user_id
+              }, {
+                favorite_list: 1
+              }, function(favorite_err, favorite_res) {
+                if (favorite_err) {
+                  res.redirect('/mypage');
+                } else {
+                  var favorite_id_list = favorite_res.favorite_list || [];
+                  find_res['is_favorite'] = favorite_id_list.indexOf(req.query.room_id) > -1;
+                  find_res['comments'] = comment_res;
+                  find_res['user_type'] = req.query.type;
+                  res.render('roomDetail.html', find_res);
+                }
+              });
             }
           }
         });
@@ -134,7 +174,20 @@ exports.roomDetail = function(req,res){
 };
 
 exports.roomregister = function(req,res){
-  res.render('roomregister.html');
+  if(req.params.room_id){
+    var room_db = db.collection("Rooms");
+    room_db.findOne({
+      room_id: req.params.room_id
+    }, function(find_err,find_res){
+      if(find_err){
+        res.redirect("/mypage");
+      }else{
+        res.render("roomupdate.html", find_res);
+      }
+    });
+  }else{
+    res.render('roomregister.html');
+  }
 };
 
 exports.mypage = function(req, res) {
@@ -352,14 +405,36 @@ exports.getroom = function(req, res){
   var m_max = parseInt (req.query.m_max)+1;
   var lat = parseFloat (req.query.lat);
   var lng = parseFloat (req.query.lng);
-  
+  var room_type = req.query.room_type;
+
+  room_type = room_type.split('|');
+  or_arr = [];
+  for (var i=0; i<room_type.length -1 ; i++)
+  {
+    entry = room_type[i];    
+
+    if (entry == "1")
+      or_arr.push({type: "One-Room(반지하)"});
+    
+    if (entry == "2")
+      or_arr.push({type: "One-Room(지상)"});
+ 
+    if (entry == "3")
+      or_arr.push({type: "Two-Room"});
+    
+    if (entry == "4")
+      or_arr.push({type: "Three-Room"});
+  }
+
   var find_query = {
-    type: { $in: req.query.room_type},
     deposit: { $gt: d_min, $lt: d_max},
     monthly: { $gt: m_min, $lt: m_max},
     'location.lat': { $gt: lat - d, $lt: lat + d},
     'location.lng': { $gt: lng - d, $lt: lng + d}
   };
+  if (or_arr.length) {
+    find_query['$or'] = or_arr;
+  }
   
   room_db.find(find_query).toArray(function(find_err, find_res) {
     if (find_err) {
@@ -411,7 +486,30 @@ exports.get_student_room_list = function(req, res) {
         if (room_err) {
           res.json(null);
         } else {
-          res.json(room_res);
+          var user_db = db.collection('Users');
+          user_db.findOne({
+            id: req.session.user_id
+          }, {
+            favorite_list: 1
+          }, function(_find_err, _find_res) {
+            if (_find_err) {
+              res.json(null);
+            } else {
+              var favorite_id_list = _find_res.favorite_list || [];
+              room_db.find({
+                room_id: {$in: favorite_id_list}
+              }).toArray(function(_room_err, _room_res) {
+                if (_room_err) {
+                  res.json(null);
+                } else {
+                  res.json({
+                    favorite_list: _room_res,
+                    history_list: room_res
+                  });
+                }
+              });
+            }
+          });
         }
       });
     }
@@ -469,7 +567,7 @@ exports.register_room = function(req, res){
   var room_owner = req.session.user_id;
   var room_comment = [];
   var room_address = req.body.address;
-  console.log(room_address);
+
   room_location.lat  = Number(room_location.lat);
   room_location.lng  = Number(room_location.lng);
     var room_obj = {
@@ -487,25 +585,67 @@ exports.register_room = function(req, res){
       comments : room_comment,
       address : room_address, 
     };
-    room_db.save(room_obj, function(save_err, save_res) {
-      if(save_err) {
-        console.log("fail!!");
-        res.json({
-          result: false,
-          err: save_err
-          
-          
-        });
-
-      }else{
-        res.json({
-          result: true,
-        });
-        console.log("Success!!");
-      }
-    });
-  
+    if (req.params.room_id) {
+      delete room_obj.room_id;
+      room_db.update({
+        room_id: req.params.room_id
+      }, {
+        $set: room_obj
+      }, function(update_err, update_res) {
+        if(update_err) {
+          res.json({
+            result: false,
+            err: update_err
+          });
+        }else{
+          res.json({
+            result: true,
+          });
+        }
+      });
+    } else {
+      room_db.save(room_obj, function(save_err, save_res) {
+        if(save_err) {
+          res.json({
+            result: false,
+            err: save_err
+          });
+        }else{
+          res.json({
+            result: true,
+          });
+        }
+      });
+    }
   }
+
+exports.delete_room = function(req, res) {
+  var room_db = db.collection('Rooms');
+  var room_id = req.body.room_id;
+
+  room_db.findOne({
+    room_id: room_id
+  }, {
+    owner: 1
+  }, function(find_err, find_res) {
+    if (find_err || !find_res) {
+      res.json(false);
+    } else if (req.session.user_id !== find_res.owner) {
+      res.json(false);
+    } else {
+      room_db.remove({
+        room_id: room_id,
+        owner: req.session.user_id
+      }, function(remove_err, remove_res) {
+        if (remove_err || !remove_res) {
+          res.json(false);
+        } else {
+          res.json(true);
+        }
+      });
+    }
+  });
+};
 
 exports.saveComment = function(req, res) {
   var comment_db = db.collection('Comments');
@@ -656,5 +796,54 @@ exports.controlRequest = function(req, res) {
         });
       }
     }
+  });
+};
+
+exports.add_favorite = function(req, res) {
+  var user_db = db.collection('Users');
+  user_db.findOne({
+    id: req.session.user_id
+  }, function(find_err, find_res) {
+    if (find_err) {
+      res.json({
+        err: find_err,
+        result: false
+      });
+    } else {
+      var update_query = {};
+      if (find_res.favorite_list) {
+        update_query['$push'] = {
+          favorite_list: req.body.room_id
+        };
+      } else {
+        update_query['$set'] = {
+          favorite_list: [req.body.room_id]
+        };
+      }
+      user_db.update({
+        id: req.session.user_id
+      }, update_query, function(update_err, update_res) {
+        res.json({
+          err: update_err,
+          result: !!update_res
+        });
+      });
+    }
+  });
+};
+
+exports.remove_favorite = function(req, res) {
+  var user_db = db.collection('Users');
+  user_db.update({
+    id: req.session.user_id
+  }, {
+    $pull: {
+      favorite_list: req.body.room_id
+    }
+  }, function(update_err, update_res) {
+    res.json({
+      err: update_err,
+      result: !!update_res
+    });
   });
 };

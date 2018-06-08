@@ -2,7 +2,7 @@ $(document).ready(function() {
   $('.request_accept').click(function() {
     var $request_info = $(this).parent();
     var request_id = $request_info.data('request-id');
-    $.post('/requestControl', {
+    $.post('/controlRequest', {
       request_id: request_id,
       status: 'accept'
     }, function(res) {
@@ -18,7 +18,7 @@ $(document).ready(function() {
   $('.request_reject').click(function() {
     var $request_info = $(this).parent();
     var request_id = $request_info.data('request-id');
-    $.post('/requestControl', {
+    $.post('/controlRequest', {
       request_id: request_id,
       status: 'reject'
     }, function(res) {

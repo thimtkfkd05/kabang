@@ -1,47 +1,48 @@
-var marker;
-
+var marker; var map;
 function initMap() {
-    var uluru = {lat: -25.363, lng: 131.044};
-    var image = {
-    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-    };
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 15,
-    center: uluru
+    
+    var seoul = {lat: 37, lng: 126};
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15, center: seoul});
+  
+    myMarker = new google.maps.Marker({
+      map: map,
+      draggable: true,
+      animation: google.maps.Animation.DROP,
+      position: seoul,
+      title: 'My Location',          
     });
     
-    marker = new google.maps.Marker({
-    map: map,
-    draggable: true,
-    animation: google.maps.Animation.DROP,
-    position: uluru,
-    title: 'uluru',
-    icon: image
-    });
-        
-    // marker.addListener('click', toggleBounce); 
+    // var infoWindow = new google.maps.InfoWindow({map: map});
+          
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(function(position) {
+    //   var pos = {
+    //     lat: position.coords.latitude,
+    //     lng: position.coords.longitude
+    //   };
+  
+    //   map.setCenter (pos);
+    //   myMarker.setPosition (pos);          
+    //   }, function () {
+    //     handleError (true, infoWindow, map.getCenter()); 
+    //   });
+  
+    // } else {
+    //     //Browser does not support Geo
+    //     handleError (false, infoWindow, map.getCenter());
+    // }
     
-//     var infoWindow = new google.maps.InfoWindow({map: map});
-//     if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//         var pos = {
-//         lat: position.coords.latitude,
-//         lng: position.coords.longitude
-//         };
-
-//         infoWindow.setPosition(pos);
-//         infoWindow.setContent('Location found. ');
-//         map.setCenter (pos);
-//         marker.setPosition (pos);
-//     }, function () {
-//         handleError (true, infoWindow, map.getCenter());
-//     });
-//     } else {
-//     //Browser does not support Geo
-//     handleError (false, infoWindow, map.getCenter());
-//     }
-
+    /*
+    google.maps.event.addListener (map, 'click', function (e){
+      
+      var myPos = myMarker.getPosition ();
+      var d = 0.0035
+      var point = new google.maps.LatLng(myPos.lat() - d, myPos.lng() + d);    
+      var dist = google.maps.geometry.spherical.computeDistanceBetween(point, myPos);
+      
+      console.log (dist);
+    }); */
 }
 
 function handleError (hasGeo, infoWindow, pos) {
@@ -119,8 +120,44 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('#like').click(function() {
+        $.post('/add_favorite', {
+            room_id: $('#room_id').text()
+        }, function(result) {
+            if (result.err || !result.result) {
+                alert('Add Favorite Failed! Try Again.');
+            } else {
+                alert('Add Favorite Success!');
+            }
+        });
+    });
+
+    $('#unlike').click(function() {
+        $.post('/remove_favorite', {
+            room_id: $('#room_id').text()
+        }, function(result) {
+            if (result.err || !result.result) {
+                alert('Remove Favorite Failed! Try Again.');
+            } else {
+                alert('Remove Favorite Success!');
+            }
+        });
+    });
+
+    var pos = {
+        'lat': Number($('#location .lat').text()),
+        'lng': Number($('#location .lng').text())
+    };
+    var interval = setInterval(function() {
+        if (map && pos.lat && pos.lng) {
+            map.setCenter (pos);
+            myMarker.setPosition (pos);
+            clearInterval(interval);
+        }
+    }, 1000);
 });
 
-$(document).on('click', '.img-thumbnail', function() {
+$(document).on('click', '.subimg', function() {
     $('#img').attr('src', $(this).attr('src'));
 });

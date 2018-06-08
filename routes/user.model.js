@@ -10,7 +10,8 @@ const userSchema = new Schema(
         type: { type: String, required: true },
         verify_code: String,
         is_verified: { type: Boolean, default: false },
-        contact : {type : String, required: true}
+        contact : {type : String, required: true},
+        favorite_list: { type: Array, default: [] }
     },
     {
         collection: 'Users'

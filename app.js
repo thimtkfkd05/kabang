@@ -79,6 +79,9 @@ app.get('/search', checker('student'), routes.searchPage);
 app.get('/roomDetail', checker(), routes.roomDetail);
 app.get('/detailRoom', checker(), routes.detailRoom);
 app.get('/roomregister', checker('room_owner'), routes.roomregister);
+app.get('/roomregister/:room_id', checker('room_owner'), routes.roomregister);
+app.post('/register_room/:room_id', checker('room_owner'), routes.register_room);
+
 
 app.post('/register_room', checker('room_owner'), routes.register_room);
 
@@ -92,6 +95,9 @@ app.get('/auth/accept_verification', routes.auth.accept_verification);
 app.post('/saveComment', checker('student'), routes.saveComment);
 app.post('/sendRequest', checker('student'), routes.sendRequest);
 app.post('/controlRequest', checker('room_owner'), routes.controlRequest);
+app.post('/delete_room', checker('room_owner'), routes.delete_room);
+app.post('/add_favorite', checker('student'), routes.add_favorite);
+app.post('/remove_favorite', checker('student'), routes.remove_favorite);
 
 function connectDB() {
   var dbUrl = 'mongodb://localhost:27017';

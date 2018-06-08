@@ -1,3 +1,7 @@
+div.container {
+  padding-bottom: 30px;
+}
+
 #map {
   width: 100%;
   height: 400px;
@@ -37,4 +41,31 @@ img.subimg {
   height:200px;
   padding:10px;
   background-color:whitesmoke;
+}
+
+#request_list {
+  padding-left: 60px;
+}
+#request_list .request_info {
+  padding-bottom: 10px;
+}
+#request_list button {
+  margin: 0 5px;
+}
+
+#like, #unlike, #send_request {
+  width: calc(50% - 15px);
+}
+#like, #unlike {
+  margin-right: 15px;
+}
+#send_request {
+  margin-left: 15px;
+}
+
+.bottom_btn_row {
+  padding: 0 40%;
+}
+.bottom_btn_row .btn {
+  margin-left: 15px;
 }
