@@ -43,7 +43,7 @@ $(document).ready(function() {
         $('div.row_adder').append(
           room_owner_roomcard(
             '/roomDetail?type=room_owner&room_id='+room_list[0].room_id,
-            room_list[0].location,
+            room_list[0].address,
             room_list[0].picture[0],
             stars,
             room_list[0].status
@@ -83,7 +83,7 @@ $(document).ready(function() {
             }
             html += room_owner_roomcard(
               '/roomDetail?type=room_owner&room_id='+room_list[2*i+j].room_id, 
-              room_list[2*i+j].location,
+              room_list[2*i+j].address,
               room_list[2*i+j].picture[0],
               stars,
               room_list[2*i+j].status
