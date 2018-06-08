@@ -108,7 +108,7 @@ function connectDB() {
   }, function(err, mongoclient) {
     if (err) throw err;
     console.log('DB connection success!');
-    // db = mongoclient.db('kabang');
+    db = mongoclient.db('kabang');
     // var dummy = require('./dummyDB.json');
     
     // db.collection('Users').insertMany(dummy.user_db, function(ins_err, res) {
