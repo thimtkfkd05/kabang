@@ -121,6 +121,30 @@ $(document).ready(function(){
         });
     });
 
+    $('#like').click(function() {
+        $.post('/add_favorite', {
+            room_id: $('#room_id').text()
+        }, function(result) {
+            if (result.err || !result.result) {
+                alert('Add Favorite Failed! Try Again.');
+            } else {
+                alert('Add Favorite Success!');
+            }
+        });
+    });
+
+    $('#unlike').click(function() {
+        $.post('/remove_favorite', {
+            room_id: $('#room_id').text()
+        }, function(result) {
+            if (result.err || !result.result) {
+                alert('Remove Favorite Failed! Try Again.');
+            } else {
+                alert('Remove Favorite Success!');
+            }
+        });
+    });
+
     var pos = {
         'lat': Number($('#location .lat').text()),
         'lng': Number($('#location .lng').text())

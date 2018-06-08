@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>KABANG :: Room Register</title>
+    <title>KABANG :: Room Edit</title>
     <link rel='stylesheet' href='/module/css/jquery-ui.min.css' />
     <link rel='stylesheet' href='/module/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/module/font-awesome-4.7.0/css/font-awesome.min.css' />
@@ -11,7 +11,7 @@
   </head>
   <body>
     <%- include("./navbar.ejs", {"type": "room_owner", "index": 1}) %>
-    <h1>Room Register</h1>
+    <h1>Room Edit</h1>
     <div class = 'room-register'>
       <div id ='registerAction' > 
         <div class = "form-row">
@@ -26,7 +26,7 @@
           <div class="imgs_wrap">
             <img id="img" />
           </div>
-          <button type="button" href="javascript:" onclick="fileUploadAction();" class="btn btn-primary">Upload</button>
+          <button onclick="fileUploadAction();" class="btn btn-primary">Upload</button>
         </div>
         <br><br>
         <div class="form-row">

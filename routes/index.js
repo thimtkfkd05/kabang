@@ -138,9 +138,22 @@ exports.roomDetail = function(req,res){
                 }
               });
             } else {
-              find_res['comments'] = comment_res;
-              find_res['user_type'] = req.query.type;
-              res.render('roomDetail.html', find_res);
+              var user_db = db.collection('Users');
+              user_db.findOne({
+                id: req.session.user_id
+              }, {
+                favorite_list: 1
+              }, function(favorite_err, favorite_res) {
+                if (favorite_err) {
+                  res.redirect('/mypage');
+                } else {
+                  var favorite_id_list = favorite_res.favorite_list || [];
+                  find_res['is_favorite'] = favorite_id_list.indexOf(req.query.room_id) > -1;
+                  find_res['comments'] = comment_res;
+                  find_res['user_type'] = req.query.type;
+                  res.render('roomDetail.html', find_res);
+                }
+              });
             }
           }
         });
@@ -473,7 +486,30 @@ exports.get_student_room_list = function(req, res) {
         if (room_err) {
           res.json(null);
         } else {
-          res.json(room_res);
+          var user_db = db.collection('Users');
+          user_db.findOne({
+            id: req.session.user_id
+          }, {
+            favorite_list: 1
+          }, function(_find_err, _find_res) {
+            if (_find_err) {
+              res.json(null);
+            } else {
+              var favorite_id_list = _find_res.favorite_list || [];
+              room_db.find({
+                room_id: {$in: favorite_id_list}
+              }).toArray(function(_room_err, _room_res) {
+                if (_room_err) {
+                  res.json(null);
+                } else {
+                  res.json({
+                    favorite_list: _room_res,
+                    history_list: room_res
+                  });
+                }
+              });
+            }
+          });
         }
       });
     }
@@ -760,5 +796,54 @@ exports.controlRequest = function(req, res) {
         });
       }
     }
+  });
+};
+
+exports.add_favorite = function(req, res) {
+  var user_db = db.collection('Users');
+  user_db.findOne({
+    id: req.session.user_id
+  }, function(find_err, find_res) {
+    if (find_err) {
+      res.json({
+        err: find_err,
+        result: false
+      });
+    } else {
+      var update_query = {};
+      if (find_res.favorite_list) {
+        update_query['$push'] = {
+          favorite_list: req.body.room_id
+        };
+      } else {
+        update_query['$set'] = {
+          favorite_list: [req.body.room_id]
+        };
+      }
+      user_db.update({
+        id: req.session.user_id
+      }, update_query, function(update_err, update_res) {
+        res.json({
+          err: update_err,
+          result: !!update_res
+        });
+      });
+    }
+  });
+};
+
+exports.remove_favorite = function(req, res) {
+  var user_db = db.collection('Users');
+  user_db.update({
+    id: req.session.user_id
+  }, {
+    $pull: {
+      favorite_list: req.body.room_id
+    }
+  }, function(update_err, update_res) {
+    res.json({
+      err: update_err,
+      result: !!update_res
+    });
   });
 };
